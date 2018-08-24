@@ -221,7 +221,7 @@ class FetchMentionsAPI(Mention):
                  access_token,
                  account_id,
                  alert_id,
-                 limit='20',
+                 limit=None,
                  before_date=None, # 2018-07-07T00:00:00.12345+02:00
                  not_before_date=None, # #2018-07-01T00:00:00.12345+02:00
                  source=None,
