@@ -2,7 +2,7 @@ import requests
 from requests_oauth2 import OAuth2BearerToken
 from abc import ABCMeta, abstractmethod
 from requests.exceptions import HTTPError
-from mention import utils
+import utils
 
 
 class Mention(object):
