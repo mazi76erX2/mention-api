@@ -1,0 +1,4 @@
+**/.idea/workspace.xml
+**/.nyc_output
+**/coverage
+**/tests/api_keys.json

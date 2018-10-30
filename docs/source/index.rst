@@ -25,7 +25,7 @@ Introduction
 ------------
 This library provides a pure Python interface for the `Mention API <https://dev.mention.com/>`_. It only works with Python 3.
 
-`Twitter <http://twitter.com>`_ provides a service that allows people to connect via the web, IM, and SMS. Twitter exposes a `web services API <http://dev.twitter.com/doc>`_ and this library is intended to make it even easier for Python programmers to use.
+`Mention <http://metion.com>`_ provides a service that allows people to connect via the web. Mention exposes a `web services API <http://dev.mention.com>`_ and this library is intended to make it even easier for Python programmers to use.
 --------
 What can this API do for you?
 

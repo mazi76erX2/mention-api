@@ -1,5 +1,6 @@
 import unittest
-from unittest import mock
+from unittest.mock import Mock, patch
+from exceptions import InvalidResponseException
 import json
 import mention
 
@@ -18,50 +19,39 @@ class TestAppDataAPI(unittest.TestCase):
         self.assertEqual(result, expected)
 
 
-    @mock.patch("mention.requests.get")
-    def test_query(self, mock_requests_get):
+    @patch("mention.requests.get")
+    def test_query_error(self, mock_requests_get):
         # assert client error response
         unsuccessful_response = {
             'error': 'invalid_grant',
             'error_description': 'The access token provided is invalid.'
         }
-
-        expected = unsuccessful_response
+        
         response = type('response', (object,),
                         {'text': json.dumps(unsuccessful_response)})
+        
         mock_requests_get.return_value = response
-        results = self.client.query()
-        self.assertEqual(results, expected)
+        self.assertEqual(unsuccessful_response, self.client.query())
 
+    
+    @patch("mention.requests.get")
+    def test_query_success(self, mock_requests_get):
         # assert successful response
-        successful_response = {
-            "app_languages": {"a"},
-            "alert_languages": {"a"},
-            "alert_countries": {"a"},
-            "alert_tones": {"a"},
-            "alert_sources": {"a"},
-            "alert_share_roles": {"a"},
-            "alert_colors": ["a"],
-            "countries": {"a"},
-            "task_types": {"a"},
-            "mention_folders": {"a"},
-            "mention_log_types": {"a"},
-            "social_account_types": {"a"},
-            "locale": "en",
-            "week_days": {"a"},
-            "push_notification_frequencies": {"a"},
-            "desktop_notification_frequencies": {"a"},
-            "email_notification_frequencies": {"a"},
-            "trending_email_notification_frequencies": {"a"},
-            "trending_sms_notification_frequencies:": {"a"}
-        }
+        with open("testapidata.json", "r") as read_file:
+            successful_response = json.load(read_file)
 
-        expected = successful_response
+        with open("api_keys.json", "r") as read_file:
+            self.access_token = json.load(read_file)["access_token"]
+            self.client = mention.AppDataAPI(self.access_token)
+
+        mock_requests_get.return_value = Mock(ok=True)
+        mock_requests_get.return_value.json.return_value = successful_response
+
         response = type('response', (object,),
                         {'text': json.dumps(successful_response)})
-        mock_requests_get.return_value = response
-        results = self.client.query()
-        self.assertEqual(results, expected)
+
+        self.assertEqual(successful_response, self.client.query())
+
 
 if __name__ == '__main__':
     unittest.main()
