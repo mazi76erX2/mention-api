@@ -53,5 +53,109 @@ class TestAppDataAPI(unittest.TestCase):
         self.assertEqual(successful_response, self.client.query())
 
 
+class TestFetchAnAlertAPI(unittest.TestCase):
+    
+    def setUp(self):
+        self.access_token = "a"
+        self.account_id = "b"
+        self.alert_id = "c"
+        
+        self.client = mention.FetchAnAlertAPI(self.access_token,
+                                              self.account_id,
+                                              self.alert_id)
+
+
+
+    def test_url(self):
+        result = self.client.url
+        expected = "https://api.mention.net/api/accounts/b/alerts/c"
+
+        self.assertEqual(result, expected)
+        
+
+    @patch("mention.requests.get")
+    def test_query_access_token_error(self, mock_requests_get):
+        # assert client error response
+        unsuccessful_response = {
+            'error': 'invalid_grant',
+            'error_description': 'The access token provided is invalid.'
+        }
+        
+        response = type('response', (object,),
+                        {'text': json.dumps(unsuccessful_response)})
+        
+        mock_requests_get.return_value = response
+        self.assertEqual(unsuccessful_response, self.client.query())
+        
+
+    @patch("mention.requests.get")
+    def test_query_account_id_error(self, mock_requests_get):
+        # assert account ID error response
+        unsuccessful_response = {
+            'code': 403,
+            'message': 'You are not allowed to access this account'
+        }
+        
+        with open("api_keys.json", "r") as read_file:
+            self.access_token = json.load(read_file)["access_token"]
+            self.client = mention.FetchAnAlertAPI(self.access_token,
+                                                  self.account_id,
+                                                  self.alert_id)
+        
+        response = type('response', (object,),
+                        {'text': json.dumps(unsuccessful_response)})
+        
+        mock_requests_get.return_value = response
+        self.assertEqual(unsuccessful_response, self.client.query())
+
+
+    @patch("mention.requests.get")
+    def test_query_alert_id_error(self, mock_requests_get):
+        # assert alert ID error response
+        unsuccessful_response = {
+            'code': 404,
+            'message':
+                'This alert doesn’t exist or you are not allowed to access it'
+        }
+        
+        with open("api_keys.json", "r") as read_file:
+            jsonfile = json.load(read_file)
+            self.access_token = jsonfile["access_token"]
+            self.account_id = jsonfile["account_id"]
+            self.client = mention.FetchAnAlertAPI(self.access_token,
+                                                  self.account_id,
+                                                  self.alert_id)
+        
+        response = type('response', (object,),
+                        {'text': json.dumps(unsuccessful_response)})
+        
+        mock_requests_get.return_value = response
+        self.assertEqual(unsuccessful_response, self.client.query())
+
+
+    @patch("mention.requests.get")
+    def test_query_success(self, mock_requests_get):
+        # assert successful response
+        with open("testfetchanalert.json", "r") as read_file:
+            successful_response = json.load(read_file)
+
+        with open("api_keys.json", "r") as read_file:
+            jsonfile = json.load(read_file)
+            self.access_token = jsonfile["access_token"]
+            self.account_id = jsonfile["account_id"]
+            self.alert_id = jsonfile["alert_id"]
+            self.client = mention.FetchAnAlertAPI(self.access_token,
+                                                  self.account_id,
+                                                  self.alert_id)
+
+        mock_requests_get.return_value = Mock(ok=True)
+        mock_requests_get.return_value.json.return_value = successful_response
+
+        response = type('response', (object,),
+                        {'text': json.dumps(successful_response)})
+
+        self.assertEqual(successful_response, self.client.query())
+
+
 if __name__ == '__main__':
     unittest.main()
