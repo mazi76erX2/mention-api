@@ -223,6 +223,7 @@ class FetchMentionsAPI(Mention):
                  access_token,
                  account_id,
                  alert_id,
+                 since_id=None,
                  limit=None,
                  before_date=None, # 2018-07-07T00:00:00.12345+02:00
                  not_before_date=None, # #2018-07-01T00:00:00.12345+02:00
@@ -246,6 +247,10 @@ class FetchMentionsAPI(Mention):
 
         alert_id: string
             Id of the alert.
+
+        since_id: string
+            Returns mentions ordered by id
+            Can not be combined with before_date, not_before_date, cursor.
 
         limit: string
             Number of mentions to return. max 1000.
@@ -302,6 +307,8 @@ class FetchMentionsAPI(Mention):
 
         self.limit = limit
 
+        self.since_id = since_id
+
         if before_date is not None:
             self.before_date = utils.transform_date(before_date)
         else:
@@ -352,22 +359,38 @@ class FetchMentionsAPI(Mention):
         params["access_token"] = self.access_token
         params["account_id"] = self.account_id
         params["alert_id"] = self.alert_id
-        
-        params["limit"] = self.limit
-        params["before_date"] = self.before_date if self.before_date else ""
-        params["not_before_date"] = self.not_before_date if self.not_before_date else ""
+
+        if self.since_id:
+            params["since_id"] = self.since_id
+        else:
+            params["before_date"] = self.before_date if self.before_date else ""
+            params["not_before_date"] = self.not_before_date if self.before_date else ""
+            params["cursor"] = self.cursor if self.cursor else ""
+
+        if self.unread:
+            params["unread"] = self.unread
+        else:
+            if (self.favorite) and
+            ((self.folder == "inbox") or (self.folder == "archive")):
+                params["favorite"] = self.favorite
+                params["folder"] = self.folder
+            else:
+                 params["folder"] = self.folder if self.folder else ""   
+            params["q"] = self.q if self.q else ""
+            params["tone"] = self.tone if self.tone else ""
+
+        if self.limit > int(1000):
+            params["limit"] = "1000"
+
         params["source"] = self.source if self.source else ""
-        params["unread"] = self.unread if self.unread else ""
-        params["favorite"] = self.favorite if self.favorite else ""
-        params["folder"] = self.folder if self.folder else ""
-        params["tone"] = self.tone if self.tone else ""
+
         params["countries"] = self.countries if self.countries else ""
         params["include_children"] = self.include_children if self.include_children else ""
         params["sort"] = self.sort if self.sort else ""
         params["languages"] = self.languages if self.languages else ""
         params["timezone"] = self.timezone if self.timezone else ""
-        params["q"] = self.q if self.q else ""
-        params["cursor"] = self.cursor if self.cursor else ""
+        
+        
 
         for key, value in list(params.items()):
             if value == '':
