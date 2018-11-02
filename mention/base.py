@@ -66,7 +66,6 @@ class AppDataAPI(Mention):
         data = response.json()
 
         return data
-    
 
 
 class FetchAnAlertAPI(Mention):
@@ -110,6 +109,91 @@ class FetchAnAlertAPI(Mention):
         with requests.Session() as session:
             session.auth = OAuth2BearerToken(self.access_token)
             response = session.get(self.url)
+            try:
+                response.raise_for_status()
+            except HTTPError:
+                pass
+            data = response.json()
+
+        return data    
+
+
+class CreateAnAlertAPI(Mention):
+    def __init__(self,
+                 access_token,
+                 account_id,
+                 alert_id,
+                 name,
+                 query,
+                 languages,
+                 countries,
+                 sources,
+                 blocked_sites,
+                 noise_detection,
+                 reviews_pages):
+        """
+        Parameters
+        ----------
+        access_token: string
+            Mention API access_token
+
+        account_id: string
+            Id of the account.
+
+        alert_id: string
+            Id of the alert.
+
+        name: string
+            Alert name
+
+        alert_id: string
+            Id of the alert.
+
+        alert_id: string
+            Id of the alert.
+
+        alert_id: string
+            Id of the alert.
+
+        alert_id: string
+            Id of the alert.
+
+        alert_id: string
+            Id of the alert.
+
+        alert_id: string
+            Id of the alert.
+
+        alert_id: string
+            Id of the alert.
+        """
+        self.access_token = access_token
+        self.account_id = account_id
+        self.alert_id = alert_id
+        super(FetchAnAlertAPI, self).__init__(access_token)
+
+
+    @property
+    def params(self):
+        params = {}
+        params["access_token"] = self.access_token
+        params["account_id"] = self.account_id
+        params["alert_id"] = self.alert_id
+        return params
+
+
+    @property
+    def url(self):
+        end_url = ("/accounts/{account_id}/alerts/"\
+            "{alert_id}".format(**self.params))
+
+        return self._base_url + end_url
+
+
+    def query(self):
+        with requests.Session() as session:
+            session.auth = OAuth2BearerToken(self.access_token)
+            response = session.post(self.url, data = {'key':'value'})
             try:
                 response.raise_for_status()
             except HTTPError:
