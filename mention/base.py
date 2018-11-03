@@ -77,10 +77,10 @@ class FetchAnAlertAPI(Mention):
             Mention API access_token
 
         account_id: string
-            Id of the account.
+            ID of the account.
 
         alert_id: string
-            Id of the alert.
+            ID of the alert.
         """
         self.access_token = access_token
         self.account_id = account_id
@@ -138,34 +138,53 @@ class CreateAnAlertAPI(Mention):
             Mention API access_token
 
         account_id: string
-            Id of the account.
+            ID of the account.
 
         alert_id: string
-            Id of the alert.
+            ID of the alert.
 
         name: string
-            Alert name
+            Alert name.
 
-        alert_id: string
-            Id of the alert.
+        query: dict
+            Query is a dictionary that can be of two different types: basic or
+            advanced.
+            
+            eg.
+            query = {
+                'type'='basic',
+                'included_keywords' : ["NASA", "Arianespace", "SpaceX", "Pockocmoc"],
+                'required_keywords' : ["mars"],
+                'excluded_keywords' : ["nose", "fil d'ariane"],
+                'monitored_website' : ["domain":"www.nasa.gov", "block_self":true]
+            }
 
-        alert_id: string
-            Id of the alert.
+            OR
 
-        alert_id: string
-            Id of the alert.
+            query = {
+                'type' : 'advanced',
+                'query_string' : '(NASA AND Discovery) OR (Arianespace AND Ariane)'
+            }
+            
+        languages: list [str]
+            A list of language codes. eg: ['en']
 
-        alert_id: string
-            Id of the alert.
+        countries: list [str]
+            A list of country codes. eg: ['US', 'RU', 'XX']
 
-        alert_id: string
-            Id of the alert.
+        sources: list [str]
+            A list of sources from which mentions should be tracked.
+            Must be either web, twitter, blogs, forums, news, facebook, images or videos
 
-        alert_id: string
-            Id of the alert.
+        blocked_sites: list [str] 
+            A list of blocked sites from which you don't want mentions to be tracked.
 
-        alert_id: string
-            Id of the alert.
+        noise_detection: boolean
+            Enables noise detection.
+
+        reviews_pages: list [str]  
+            List of reviews pages.
+
         """
         self.access_token = access_token
         self.account_id = account_id
@@ -213,7 +232,7 @@ class FetchAlertsAPI(Mention):
             Mention API access_token
 
         account_id: string
-            Id of the account.
+            ID of the account.
 
         """
         self.access_token = access_token
@@ -256,13 +275,13 @@ class FetchAMentionAPI(Mention):
             Mention API access_token
 
         account_id: string
-            Id of the account.
+            ID of the account.
 
         alert_id: string
-            Id of the alert.
+            ID of the alert.
 
         mention_id: string
-            Id of the mention.
+            ID of the mention.
         """
         self.access_token = access_token
         self.account_id = account_id
@@ -330,7 +349,7 @@ class FetchMentionsAPI(Mention):
             Mention API access_token
 
         alert_id: string
-            Id of the alert.
+            ID of the alert.
 
         since_id: string
             Returns mentions ordered by id
@@ -532,13 +551,13 @@ class FetchMentionChildrenAPI(Mention):
             Mention API access_token
 
         account_id: string
-            Id of the account.
+            ID of the account.
 
         alert_id: string
-            Id of the alert.
+            ID of the alert.
 
         mention_id: string
-            Id of the mention.
+            ID of the mention.
 
         limit: string
             Number of mentions to return. max 1000.
