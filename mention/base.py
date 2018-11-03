@@ -66,7 +66,6 @@ class AppDataAPI(Mention):
         data = response.json()
 
         return data
-    
 
 
 class FetchAnAlertAPI(Mention):
@@ -78,10 +77,10 @@ class FetchAnAlertAPI(Mention):
             Mention API access_token
 
         account_id: string
-            Id of the account.
+            ID of the account.
 
         alert_id: string
-            Id of the alert.
+            ID of the alert.
         """
         self.access_token = access_token
         self.account_id = account_id
@@ -116,6 +115,110 @@ class FetchAnAlertAPI(Mention):
                 pass
             data = response.json()
 
+        return data    
+
+
+class CreateAnAlertAPI(Mention):
+    def __init__(self,
+                 access_token,
+                 account_id,
+                 alert_id,
+                 name,
+                 query,
+                 languages,
+                 countries,
+                 sources,
+                 blocked_sites,
+                 noise_detection,
+                 reviews_pages):
+        """
+        Parameters
+        ----------
+        access_token: string
+            Mention API access_token
+
+        account_id: string
+            ID of the account.
+
+        alert_id: string
+            ID of the alert.
+
+        name: string
+            Alert name.
+
+        query: dict
+            Query is a dictionary that can be of two different types: basic or
+            advanced.
+            
+            eg.
+            query = {
+                'type'='basic',
+                'included_keywords' : ["NASA", "Arianespace", "SpaceX", "Pockocmoc"],
+                'required_keywords' : ["mars"],
+                'excluded_keywords' : ["nose", "fil d'ariane"],
+                'monitored_website' : ["domain":"www.nasa.gov", "block_self":true]
+            }
+
+            OR
+
+            query = {
+                'type' : 'advanced',
+                'query_string' : '(NASA AND Discovery) OR (Arianespace AND Ariane)'
+            }
+            
+        languages: list [str]
+            A list of language codes. eg: ['en']
+
+        countries: list [str]
+            A list of country codes. eg: ['US', 'RU', 'XX']
+
+        sources: list [str]
+            A list of sources from which mentions should be tracked.
+            Must be either web, twitter, blogs, forums, news, facebook, images or videos
+
+        blocked_sites: list [str] 
+            A list of blocked sites from which you don't want mentions to be tracked.
+
+        noise_detection: boolean
+            Enables noise detection.
+
+        reviews_pages: list [str]  
+            List of reviews pages.
+
+        """
+        self.access_token = access_token
+        self.account_id = account_id
+        self.alert_id = alert_id
+        super(FetchAnAlertAPI, self).__init__(access_token)
+
+
+    @property
+    def params(self):
+        params = {}
+        params["access_token"] = self.access_token
+        params["account_id"] = self.account_id
+        params["alert_id"] = self.alert_id
+        return params
+
+
+    @property
+    def url(self):
+        end_url = ("/accounts/{account_id}/alerts/"\
+            "{alert_id}".format(**self.params))
+
+        return self._base_url + end_url
+
+
+    def query(self):
+        with requests.Session() as session:
+            session.auth = OAuth2BearerToken(self.access_token)
+            response = session.post(self.url, data = {'key':'value'})
+            try:
+                response.raise_for_status()
+            except HTTPError:
+                pass
+            data = response.json()
+
         return data
     
 
@@ -129,7 +232,7 @@ class FetchAlertsAPI(Mention):
             Mention API access_token
 
         account_id: string
-            Id of the account.
+            ID of the account.
 
         """
         self.access_token = access_token
@@ -172,13 +275,13 @@ class FetchAMentionAPI(Mention):
             Mention API access_token
 
         account_id: string
-            Id of the account.
+            ID of the account.
 
         alert_id: string
-            Id of the alert.
+            ID of the alert.
 
         mention_id: string
-            Id of the mention.
+            ID of the mention.
         """
         self.access_token = access_token
         self.account_id = account_id
@@ -246,7 +349,7 @@ class FetchMentionsAPI(Mention):
             Mention API access_token
 
         alert_id: string
-            Id of the alert.
+            ID of the alert.
 
         since_id: string
             Returns mentions ordered by id
@@ -448,13 +551,13 @@ class FetchMentionChildrenAPI(Mention):
             Mention API access_token
 
         account_id: string
-            Id of the account.
+            ID of the account.
 
         alert_id: string
-            Id of the alert.
+            ID of the alert.
 
         mention_id: string
-            Id of the mention.
+            ID of the mention.
 
         limit: string
             Number of mentions to return. max 1000.
