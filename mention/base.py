@@ -1,4 +1,5 @@
 import requests
+import json
 from requests_oauth2 import OAuth2BearerToken
 from abc import ABCMeta, abstractmethod
 from requests.exceptions import HTTPError
@@ -124,7 +125,7 @@ class CreateAnAlertAPI(Mention):
                  account_id,
                  alert_id,
                  name,
-                 query,
+                 queryd,
                  languages,
                  countries=None,
                  sources=None,
@@ -146,12 +147,12 @@ class CreateAnAlertAPI(Mention):
         name: string
             Alert name.
 
-        query: dict
-            Query is a dictionary that can be of two different types: basic or
+        queryd: dict
+            Queryd is a dictionary that can be of two different types: basic or
             advanced.
             
             eg.
-            query = {
+            queryd = {
                 'type'='basic',
                 'included_keywords' : ["NASA", "Arianespace", "SpaceX", "Pockocmoc"],
                 'required_keywords' : ["mars"],
@@ -161,7 +162,7 @@ class CreateAnAlertAPI(Mention):
 
             OR
 
-            query = {
+            queryd = {
                 'type' : 'advanced',
                 'query_string' : '(NASA AND Discovery) OR (Arianespace AND Ariane)'
             }
@@ -190,7 +191,7 @@ class CreateAnAlertAPI(Mention):
         self.account_id = account_id
         self.alert_id = alert_id
         self.name = name
-        self.query = query
+        self.queryd = queryd
         self.languages = languages
         self.countries = countries
         self.sources = sources
@@ -202,7 +203,7 @@ class CreateAnAlertAPI(Mention):
             self.noise_detection = noise_detection
         
         self.reviews_pages = reviews_pages
-        super(FetchAnAlertAPI, self).__init__(access_token)
+        super(CreateAnAlertAPI, self).__init__(access_token)
 
 
     @property
@@ -211,55 +212,46 @@ class CreateAnAlertAPI(Mention):
         params["access_token"] = self.access_token
         params["account_id"] = self.account_id
         params["alert_id"] = self.alert_id
-        params["name"] = self.name
-        params["query"] = self.query
-        params["languages"] = self.languages
-        params["countries"] = self.countries if self.cursor else ""
-        params["sources"] = self.sources if self.sourceselse ""
-        params["blocked_sites"] = self.blocked_sites if self.blocked_sites else ""
-        params["noise_detection"] = self.noise_detection if noise_detection else ""
-        params["reviews_pages"] = self.reviews_pages if reviews_pages else ""
-
-        for key, value in list(params.items()):
-            if value == '':
-                del params[key]
-        
         return params
+
+    @property
+    def data(self):
+        data = {}
+        data["name"] = self.name
+        data["query"] = self.queryd
+        data["languages"] = self.languages
+        data["countries"] = self.countries if self.countries else ""
+        data["sources"] = self.sources if self.sources else ""
+        data["blocked_sites"] = self.blocked_sites if self.blocked_sites else ""
+        data["noise_detection"] = self.noise_detection if self.noise_detection else ""
+        data["reviews_pages"] = self.reviews_pages if self.reviews_pages else ""
+
+        #Deletes parameter if it does not have a value
+        for key, value in list(data.items()):
+            if value == '':
+                del data[key]
+        
+        data = json.dumps(data)
+        return data
 
 
     @property
     def url(self):
-        end_url= "/accounts/{account_id}/alerts/{alert_id}/mentions?"
-
-        # Returns copy of dictionary excluding certain keys
-        # https://stackoverflow.com/questions/31433989/
-        # return-copy-of-dictionary-excluding-specified-keys
-        def without_keys(d, keys):
-            return {x: d[x] for x in d if x not in keys}
-
-        keys = {"access_token", "account_id", "alert_id"}
-        parameters = without_keys(self.params, keys)
-
-        for key, value in list(parameters.items()):
-            if value != '':
-                end_url += '&' + key + '={' + key + '}'
-        
-        end_url = end_url.format(**self.params)
+        end_url = ("/accounts/{account_id}/alerts/"\
+            "{alert_id}".format(**self.params))
         return self._base_url + end_url
 
 
     def query(self):
         with requests.Session() as session:
             session.auth = OAuth2BearerToken(self.access_token)
-            response = session.post(self.url, data = {'key':'value'})
+            response = session.post(self.url, data=self.data)
             try:
                 response.raise_for_status()
             except HTTPError:
                 pass
             data = response.json()
-
         return data
-    
 
 
 class FetchAlertsAPI(Mention):
@@ -360,13 +352,13 @@ class FetchAMentionAPI(Mention):
         return data
 
 
-class FetchMentionsAPI(Mention):
+class FetchAllMentionsAPI(Mention):
     def __init__(self,
                  access_token,
                  account_id,
                  alert_id,
                  since_id=None,
-                 limit=None,
+                 limit='20',
                  before_date=None, # 2018-07-07T00:00:00.12345+02:00
                  not_before_date=None, # #2018-07-01T00:00:00.12345+02:00
                  source=None,
@@ -494,7 +486,7 @@ class FetchMentionsAPI(Mention):
         self.timezone = timezone
         self.q = q
         self.cursor = cursor
-        super(FetchMentionsAPI, self).__init__(access_token)
+        super(FetchAllMentionsAPI, self).__init__(access_token)
         
 
     @property
@@ -514,8 +506,8 @@ class FetchMentionsAPI(Mention):
         if self.unread:
             params["unread"] = self.unread
         else:
-            if (self.favorite) and
-            ((self.folder == "inbox") or (self.folder == "archive")):
+            if (self.favorite) and (
+                (self.folder == "inbox") or (self.folder == "archive")):
                 params["favorite"] = self.favorite
                 params["folder"] = self.folder
             else:
