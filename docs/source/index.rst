@@ -25,20 +25,14 @@ Introduction
 ------------
 This library provides a pure Python interface for the `Mention API <https://dev.mention.com/>`_. It only works with Python 3.
 
-`Mention <http://metion.com>`_ provides a service that allows people to connect via the web. Mention exposes a `web services API <http://dev.mention.com>`_ and this library is intended to make it even easier for Python programmers to use.
+`Mention <http://mention.com>` Mention is designed as a REST API with multiple clients: web (the web app, used on computers), iOS, and Android. A client is a program that will consume our API, that will use its endpoints and returned data.
 --------
 What can this API do for you?
 
-Mention is designed as a REST API with multiple clients: web (the web app, used on computers), iOS, and Android. A client is a program that will consume our API, that will use its endpoints and returned data.
+Integrate Mention capabilities into your own website, with your own layout and your own way of managing rights
+Use Mention as an intelligent crawler and use its output in your own systems / workflow
 
 You can do pretty much anything our web client can.
-
-This will be most useful to:
-
-    Integrate Mention capabilities into your own website, with your own layout and your own way of managing rights
-    Use Mention as an intelligent crawler and use its output in your own systems / workflow
----
-
 
 Indices and tables
 ==================

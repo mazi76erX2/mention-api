@@ -123,8 +123,136 @@ class CreateAnAlertAPI(Mention):
     def __init__(self,
                  access_token,
                  account_id,
-                 alert_id,
                  name,
+                 queryd,
+                 languages,
+                 countries=None,
+                 sources=None,
+                 blocked_sites=None,
+                 noise_detection=None,
+                 reviews_pages=None):
+        """
+        Parameters
+        ----------
+        access_token: string
+            Mention API access_token
+
+        account_id: string
+            ID of the account.
+
+        name: string
+            Alert name.
+
+        queryd: dict
+            Queryd is a dictionary that can be of two different types: basic or
+            advanced.
+            
+            eg.
+            queryd = {
+                'type'='basic',
+                'included_keywords' : ["NASA", "Arianespace", "SpaceX", "Pockocmoc"],
+                'required_keywords' : ["mars"],
+                'excluded_keywords' : ["nose", "fil d'ariane"],
+                'monitored_website' : ["domain":"www.nasa.gov", "block_self":true]
+            }
+
+            OR
+
+            queryd = {
+                'type' : 'advanced',
+                'query_string' : '(NASA AND Discovery) OR (Arianespace AND Ariane)'
+            }
+            
+        languages: list [str]
+            A list of language codes. eg: ['en']
+
+        countries: list [str]
+            A list of country codes. eg: ['US', 'RU', 'XX']
+
+        sources: list [str]
+            A list of sources from which mentions should be tracked.
+            Must be either web, twitter, blogs, forums, news, facebook, images or videos
+
+        blocked_sites: list [str] 
+            A list of blocked sites from which you don't want mentions to be tracked.
+
+        noise_detection: boolean
+            Enables noise detection.
+
+        reviews_pages: list [str]  
+            List of reviews pages.
+
+        """
+        self.access_token = access_token
+        self.account_id = account_id
+        self.name = name
+        self.queryd = queryd
+        self.languages = languages
+        self.countries = countries
+        self.sources = sources
+        self.blocked_sites = blocked_sites
+
+        if noise_detection is not None:
+            self.noise_detection = utils.transform_boolean(noise_detection)
+        else:
+            self.noise_detection = noise_detection
+        
+        self.reviews_pages = reviews_pages
+        super(CreateAnAlertAPI, self).__init__(access_token)
+
+
+    @property
+    def params(self):
+        params = {}
+        params["access_token"] = self.access_token
+        params["account_id"] = self.account_id
+        return params
+
+    @property
+    def data(self):
+        data = {}
+        data["name"] = self.name
+        data["query"] = self.queryd
+        data["languages"] = self.languages
+        data["countries"] = self.countries if self.countries else ""
+        data["sources"] = self.sources if self.sources else ""
+        data["blocked_sites"] = self.blocked_sites if self.blocked_sites else ""
+        data["noise_detection"] = self.noise_detection if self.noise_detection else ""
+        data["reviews_pages"] = self.reviews_pages if self.reviews_pages else ""
+
+        #Deletes parameter if it does not have a value
+        for key, value in list(data.items()):
+            if value == '':
+                del data[key]
+        
+        data = json.dumps(data)
+        return data
+
+
+    @property
+    def url(self):
+        end_url = "/accounts/{account_id}/alerts/".format(**self.params)
+        return self._base_url + end_url
+
+
+    def query(self):
+        with requests.Session() as session:
+            session.auth = OAuth2BearerToken(self.access_token)
+            response = session.post(self.url, data=self.data)
+            try:
+                response.raise_for_status()
+            except HTTPError:
+                pass
+            data = response.json()
+        return data
+
+
+class UpdateAnAlertAPI(Mention):
+    def __init__(self,
+                 access_token,
+                 account_id,
+                 name,
+                 alert_id,
                  queryd,
                  languages,
                  countries=None,
@@ -203,7 +331,7 @@ class CreateAnAlertAPI(Mention):
             self.noise_detection = noise_detection
         
         self.reviews_pages = reviews_pages
-        super(CreateAnAlertAPI, self).__init__(access_token)
+        super(UpdateAnAlertAPI, self).__init__(access_token)
 
 
     @property
@@ -237,15 +365,15 @@ class CreateAnAlertAPI(Mention):
 
     @property
     def url(self):
-        end_url = ("/accounts/{account_id}/alerts/"\
-            "{alert_id}".format(**self.params))
+        end_url = ("/accounts/{account_id}/alerts/
+                   "{alert_id}".format(**self.params))
         return self._base_url + end_url
 
 
     def query(self):
         with requests.Session() as session:
             session.auth = OAuth2BearerToken(self.access_token)
-            response = session.post(self.url, data=self.data)
+            response = session.put(self.url, data=self.data)
             try:
                 response.raise_for_status()
             except HTTPError:
