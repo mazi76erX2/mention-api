@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Welcome to mention-python’s documentation!" href="index.html" />
+    <link rel="prev" title="Getting Started" href="getting_started.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -44,171 +44,17 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-mention.base">
-<span id="mention-base-module"></span><h2>mention.base module<a class="headerlink" href="#module-mention.base" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="mention.base.AppDataAPI">
-<em class="property">class </em><code class="descclassname">mention.base.</code><code class="descname">AppDataAPI</code><span class="sig-paren">(</span><em>access_token</em><span class="sig-paren">)</span><a class="headerlink" href="#mention.base.AppDataAPI" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#mention.base.Mention" title="mention.base.Mention"><code class="xref py py-class docutils literal"><span class="pre">mention.base.Mention</span></code></a></p>
-<dl class="method">
-<dt id="mention.base.AppDataAPI.query">
-<code class="descname">query</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mention.base.AppDataAPI.query" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="mention.base.AppDataAPI.url">
-<code class="descname">url</code><a class="headerlink" href="#mention.base.AppDataAPI.url" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="mention.base.FetchAMentionAPI">
-<em class="property">class </em><code class="descclassname">mention.base.</code><code class="descname">FetchAMentionAPI</code><span class="sig-paren">(</span><em>access_token</em>, <em>account_id</em>, <em>alert_id</em>, <em>mention_id</em><span class="sig-paren">)</span><a class="headerlink" href="#mention.base.FetchAMentionAPI" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#mention.base.Mention" title="mention.base.Mention"><code class="xref py py-class docutils literal"><span class="pre">mention.base.Mention</span></code></a></p>
-<dl class="attribute">
-<dt id="mention.base.FetchAMentionAPI.params">
-<code class="descname">params</code><a class="headerlink" href="#mention.base.FetchAMentionAPI.params" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="mention.base.FetchAMentionAPI.query">
-<code class="descname">query</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mention.base.FetchAMentionAPI.query" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="mention.base.FetchAMentionAPI.url">
-<code class="descname">url</code><a class="headerlink" href="#mention.base.FetchAMentionAPI.url" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="mention.base.FetchAlertsAPI">
-<em class="property">class </em><code class="descclassname">mention.base.</code><code class="descname">FetchAlertsAPI</code><span class="sig-paren">(</span><em>access_token</em>, <em>account_id</em><span class="sig-paren">)</span><a class="headerlink" href="#mention.base.FetchAlertsAPI" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#mention.base.Mention" title="mention.base.Mention"><code class="xref py py-class docutils literal"><span class="pre">mention.base.Mention</span></code></a></p>
-<dl class="attribute">
-<dt id="mention.base.FetchAlertsAPI.params">
-<code class="descname">params</code><a class="headerlink" href="#mention.base.FetchAlertsAPI.params" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="mention.base.FetchAlertsAPI.query">
-<code class="descname">query</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mention.base.FetchAlertsAPI.query" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="mention.base.FetchAlertsAPI.url">
-<code class="descname">url</code><a class="headerlink" href="#mention.base.FetchAlertsAPI.url" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="mention.base.FetchAnAlertAPI">
-<em class="property">class </em><code class="descclassname">mention.base.</code><code class="descname">FetchAnAlertAPI</code><span class="sig-paren">(</span><em>access_token</em>, <em>account_id</em>, <em>alert_id</em><span class="sig-paren">)</span><a class="headerlink" href="#mention.base.FetchAnAlertAPI" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#mention.base.Mention" title="mention.base.Mention"><code class="xref py py-class docutils literal"><span class="pre">mention.base.Mention</span></code></a></p>
-<dl class="attribute">
-<dt id="mention.base.FetchAnAlertAPI.params">
-<code class="descname">params</code><a class="headerlink" href="#mention.base.FetchAnAlertAPI.params" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="mention.base.FetchAnAlertAPI.query">
-<code class="descname">query</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mention.base.FetchAnAlertAPI.query" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="mention.base.FetchAnAlertAPI.url">
-<code class="descname">url</code><a class="headerlink" href="#mention.base.FetchAnAlertAPI.url" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="mention.base.FetchMentionsAPI">
-<em class="property">class </em><code class="descclassname">mention.base.</code><code class="descname">FetchMentionsAPI</code><span class="sig-paren">(</span><em>access_token</em>, <em>account_id</em>, <em>alert_id</em>, <em>limit=None</em>, <em>before_date=None</em>, <em>not_before_date=None</em>, <em>source=None</em>, <em>unread=None</em>, <em>favorite=None</em>, <em>folder=None</em>, <em>tone=None</em>, <em>countries=None</em>, <em>include_children=None</em>, <em>sort=None</em>, <em>languages=None</em>, <em>timezone=None</em>, <em>q=None</em>, <em>cursor=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mention.base.FetchMentionsAPI" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#mention.base.Mention" title="mention.base.Mention"><code class="xref py py-class docutils literal"><span class="pre">mention.base.Mention</span></code></a></p>
-<dl class="attribute">
-<dt id="mention.base.FetchMentionsAPI.params">
-<code class="descname">params</code><a class="headerlink" href="#mention.base.FetchMentionsAPI.params" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="mention.base.FetchMentionsAPI.query">
-<code class="descname">query</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mention.base.FetchMentionsAPI.query" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="mention.base.FetchMentionsAPI.url">
-<code class="descname">url</code><a class="headerlink" href="#mention.base.FetchMentionsAPI.url" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="mention.base.Mention">
-<em class="property">class </em><code class="descclassname">mention.base.</code><code class="descname">Mention</code><span class="sig-paren">(</span><em>access_token</em><span class="sig-paren">)</span><a class="headerlink" href="#mention.base.Mention" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<dl class="method">
-<dt id="mention.base.Mention.params">
-<code class="descname">params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mention.base.Mention.params" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="mention.base.Mention.query">
-<code class="descname">query</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mention.base.Mention.query" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="mention.base.Mention.url">
-<code class="descname">url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mention.base.Mention.url" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<div class="section" id="mention-base-module">
+<h2>mention.base module<a class="headerlink" href="#mention-base-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-mention.exceptions">
-<span id="mention-exceptions-module"></span><h2>mention.exceptions module<a class="headerlink" href="#module-mention.exceptions" title="Permalink to this headline">¶</a></h2>
-<dl class="exception">
-<dt id="mention.exceptions.InvalidEndpointException">
-<em class="property">exception </em><code class="descclassname">mention.exceptions.</code><code class="descname">InvalidEndpointException</code><a class="headerlink" href="#mention.exceptions.InvalidEndpointException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">Exception</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="mention.exceptions.InvalidResponseException">
-<em class="property">exception </em><code class="descclassname">mention.exceptions.</code><code class="descname">InvalidResponseException</code><a class="headerlink" href="#mention.exceptions.InvalidResponseException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">Exception</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="mention.exceptions.InvalidURLException">
-<em class="property">exception </em><code class="descclassname">mention.exceptions.</code><code class="descname">InvalidURLException</code><a class="headerlink" href="#mention.exceptions.InvalidURLException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">Exception</span></code></p>
-</dd></dl>
-
+<div class="section" id="mention-exceptions-module">
+<h2>mention.exceptions module<a class="headerlink" href="#mention-exceptions-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-mention.utils">
-<span id="mention-utils-module"></span><h2>mention.utils module<a class="headerlink" href="#module-mention.utils" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="mention.utils.transform_boolean">
-<code class="descclassname">mention.utils.</code><code class="descname">transform_boolean</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#mention.utils.transform_boolean" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="mention.utils.transform_date">
-<code class="descclassname">mention.utils.</code><code class="descname">transform_date</code><span class="sig-paren">(</span><em>date</em><span class="sig-paren">)</span><a class="headerlink" href="#mention.utils.transform_date" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="mention.utils.transform_tone">
-<code class="descclassname">mention.utils.</code><code class="descname">transform_tone</code><span class="sig-paren">(</span><em>tone</em><span class="sig-paren">)</span><a class="headerlink" href="#mention.utils.transform_tone" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<div class="section" id="mention-utils-module">
+<h2>mention.utils module<a class="headerlink" href="#mention-utils-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-mention">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mention" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -221,7 +67,7 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">Welcome to mention-python’s documentation!</a></li>
+      <li>Previous: <a href="getting_started.html" title="previous chapter">Getting Started</a></li>
   </ul></li>
 </ul>
 </div>

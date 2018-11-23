@@ -53,7 +53,7 @@ class AppDataAPI(Mention):
 
         return self._base_url + end_url
 
-    
+ 
     def query(self):
         #with requests.Session() as session:
         session = requests.Session()

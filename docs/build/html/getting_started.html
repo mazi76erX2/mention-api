@@ -1,0 +1,123 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Getting Started &#8212; mention-python  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="mention package" href="mention.html" />
+    <link rel="prev" title="Installation &amp; Testing" href="installation.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="getting-your-application-tokens">
+<h2>Getting your application tokens<a class="headerlink" href="#getting-your-application-tokens" title="Permalink to this headline">¶</a></h2>
+<p>In order to use the mention-python API client, after you have created a mention account, you first need to acquire a access token.</p>
+<div class="section" id="create-your-app">
+<h3>Create your app<a class="headerlink" href="#create-your-app" title="Permalink to this headline">¶</a></h3>
+<p>Create a new <a class="reference external" href="https://dev.mention.com/apps/create">Mention App</a>. Login using your mention details, click the “Create a new application” button and fill out the fields on the next page.</p>
+<img alt="getting_started_1.png" src="getting_started_1.png" />
+<p>On the next screen, you’ll see the applications that you’ve created. Click the “Edit” button to see the application that you created and some information about it:</p>
+</div>
+<div class="section" id="your-app">
+<h3>Your app<a class="headerlink" href="#your-app" title="Permalink to this headline">¶</a></h3>
+<p>Once your app is created, you’ll be directed to a new page showing you some information about it.</p>
+<img alt="getting_started_2.png" src="getting_started_2.png" />
+<img alt="getting_started_3.png" src="getting_started_3.png" />
+</div>
+<div class="section" id="your-keys">
+<h3>Your Keys<a class="headerlink" href="#your-keys" title="Permalink to this headline">¶</a></h3>
+<p>Take note that the <code class="docutils literal"><span class="pre">account_id</span></code> is is the red outline string of charaters inside the request example seen below:</p>
+<img alt="getting_started_3.png" src="getting_started_3.png" />
+<p>At this point, you can test out your application using the keys under “Your Application Tokens”. The <code class="docutils literal"><span class="pre">twitter.Api()</span></code> object can be created as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">twitter</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">twitter</span><span class="o">.</span><span class="n">Api</span><span class="p">(</span><span class="n">consumer_key</span><span class="o">=</span><span class="p">[</span><span class="n">consumer</span> <span class="n">key</span><span class="p">],</span>
+                  <span class="n">consumer_secret</span><span class="o">=</span><span class="p">[</span><span class="n">consumer</span> <span class="n">secret</span><span class="p">],</span>
+                  <span class="n">access_token_key</span><span class="o">=</span><span class="p">[</span><span class="n">access</span> <span class="n">token</span><span class="p">],</span>
+                  <span class="n">access_token_secret</span><span class="o">=</span><span class="p">[</span><span class="n">access</span> <span class="n">token</span> <span class="n">secret</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Note: Make sure to enclose your keys in quotes (ie, api = twitter.Api(consumer_key=‘1234567’, …) and so on) or you will receive a NameError.</p>
+<p>If you are creating an application for end users/consumers, then you will want them to authorize you application, but that is outside the scope of this document.</p>
+<p>And that should be it! If you need a little more help, check out the <a class="reference external" href="https://github.com/bear/python-twitter/tree/master/examples">examples on Github</a>. If you have an open source application using python-twitter, send us a link and we’ll add a link to it here.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="installation.html" title="previous chapter">Installation &amp; Testing</a></li>
+      <li>Next: <a href="mention.html" title="next chapter">mention package</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Xolani Mazibuko.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/getting_started.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
