@@ -8,8 +8,8 @@ Mention-Python
 .. image:: https://travis-ci.org/mazi76erX2/mention-python.svg?branch=master
     :target: https://travis-ci.org/mazi76erX2/mention-python
 
-.. image:: https://coveralls.io/repos/github/mazi76erX2/mention-python/badge.svg?branch=master
-:target: https://coveralls.io/github/mazi76erX2/mention-python?branch=master
+.. image:: https://codecov.io/gh//mazi76erX2/mention-python/branch/master/graph/badge.svg
+:target: https://codecov.io/gh/mazi76erX2/mention-python
 
 
 .. image:: https://readthedocs.org/projects/mention/badge/?version=latest
@@ -41,8 +41,7 @@ Examples
 
 .. code-block:: python
 
-    >>> allAlerts = mention.FetchAlertsAPI(access_token,
-    							 		   account_id)
+    >>> allAlerts = mention.FetchAlertsAPI(access_token, account_id)
 
     >>> data = nandosAlert.query()
 
@@ -57,18 +56,15 @@ Examples
 
 .. code-block:: python
 
-    >>> nandosMention = mention.FetchAMentionAPI(access_token,
-    							 			  	 account_id,
-    							 			  	 alert_id,
-    							 			  	 mention_id)
+    >>> nandosMention = mention.FetchAMentionAPI(access_token, account_id, alert_id, mention_id)
 
     >>> data = nandosMention.query()
 
     >>> data['title']					 			
-    >>> 'Nando's launches their own food ordering app'
+    >>> "Nando's launches their own food ordering app"
 
     >>> data['description']				 			
-    >>> 'Nando's has launched their own app that will allow people to order their favourite meal from the comfort of their own home.'
+    >>> "Nando's has launched their own app that will allow people to order their favourite meal from the comfort of their own home."
 
     >>> data['original_url']				 			
     >>> 'https:\/\/www.iol.co.za\/business-report\/technology\/nandos-launches-their-own-food-ordering-app-18378360'

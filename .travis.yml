@@ -5,6 +5,8 @@ cache: pip
 install:
   - pip install -r requirements.txt
 
+CODECOV_TOKEN="9c1280d3-80a6-4aaa-9538-10ff0aa7099d"
+
 before_script: cd tests
 
 script:
