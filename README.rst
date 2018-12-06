@@ -11,7 +11,6 @@ Mention-Python
 .. image:: https://codecov.io/gh//mazi76erX2/mention-python/branch/master/graph/badge.svg
 :target: https://codecov.io/gh/mazi76erX2/mention-python
 
-
 .. image:: https://readthedocs.org/projects/mention/badge/?version=latest
     :target: https://mention.readthedocs.org/en/latest
 
