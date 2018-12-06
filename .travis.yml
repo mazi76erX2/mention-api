@@ -6,3 +6,4 @@ python:
 install:
   - pip install -r requirements.txt
 # command to run tests
+if [[ $TRAVIS_PYTHON_VERSION == 3.3 ]]; then pip install virtualenv==15.2.0 fi
