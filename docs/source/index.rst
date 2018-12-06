@@ -62,14 +62,12 @@ Mention is a social media and web monitoring tool. The media monitoring tool pro
 
 This library provides a pure Python interface for the `Mention API <https://dev.mention.com/>`_. It only works with Python 3.6+
 
-`Mention <http://mention.com>` Mention is designed as a REST API with multiple clients: web (the web app, used on computers), iOS, and Android. A client is a program that will consume our API, that will use its endpoints and returned data.
+`Mention<http://mention.com>`_. Mention is designed as a REST API with multiple clients: web (the web app, used on computers), iOS, and Android. A client is a program that will consume our API, that will use its endpoints and returned data.
 --------
 What can this API do for you?
 
 Integrate Mention capabilities into your own website, with your own layout and your own way of managing rights
-Use Mention as an intelligent crawler and use its output in your own systems / workflow
-
-You can do pretty much anything the web client can.
+Use Mention as an intelligent crawler and use its output in your own systems / workflow. You can do pretty much anything the web client can.
 
 Indices and tables
 ==================

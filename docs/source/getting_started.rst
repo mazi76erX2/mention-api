@@ -82,7 +82,7 @@ Example:
 
 
 Fetch all alerts of an account
---------------
+------------------------------
 
 Fetch a list of all alerts for a given ``account_id``.
 
@@ -99,7 +99,7 @@ Example:
     >>> alertsList[5]['alert']['name']
     >>> 'Nandos'			 			
 
-    >>> data['alert']['query']['included_keywords']					 			
+    >>> data['alert']['query']['included_keywords']
     >>> ['Nandos', 'Flame-grilled Chicken', 'Peri-Peri Sauce']
 
 

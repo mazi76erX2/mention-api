@@ -1,7 +1,6 @@
-Welcome to Mention-Python's documentation!
-==========================================
-
-Author: Xolani Mazibuko <mazi76erx@gmail.com>
+==============
+Mention-Python
+==============
 
 .. image:: https://img.shields.io/pypi/v/MentionAPI.svg
     :target: https://pypi.python.org/pypi/MentionAPI
@@ -9,10 +8,17 @@ Author: Xolani Mazibuko <mazi76erx@gmail.com>
 .. image:: https://travis-ci.org/mazi76erX2/mention-python.svg?branch=master
     :target: https://travis-ci.org/mazi76erX2/mention-python
 
+.. image:: https://coveralls.io/repos/github/mazi76erX2/mention-python/badge.svg?branch=master
+:target: https://coveralls.io/github/mazi76erX2/mention-python?branch=master
+
+
 .. image:: https://readthedocs.org/projects/mention/badge/?version=latest
     :target: https://mention.readthedocs.org/en/latest
 
 **A Python wrapper around the Mention API.**
+
+Installation
+------------
 
 .. code-block:: console
 
@@ -28,52 +34,52 @@ Author: Xolani Mazibuko <mazi76erx@gmail.com>
 
     >>> title = first_mention_data['title']
 
-Features
-========
-
-**Mention-Python** supports all of the App, Alert and Mention features of the Mention API.
-
-- fetch mention's application data
-- create, fetch, update, and delete an alert
-- fetch all the alerts of an account
-- fetch and curate (update) a mention from an alert
-- fetch all mentions for an alert
-- fetch all children mentions for a given mention
-- stream all mentions for alerts
-- mark all of an alert's mentions as read
-
-Contents:
-
-.. toctree::
-   :maxdepth: 1
-
-   installation.rst
-   getting_started.rst
-   contributing.rst
-   changelog.rst
-   models.rst
-   searching.rst
-   mention.rst
-
-
-Introduction
-------------
-Mention is a social media and web monitoring tool. The media monitoring tool provides real-time alerts for a company's keyword and allows users to monitor millions of sources in real time and in 42 languages.
-
-This library provides a pure Python interface for the `Mention API <https://dev.mention.com/>`_. It only works with Python 3.6+
-
-`Mention <http://mention.com>` Mention is designed as a REST API with multiple clients: web (the web app, used on computers), iOS, and Android. A client is a program that will consume our API, that will use its endpoints and returned data.
+Examples
 --------
-What can this API do for you?
 
-Integrate Mention capabilities into your own website, with your own layout and your own way of managing rights
-Use Mention as an intelligent crawler and use its output in your own systems / workflow
+**Fetch all alerts of an account**
 
-You can do pretty much anything the web client can.
+.. code-block:: python
 
-Indices and tables
-==================
+    >>> allAlerts = mention.FetchAlertsAPI(access_token,
+    							 		   account_id)
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+    >>> data = nandosAlert.query()
+
+    >>> alertsList = data['alerts']	
+    >>> alertsList[5]['alert']['name']
+    >>> 'Nandos'			 			
+
+    >>> data['alert']['query']['included_keywords']
+    >>> ['Nandos', 'Flame-grilled Chicken', 'Peri-Peri Sauce']
+
+**Fetch a mention**
+
+.. code-block:: python
+
+    >>> nandosMention = mention.FetchAMentionAPI(access_token,
+    							 			  	 account_id,
+    							 			  	 alert_id,
+    							 			  	 mention_id)
+
+    >>> data = nandosMention.query()
+
+    >>> data['title']					 			
+    >>> 'Nando's launches their own food ordering app'
+
+    >>> data['description']				 			
+    >>> 'Nando's has launched their own app that will allow people to order their favourite meal from the comfort of their own home.'
+
+    >>> data['original_url']				 			
+    >>> 'https:\/\/www.iol.co.za\/business-report\/technology\/nandos-launches-their-own-food-ordering-app-18378360'
+
+
+ - `Full Documentation`_
+     - `Installation`_
+     - `Basic Usage`_
+     - `Contributing`_
+
+.. _Full Documentation: http:///mention-python.readthedocs.org/en/latest/
+.. _Installation: http://mention-python.readthedocs.org/en/latest/pages/installation.html
+.. _Basic Usage: http:///mention-python.readthedocs.org/en/latest/pages/quickstart.html
+.. _Contributing: http:///mention-python.readthedocs.org/en/latest/pages/contributing.html
