@@ -6,8 +6,8 @@ Author: Xolani Mazibuko <mazi76erx@gmail.com>
 .. image:: https://img.shields.io/pypi/v/MentionAPI.svg
     :target: https://pypi.python.org/pypi/MentionAPI
 
-.. image:: https://travis-ci.org/rhgrant10/Mention.svg?branch=dev
-    :target: https://travis-ci.org/mazi76er/Mention
+.. image:: https://travis-ci.org/mazi76erX2/mention-python.svg?branch=master
+    :target: https://travis-ci.org/mazi76erX2/mention-python
 
 .. image:: https://readthedocs.org/projects/mention/badge/?version=latest
     :target: https://mention.readthedocs.org/en/latest
