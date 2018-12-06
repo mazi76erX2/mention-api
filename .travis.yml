@@ -10,5 +10,3 @@ before_install: cd project
 
 script:
   - python test_base.py
-# command to run tests
-if [[ $TRAVIS_PYTHON_VERSION == 3.6 ]]; then pip install virtualenv==16.0.0 fi
