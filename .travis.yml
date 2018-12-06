@@ -2,8 +2,11 @@ language: python
 python:
   - "3.6"
   - "3.7"
-
+cache: pip
 install:
   - pip install -r requirements.txt
+
+script:
+  - python test_base.py
 # command to run tests
 if [[ $TRAVIS_PYTHON_VERSION == 3.6 ]]; then pip install virtualenv==16.0.0 fi
