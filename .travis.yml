@@ -16,7 +16,7 @@ before_script: cd tests
 
 script:
   - python test_base.py
-  - coverage run tests.py
+  - coverage run test_base.py
 
 after_success:
   - codecov
