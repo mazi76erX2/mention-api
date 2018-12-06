@@ -475,7 +475,6 @@ class FetchAMentionAPI(Mention):
             except HTTPError:
                 pass
             data = response.json()
-
         return data
 
 
@@ -734,7 +733,7 @@ class FetchMentionChildrenAPI(Mention):
             self.before_date = utils.transform_date(before_date)
         else:
             self.before_date = before_date
-        super(FetchChildrenMentionAPI, self).__init__(access_token)
+        super(FetchMentionChildrenAPI, self).__init__(access_token)
 
 
     @property
@@ -746,12 +745,13 @@ class FetchMentionChildrenAPI(Mention):
         params["mention_id"] = self.mention_id
         params["before_date"] = self.before_date if self.before_date else ""
 
-        if int(self.limit) > 1000:
-            params["limit"] = "1000"
-        elif int(self.limit) < 1:
-            params["limit"] = ""
-        else:
-            params["limit"] = self.limit
+        if self.limit:
+            if int(self.limit) > 1000:
+                params["limit"] = "1000"
+            elif int(self.limit) < 1:
+                params["limit"] = ""
+            else:
+                params["limit"] = self.limit
         
         return params
 
@@ -863,45 +863,48 @@ class StreamMentionsAPI(Mention):
         return data
 
 
-client = '1348_19fnvh857se88c8kowok4og888sgwc4kg4wk04kcc0s00o4k8c'
-client_secret  = '3d37xzv9miwww0s4sc04kcc8ccswk0g0g8kscc44sk8gckoww4'
+client = '1358_2fe3fcbxf21wgkgckog4s4kowksoo044gsskss0wco0s0gc4cg'
+client_secret  = '5sy5nryhys8wsgocs08wc0wc80k880ggwoo08wko0ssscsggg8'
 
-access_token = 'NzExZjg4YWZkYWUzMzdjNzE3MmU1NzJiNGEwODdhZTAwMWZlMGY1Y'\
-               'TZjOTI0NDAxMGQyM2JmZjAyNDc0NDYzNw'
+access_token = 'MTkwOGEwNjdhOWU0Y2NiOTU5MzVmNmE1OWNkOGU1N2U0MGIxNzc3'\
+               'MjU5OTg2MzFmOWZkNTM4MGJkYTU0ZjU3OA'
 
 
-account_id = '923891_2dniw2gdyy4gw0kgg8gskg448gck488csck0c4oksw00g08oo0'
+account_id = '931457_136gzug42du88og80wskosg8c4ws8kw084k8w4cwkc000go08k'
 
-alert_id = '1826208'
-alert_id1 = '1826209'
-alert_id2 = '1826210'
-alert_id3 = '1826211'
-alert_id4 = '1826212'
+alert_id = '1849085'
+alert_id1 = '1849086'
+alert_id2 = '1849087'
+alert_id3 = '1849088'
+alert_id4 = '1849150'
 
 limit = '1000'
 
-mention_id = '127910474505'
+mention_id = '128182423172'
 
-name = 'Trip van der Bilt'
+name = 'Nike Air Yeezy 2'
 query = {'type':'basic',
-         'included_keywords' : ["NASA", "Arianespace", "SpaceX", "Pockocmoc"],
-         'required_keywords' : ["mars"],
-         'excluded_keywords' : ["nose", "fil d'ariane"],
-         'monitored_website' : {"domain":"www.nasa.gov", "block_self":True}
+         'included_keywords' : ["Nike Air Yeezy 2", "Platinum"],
+         'required_keywords' : ["nike"],
+         'excluded_keywords' : ["adidas"],
+         'monitored_website' : {"domain":"www.hypebeast.com", "block_self":False}
         }
 
 languages = ["en"]
 
-##data = AppDataAPI(access_token).query()
-##data2 = FetchAnAlertAPI(access_token, account_id, alert_id).query()
-##data3 = FetchAlertsAPI(access_token, account_id).query()
-##data4 = FetchAllMentionsAPI(access_token, account_id, alert_id).query()
-##data5 = FetchAMentionAPI(access_token, account_id, alert_id, mention_id).query()
+data = AppDataAPI(access_token).query()
+data2 = FetchAnAlertAPI(access_token, account_id, alert_id).query()
+data3 = FetchAlertsAPI(access_token, account_id).query()
+data4 = FetchAllMentionsAPI(access_token, account_id, alert_id).query()
+data5 = FetchAMentionAPI(access_token, account_id, alert_id, mention_id).query()
 
-##data6 = CreateAnAlertAPI(access_token, account_id, name, query, languages).query()
-##data7 = UpdateAnAlertAPI(access_token, account_id, alert_id4, name, query, languages).query()
+#data6 = CreateAnAlertAPI(access_token, account_id, name, query, languages).query()
 
-"""
+countries = ["US", "ZA"]
+
+data7 = UpdateAnAlertAPI(access_token, account_id, alert_id4, name, query, languages).query()
+data8 = FetchMentionChildrenAPI(access_token, account_id, alert_id, mention_id).query()
+
 with open('testapidata.json', 'w') as file:
     json.dump(data, file)
 
@@ -917,6 +920,11 @@ with open('testfetchmentions.json', 'w') as file:
 with open('testfetchamention.json', 'w') as file:
     json.dump(data5, file)
 
+#with open('testcreateanalert.json', 'w') as file:
+    #json.dump(data6, file)
+
 with open('testupdateanalert.json', 'w') as file:
     json.dump(data7, file)
-"""
+
+with open('testfetchmentionchildren.json', 'w') as file:
+    json.dump(data8, file)

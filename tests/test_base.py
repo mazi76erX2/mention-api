@@ -4,6 +4,9 @@ from exceptions import InvalidResponseException
 import json
 import mention
 
+from unittest import TestCase
+TestCase.maxDiff = None
+
 class TestAppDataAPI(unittest.TestCase):
     
     def setUp(self):
@@ -52,15 +55,14 @@ class TestAppDataAPI(unittest.TestCase):
 
         self.assertEqual(successful_response, self.client.query())
 
-
-class TestCreateAnAlertAPI(unittest.TestCase):
+class TestFetchAlertsAPI(unittest.TestCase):
     
     def setUp(self):
         self.access_token = "a"
         self.account_id = "b"
         
-        self.client = mention.CreateAnAlertAPI(self.access_token,
-                                               self.account_id)
+        self.client = mention.FetchAlertsAPI(self.access_token,
+                                             self.account_id)
 
 
     def test_url(self):
@@ -70,7 +72,7 @@ class TestCreateAnAlertAPI(unittest.TestCase):
         self.assertEqual(result, expected)
         
 
-    @patch("mention.requests.post")
+    @patch("mention.requests.get")
     def test_query_access_token_error(self, mock_requests_get):
         # assert client error response
         unsuccessful_response = {
@@ -125,7 +127,132 @@ class TestCreateAnAlertAPI(unittest.TestCase):
         response = type('response', (object,),
                         {'text': json.dumps(successful_response)})
 
-        self.assertEqual(successful_response, self.client.query())
+    
+        self.assertEqual(successful_response["alerts"][0],
+                         self.client.query()["alerts"][0])
+
+
+class TestUpdateAnAlertAPI(unittest.TestCase):
+    
+    def setUp(self):
+        self.access_token = "a"
+        self.account_id = "b"
+        self.alert_id = "c"
+
+        with open("api_keys.json", "r") as read_file:
+            jsonfile = json.load(read_file)
+            self.name = jsonfile["update_mention"]["name"]
+            self.query = jsonfile["update_mention"]["query"]
+            self.languages = jsonfile["update_mention"]["languages"]
+        
+        self.client = mention.UpdateAnAlertAPI(self.access_token,
+                                               self.account_id,
+                                               self.alert_id,
+                                               self.name,
+                                               self.query,
+                                               self.languages)
+        
+
+    def test_url(self):
+        result = self.client.url
+        expected = "https://api.mention.net/api/accounts/b/alerts/c"
+
+        self.assertEqual(result, expected)
+        
+
+    @patch("mention.requests.put")
+    def test_query_access_token_error(self, mock_requests_put):
+        # assert client error response
+        unsuccessful_response = {
+            'error': 'invalid_grant',
+            'error_description': 'The access token provided is invalid.'
+        }
+        
+        response = type('response', (object,),
+                        {'text': json.dumps(unsuccessful_response)})
+        
+        mock_requests_put.return_value = response
+        self.assertEqual(unsuccessful_response, self.client.query())
+        
+
+    @patch("mention.requests.put")
+    def test_query_account_id_error(self, mock_requests_put):
+        # assert account ID error response
+        unsuccessful_response = {
+            'code': 403,
+            'message': 'You are not allowed to access this account'
+        }
+        
+        with open("api_keys.json", "r") as read_file:
+            self.access_token = json.load(read_file)["access_token"]
+            self.client = mention.UpdateAnAlertAPI(self.access_token,
+                                                   self.account_id,
+                                                   self.alert_id,
+                                                   self.name,
+                                                   self.query,
+                                                   self.languages)
+        
+        response = type('response', (object,),
+                        {'text': json.dumps(unsuccessful_response)})
+        
+        mock_requests_put.return_value = response
+        self.assertEqual(unsuccessful_response,
+                         self.client.query())
+
+
+    @patch("mention.requests.put")
+    def test_query_alert_id_error(self, mock_requests_put):
+        # assert alert ID error response
+        unsuccessful_response = {
+            'code': 404,
+            'message':
+                'This alert doesn’t exist or you are not allowed to access it'
+        }
+        
+        with open("api_keys.json", "r") as read_file:
+            jsonfile = json.load(read_file)
+            self.access_token = jsonfile["access_token"]
+            self.account_id = jsonfile["account_id"]
+            self.client = mention.UpdateAnAlertAPI(self.access_token,
+                                                   self.account_id,
+                                                   self.alert_id,
+                                                   self.name,
+                                                   self.query,
+                                                   self.languages)
+        
+        response = type('response', (object,),
+                        {'text': json.dumps(unsuccessful_response)})
+        
+        mock_requests_put.return_value = response
+        self.assertEqual(unsuccessful_response, self.client.query())
+
+
+    @patch("mention.requests.put")
+    def test_query_success(self, mock_requests_put):
+        # assert successful response
+        with open("testupdateanalert.json", "r") as read_file:
+            successful_response = json.load(read_file)
+
+        with open("api_keys.json", "r") as read_file:
+            jsonfile = json.load(read_file)
+            self.access_token = jsonfile["access_token"]
+            self.account_id = jsonfile["account_id"]
+            self.alert_id = jsonfile["update_mention"]["alert_id"]
+            self.client = mention.UpdateAnAlertAPI(self.access_token,
+                                                   self.account_id,
+                                                   self.alert_id,
+                                                   self.name,
+                                                   self.query,
+                                                   self.languages)
+
+        mock_requests_put.return_value = Mock(ok=True)
+        mock_requests_put.return_value.json.return_value = successful_response
+
+        response = type('response', (object,),
+                        {'text': json.dumps(successful_response)})
+
+        self.assertEqual(successful_response["alert"]["name"],
+                         self.client.query()["alert"]["name"])
 
 
 class TestFetchAnAlertAPI(unittest.TestCase):
@@ -229,82 +356,8 @@ class TestFetchAnAlertAPI(unittest.TestCase):
         response = type('response', (object,),
                         {'text': json.dumps(successful_response)})
 
-        self.assertEqual(successful_response, self.client.query())
-
-
-class TestFetchAlertsAPI(unittest.TestCase):
-    
-    def setUp(self):
-        self.access_token = "a"
-        self.account_id = "b"
-        
-        self.client = mention.FetchAlertsAPI(self.access_token,
-                                             self.account_id)
-
-
-    def test_url(self):
-        result = self.client.url
-        expected = "https://api.mention.net/api/accounts/b/alerts"
-
-        self.assertEqual(result, expected)
-        
-
-    @patch("mention.requests.get")
-    def test_query_access_token_error(self, mock_requests_get):
-        # assert client error response
-        unsuccessful_response = {
-            'error': 'invalid_grant',
-            'error_description': 'The access token provided is invalid.'
-        }
-        
-        response = type('response', (object,),
-                        {'text': json.dumps(unsuccessful_response)})
-        
-        mock_requests_get.return_value = response
-        self.assertEqual(unsuccessful_response, self.client.query())
-        
-
-    @patch("mention.requests.get")
-    def test_query_account_id_error(self, mock_requests_get):
-        # assert account ID error response
-        unsuccessful_response = {
-            'code': 403,
-            'message': 'You are not allowed to access this account'
-        }
-        
-        with open("api_keys.json", "r") as read_file:
-            self.access_token = json.load(read_file)["access_token"]
-            self.client = mention.FetchAlertsAPI(self.access_token,
-                                                 self.account_id)
-        
-        response = type('response', (object,),
-                        {'text': json.dumps(unsuccessful_response)})
-        
-        mock_requests_get.return_value = response
-        self.assertEqual(unsuccessful_response, self.client.query())
-
-
-    @patch("mention.requests.get")
-    def test_query_success(self, mock_requests_get):
-        # assert successful response
-        with open("testfetchalerts.json", "r") as read_file:
-            successful_response = json.load(read_file)
-
-        with open("api_keys.json", "r") as read_file:
-            jsonfile = json.load(read_file)
-            self.access_token = jsonfile["access_token"]
-            self.account_id = jsonfile["account_id"]
-            self.alert_id = jsonfile["alert_id"]
-            self.client = mention.FetchAlertsAPI(self.access_token,
-                                                 self.account_id)
-
-        mock_requests_get.return_value = Mock(ok=True)
-        mock_requests_get.return_value.json.return_value = successful_response
-
-        response = type('response', (object,),
-                        {'text': json.dumps(successful_response)})
-
-        self.assertEqual(successful_response, self.client.query())
+        self.assertEqual(successful_response["alert"]["name"],
+                         self.client.query()["alert"]["name"])
 
 
 class TestFetchAMentionAPI(unittest.TestCase):
@@ -323,7 +376,7 @@ class TestFetchAMentionAPI(unittest.TestCase):
 
     def test_url(self):
         result = self.client.url
-        expected = "https://api.mention.net/api/accounts/b/alerts/c/mentions?&limit=20"
+        expected = "https://api.mention.net/api/accounts/b/alerts/c/mentions/d"
 
         self.assertEqual(result, expected)
         
@@ -392,7 +445,7 @@ class TestFetchAMentionAPI(unittest.TestCase):
 
     @patch("mention.requests.get")
     def test_query_mention_id_error(self, mock_requests_get):
-        # assert alert ID error response
+        # assert mention ID error response
         unsuccessful_response = {
             'code': 404,
             'message': 'no such mention'
@@ -449,13 +502,13 @@ class TestFetchAllMentionsAPI(unittest.TestCase):
         self.alert_id = "c"
         
         self.client = mention.FetchAllMentionsAPI(self.access_token,
-                                               self.account_id,
-                                               self.alert_id)
+                                                  self.account_id,
+                                                  self.alert_id)
 
 
     def test_url(self):
         result = self.client.url
-        expected = "https://api.mention.net/api/accounts/b/alerts/c/mentions/d"
+        expected = "https://api.mention.net/api/accounts/b/alerts/c/mentions?&limit=20"
 
         self.assertEqual(result, expected)
         
@@ -486,9 +539,8 @@ class TestFetchAllMentionsAPI(unittest.TestCase):
         with open("api_keys.json", "r") as read_file:
             self.access_token = json.load(read_file)["access_token"]
             self.client = mention.FetchAllMentionsAPI(self.access_token,
-                                                   self.account_id,
-                                                   self.alert_id,
-                                                   self.mention_id)
+                                                      self.account_id,
+                                                      self.alert_id)
         
         response = type('response', (object,),
                         {'text': json.dumps(unsuccessful_response)})
@@ -496,7 +548,7 @@ class TestFetchAllMentionsAPI(unittest.TestCase):
         mock_requests_get.return_value = response
         self.assertEqual(unsuccessful_response, self.client.query())
 
-
+    """
     @patch("mention.requests.get")
     def test_query_alert_id_error(self, mock_requests_get):
         # assert alert ID error response
@@ -511,21 +563,20 @@ class TestFetchAllMentionsAPI(unittest.TestCase):
             self.access_token = jsonfile["access_token"]
             self.account_id = jsonfile["account_id"]
             self.client = mention.FetchAllMentionsAPI(self.access_token,
-                                                   self.account_id,
-                                                   self.alert_id,
-                                                   self.mention_id)
+                                                      self.account_id,
+                                                      self.alert_id)
         
         response = type('response', (object,),
                         {'text': json.dumps(unsuccessful_response)})
         
         mock_requests_get.return_value = response
         self.assertEqual(unsuccessful_response, self.client.query())
-
+    """
 
     @patch("mention.requests.get")
     def test_query_success(self, mock_requests_get):
         # assert successful response
-        with open("testfetchamention.json", "r") as read_file:
+        with open("testfetchmentions.json", "r") as read_file:
             successful_response = json.load(read_file)
 
         with open("api_keys.json", "r") as read_file:
@@ -543,10 +594,11 @@ class TestFetchAllMentionsAPI(unittest.TestCase):
         response = type('response', (object,),
                         {'text': json.dumps(successful_response)})
 
-        self.assertEqual(successful_response, self.client.query())
+        self.assertEqual(successful_response["mentions"][0]["title"],
+                         self.client.query()["mentions"][0]["title"])
 
-"""
-class TestFetchChildrenMentionsAPI(unittest.TestCase):
+
+class TestFetchMentionChildrenAPI(unittest.TestCase):
     
     def setUp(self):
         self.access_token = "a"
@@ -554,16 +606,16 @@ class TestFetchChildrenMentionsAPI(unittest.TestCase):
         self.alert_id = "c"
         self.mention_id = "d"
         
-        self.client = mention.TestFetchChildrenMentionsAPI(self.access_token,
-                                                            self.account_id,
-                                                            self.alert_id,
-                                                            self.mention_id)
+        self.client = mention.FetchMentionChildrenAPI(self.access_token,
+                                                      self.account_id,
+                                                      self.alert_id,
+                                                      self.mention_id)
 
 
     def test_url(self):
         result = self.client.url
         expected = "https://api.mention.net/api/accounts/b/alerts/"\
-                   "c/mentions/d/children"
+                   "c/mentions/d/children?&mention_id=d"
 
         self.assertEqual(result, expected)
         
@@ -593,10 +645,10 @@ class TestFetchChildrenMentionsAPI(unittest.TestCase):
         
         with open("api_keys.json", "r") as read_file:
             self.access_token = json.load(read_file)["access_token"]
-            self.client = mention.FetchAMentionAPI(self.access_token,
-                                                   self.account_id,
-                                                   self.alert_id,
-                                                   self.mention_id)
+            self.client = mention.FetchMentionChildrenAPI(self.access_token,
+                                                          self.account_id,
+                                                          self.alert_id,
+                                                          self.mention_id)
         
         response = type('response', (object,),
                         {'text': json.dumps(unsuccessful_response)})
@@ -618,10 +670,10 @@ class TestFetchChildrenMentionsAPI(unittest.TestCase):
             jsonfile = json.load(read_file)
             self.access_token = jsonfile["access_token"]
             self.account_id = jsonfile["account_id"]
-            self.client = mention.FetchAMentionAPI(self.access_token,
-                                                   self.account_id,
-                                                   self.alert_id,
-                                                   self.mention_id)
+            self.client = mention.FetchMentionChildrenAPI(self.access_token,
+                                                          self.account_id,
+                                                          self.alert_id,
+                                                          self.mention_id)
         
         response = type('response', (object,),
                         {'text': json.dumps(unsuccessful_response)})
@@ -643,10 +695,10 @@ class TestFetchChildrenMentionsAPI(unittest.TestCase):
             self.access_token = jsonfile["access_token"]
             self.account_id = jsonfile["account_id"]
             self.alert_id = jsonfile["alert_id"]
-            self.client = mention.FetchAMentionAPI(self.access_token,
-                                                   self.account_id,
-                                                   self.alert_id,
-                                                   self.mention_id)
+            self.client = mention.FetchMentionChildrenAPI(self.access_token,
+                                                          self.account_id,
+                                                          self.alert_id,
+                                                          self.mention_id)
         
         response = type('response', (object,),
                         {'text': json.dumps(unsuccessful_response)})
@@ -658,7 +710,7 @@ class TestFetchChildrenMentionsAPI(unittest.TestCase):
     @patch("mention.requests.get")
     def test_query_success(self, mock_requests_get):
         # assert successful response
-        with open("testfetchamention.json", "r") as read_file:
+        with open("testfetchmentionchildren.json", "r") as read_file:
             successful_response = json.load(read_file)
 
         with open("api_keys.json", "r") as read_file:
@@ -667,10 +719,10 @@ class TestFetchChildrenMentionsAPI(unittest.TestCase):
             self.account_id = jsonfile["account_id"]
             self.alert_id = jsonfile["alert_id"]
             self.mention_id = jsonfile["mention_id"]
-            self.client = mention.FetchAMentionAPI(self.access_token,
-                                                   self.account_id,
-                                                   self.alert_id,
-                                                   self.mention_id)
+            self.client = mention.FetchMentionChildrenAPI(self.access_token,
+                                                          self.account_id,
+                                                          self.alert_id,
+                                                          self.mention_id)
 
         mock_requests_get.return_value = Mock(ok=True)
         mock_requests_get.return_value.json.return_value = successful_response
@@ -679,7 +731,7 @@ class TestFetchChildrenMentionsAPI(unittest.TestCase):
                         {'text': json.dumps(successful_response)})
 
         self.assertEqual(successful_response, self.client.query())
-"""
+
 
 if __name__ == '__main__':
     unittest.main()
