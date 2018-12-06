@@ -1,48 +1,289 @@
 Getting Started
 ===============
 
-Getting your application tokens
-+++++++++++++++++++++++++++++++
+First, make sure you have:
 
-.. danger::
+- **Mention-Python** installed
+- your Access token
 
-In order to use the mention-python API client, after you have created a mention account, you first need to acquire a access token. 
-
-Create your app
-________________
-
-Create a new `Mention App <https://dev.mention.com/apps/create>`_. Login using your mention details, click the "Create a new application" button and fill out the fields on the next page.
+See the :doc:`installation` page for help if needed.
 
 
-.. image:: getting_started_1.png
+App
+==========
 
-On the next screen, you'll see the applications that you've created. Click the "Edit" button to see the application that you created and some information about it:
+Assume your access token is stored in ``access_token`` for all API calls:
 
-Your app
-_________
+App Data
+-----------------
+Retrieves useful details about the application.
 
-Once your app is created, you'll be directed to a new page showing you some information about it.
+    Like some other resources, certain properties are translated given the Accept-Language header.
 
-.. image:: getting_started_2.png
-.. image:: getting_started_3.png
+Example:
 
-Your Keys
-_________
+.. code-block:: python
 
-Take note that the ``account_id`` is is the red outline string of charaters inside the request example seen below: 
+    >>> from mention import AppDataAPI
+    >>> appData = AppDataAPI(access_token)
 
-.. image:: getting_started_3.png
 
-At this point, you can test out your application using the keys under "Your Application Tokens". The ``twitter.Api()`` object can be created as follows::
+Alert
+==========
 
-    import twitter
-    api = twitter.Api(consumer_key=[consumer key],
-                      consumer_secret=[consumer secret],
-                      access_token_key=[access token],
-                      access_token_secret=[access token secret])
+Create an Alert
+--------------
 
-Note: Make sure to enclose your keys in quotes (ie, api = twitter.Api(consumer_key='1234567', ...) and so on) or you will receive a NameError.
+You can create a new alert for a given ``account_id``.
 
-If you are creating an application for end users/consumers, then you will want them to authorize you application, but that is outside the scope of this document.
+The minimum requirements for a new alert are the parameters ``name`` as a string, ``queryd`` as a dictionary and ``languages`` as a list of strings.
 
-And that should be it! If you need a little more help, check out the `examples on Github <https://github.com/bear/python-twitter/tree/master/examples>`_. If you have an open source application using python-twitter, send us a link and we'll add a link to it here.
+Example:
+
+.. code-block:: python
+
+    >>> name = "Nandos"
+    >>> queryd = {"type": "basic", "included_keywords": ["Nandos", "Flame-grilled Chicken", "Peri-Peri Sauce"]}
+    >>> languages = ["en"]
+
+    >>> newAlert = mention.CreateAnAlertAPI(access_token,
+    							 			account_id,
+    							 			name,
+    							 			queryd,
+    							 			languages)
+
+    >>> data = newAlert.query()				
+
+If the request was successful, the response will return the full alert data, like if you did a :ref:`Fetch An Alert <Fetch an Alert>`.		 			
+
+Please view the `Create an alert <https://dev.mention.com/current/src/account/alert/PostAlert.html>`_ page to see all the available parameters and :class:`~mention.CreateAnAlertAPI` for formatting.
+
+
+Fetch an Alert
+--------------
+
+Retrieve details about a single ``alert_id`` for a given ``account_id``.
+
+Example:
+
+.. code-block:: python
+
+    >>> nandosAlert = mention.FetchAnAlertAPI(access_token,
+    							 			  account_id,
+    							 			  alert_id)
+
+    >>> data = nandosAlert.query()
+
+    >>> data['alert']['name']					 			
+    >>> 'Nandos'
+
+    >>> data['alert']['query']['included_keywords']					 			
+    >>> ['Nandos', 'Flame-grilled Chicken', 'Peri-Peri Sauce']
+
+
+Fetch all alerts of an account
+--------------
+
+Fetch a list of all alerts for a given ``account_id``.
+
+Example:
+
+.. code-block:: python
+
+    >>> allAlerts = mention.FetchAlertsAPI(access_token,
+    							 		   account_id)
+
+    >>> data = nandosAlert.query()
+
+    >>> alertsList = data['alerts']	
+    >>> alertsList[5]['alert']['name']
+    >>> 'Nandos'			 			
+
+    >>> data['alert']['query']['included_keywords']					 			
+    >>> ['Nandos', 'Flame-grilled Chicken', 'Peri-Peri Sauce']
+
+
+Update an Alert
+--------------
+
+Modifies an existing alert, usually to update the criteria and to improve the search's efficiency for a given ``account_id``.
+
+This API call has all of the same parameters as :ref:`Create An Alert <Create an Alert>`.
+
+Example:
+
+.. code-block:: python
+
+    >>> name = "Nandos"
+    >>> queryd = {"type": "basic", "included_keywords": ["Nandos", "Flame-grilled Chicken", "Peri-Peri Sauce", "Garlic Rolls"]}
+    >>> languages = ["en", "af"]
+    >>> countries = ["US", "ZA", "UK"]
+    >>> sources = ["web", "twitter"]
+
+    >>> updateNandosAlert = mention.UpdateAnAlertAPI(access_token,
+    ...							 					 account_id,
+    ...							 					 name,
+    ...							 					 queryd,
+    ...							 					 languages,
+    ...							 					 countries,
+    ...							 					 sources)
+
+    >>> data = updateNandosAlert.query()				
+
+Again a successful request will return the full alert data as a response.
+
+Please view the `Update an alert <https://dev.mention.com/current/src/account/alert/PutAlert.html>`_ page to see all the available parameters and :class:`~mention.UpdateAnAlertAPI` for formatting.
+
+
+Mention
+==========
+
+Fetch a mention
+--------------
+
+Retrieve details about a single ``mention_id`` for a given ``alert_id`` from an ``account_id``.
+
+Example:
+
+.. code-block:: python
+
+    >>> nandosMention = mention.FetchAMentionAPI(access_token,
+    							 			  	 account_id,
+    							 			  	 alert_id,
+    							 			  	 mention_id)
+
+    >>> data = nandosMention.query()
+
+    >>> data['title']					 			
+    >>> 'Nando's launches their own food ordering app'
+
+    >>> data['description']				 			
+    >>> 'Nando's has launched their own app that will allow people to order their favourite meal from the comfort of their own home.'
+
+    >>> data['original_url']				 			
+    >>> 'https:\/\/www.iol.co.za\/business-report\/technology\/nandos-launches-their-own-food-ordering-app-18378360'
+
+
+Fetch mentions
+--------------
+
+Fetch a list of all mention for a given ``alert_id`` from an ``account_id``.
+
+There are 16 parameters which can be used to filter the mentions you receive as a response. Please note that some parameters cannot be used in combination with others. For example ``since_id`` cannot be combined with ``before_date``, ``not_before_date`` or ``cursor``. 
+
+Please view the `Fetch Mentions<https://dev.mention.com/current/src/account/alert/mention/GetMentions.html>`_ page to see all the available parameters and :class:`~mention.FetchAllMentionsAPI` for formatting. For example read and favourite uses the python boolean type instead of a string.
+
+Example:
+
+.. code-block:: python
+
+	>>> limit = '1000'
+	>>> from = '2018-10-04 12:00'
+	>>> to = '2018-11-25 12:00'
+	>>> source = 'twitter'
+	>>> read = True
+
+    >>> nandosMentions = mention.FetchAllMentionsAPI(access_token,
+                 									 account_id,
+                 									 alert_id,
+                 									 limit=limit,
+                 									 before_date=to
+                 									 not_before_date=from
+                 									 source=source,
+                 									 read=read)
+
+    >>> data = nandosMentions.query()
+
+    >>> firstMention = data['mentions'][0]
+
+    >>> firstMention['title']					 			
+    >>> 'Nando's launches their own food ordering app'
+
+    >>> firstMention['description']				 			
+    >>> 'Nando's has launched their own app that will allow people to order their favourite meal from the comfort of their own home.'
+
+    >>> firstMention['original_url']				 			
+    >>> 'https:\/\/www.iol.co.za\/business-report\/technology\/nandos-launches-their-own-food-ordering-app-18378360'
+
+    >>> if len(data['_links']['more']['href']) == 0:
+    >>> 	print('No more mentions to receive.')
+
+    >>> 'No more mentions to receive.'
+
+.. note::
+
+    ``limit`` is capped at 1000. To view more mentions use the ``_links``, ``more`` and ``pull`` urls to receive all of your mentions. To learn more about this, read the bottom of `Fetch Mentions<https://dev.mention.com/current/src/account/alert/mention/GetMentions.html>`_.
+
+
+Stream mention
+--------------
+
+Enables you to stream mentions for one or many alerts. It will open an http connection and keep it open, sending to your stream client any mention as soon as it is fetched for any of the selected alerts.
+
+Requires a at least one ``alert_id`` from an ``account_id``.
+
+Can pass the parameter ``since_id``.
+
+
+Example:
+
+.. code-block:: python
+
+
+	>>> alerts = ['alert_id', '111222']
+	>>> since_ids = ['', '43']
+	
+    >>> streamedMentions = mention.StreamMentionsAPI(access_token,
+    												 alerts,
+    												 since_ids)
+
+    >>> data = streamedMentions.query()
+
+    >>> firstStremedMentions = data['mentions'][0]
+
+
+Curate a mention
+--------------
+
+Updates an existing ``mention_id`` for a given ``alert_id`` from an ``account_id``. These update concern majorly classification of the mention: indicating the folder, tags, effective tone of the mention, etc... You cannot modify the content of a mention, or its source.
+
+There are 6 parameters which can be used to change how a mention is classified. ``favorite`` and ``trashed`` can only be editted by an admin. Please view the `Curate Mention<https://dev.mention.com/current/src/account/alert/mention/PutMention.html>`_ page to see all the available parameters and :class:`~mention.CurateAMentionAPI` for formatting.
+
+Example:
+
+.. code-block:: python
+
+	>>> favorite = True
+	>>> tone = '-1'
+
+    >>> nandosMention = mention.CurateAMentionAPI(access_token,
+    ...							 			  	  account_id,
+    ...							 			  	  alert_id,
+    ...							 			  	  mention_id,
+    ...							 			  	  favorite,
+    ...							 			  	  tone)
+
+    >>> data = nandosMention.query()
+
+    >>> data['favorite']				 			
+    >>> 'true'
+
+.. note::
+
+     A mention can only be associated with an existing ``tag``. This means that you have to `create a tag<https://dev.mention.com/current/src/account/alert/tag/PostTag.html>`_ first. Mention-Python does not currently support this feature.
+
+
+Mark all mentions read
+----------------------
+
+Mark all mentions as read for a given ``alert_id`` from an ``account_id``.
+
+Example:
+
+.. code-block:: python
+
+    >>> nandos = mention.MarkAllMentionsReadAPI(access_token,
+    ...							 			  	account_id,
+    ...							 			  	alert_id)
+
+    >>> data = nandos.query()
