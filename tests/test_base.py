@@ -128,8 +128,8 @@ class TestFetchAlertsAPI(unittest.TestCase):
                         {'text': json.dumps(successful_response)})
 
     
-        self.assertEqual(successful_response["alerts"][0],
-                         self.client.query()["alerts"][0])
+        self.assertEqual(successful_response["alerts"][0]["name"],
+                         self.client.query()["alerts"][0]["name"])
 
 
 class TestUpdateAnAlertAPI(unittest.TestCase):
