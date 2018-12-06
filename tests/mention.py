@@ -794,7 +794,7 @@ class StreamMentionsAPI(Mention):
                  account_id,
                  alert_id,
                  alerts,
-                 since_id+None):
+                 since_id=None):
         """
         Parameters
         ----------
