@@ -25,7 +25,7 @@ def get_requirements():
 
 
 setup_args = dict(
-    name='Mention-Python',
+    name='mention',
     description='Python Wrapper for Mention API',
     url='https://github.com/mazi76erX2/mention-python',
     version=VERSION,

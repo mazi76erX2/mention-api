@@ -1,3 +1,5 @@
+name = "mention"
+
 from .base import AppDataAPI
 from .base import FetchAnAlertAPI
 from .base import FetchAlertsAPI
