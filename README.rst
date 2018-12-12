@@ -11,8 +11,8 @@ Mention-Python
 .. image:: https://codecov.io/gh/mazi76erX2/mention-python/branch/master/graph/badge.svg
   :target: https://codecov.io/gh/mazi76erX2/mention-python
 
-.. image:: https://readthedocs.org/projects/mention/badge/?version=latest
-    :target: https://mention.readthedocs.org/en/latest
+.. image:: https://readthedocs.org/projects/mention-python/badge/?version=latest
+    :target: https://mention-python.readthedocs.org/en/latest
 
 **A Python wrapper around the Mention API.**
 
@@ -46,10 +46,10 @@ Examples
 
     >>> alertsList = data['alerts']	
     >>> alertsList[5]['alert']['name']
-    >>> 'Nandos'			 			
+    'Nandos'			 			
 
     >>> data['alert']['query']['included_keywords']
-    >>> ['Nandos', 'Flame-grilled Chicken', 'Peri-Peri Sauce']
+    ['Nandos', 'Flame-grilled Chicken', 'Peri-Peri Sauce']
 
 **Fetch a mention**
 
@@ -60,14 +60,15 @@ Examples
     >>> data = nandosMention.query()
 
     >>> data['title']					 			
-    >>> "Nando's launches their own food ordering app"
+    "Nando's launches their own food ordering app"
 
     >>> data['description']				 			
-    >>> "Nando's has launched their own app that will allow people to order their favourite meal from the comfort of their own home."
+    "Nando's has launched their own app that will allow people to order their favourite meal from the comfort of their own home."
 
     >>> data['original_url']				 			
-    >>> 'https:\/\/www.iol.co.za\/business-report\/technology\/nandos-launches-their-own-food-ordering-app-18378360'
+    'https:\/\/www.iol.co.za\/business-report\/technology\/nandos-launches-their-own-food-ordering-app-18378360'
 
+**Read More**
 
  - `Full Documentation`_
      - `Installation`_

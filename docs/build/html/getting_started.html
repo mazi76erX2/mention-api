@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Getting Started &#8212; mention-python  documentation</title>
+    <title>Getting Started &#8212; mention-python 0.1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '',
+        VERSION:     '0.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -42,36 +42,199 @@
             
   <div class="section" id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="getting-your-application-tokens">
-<h2>Getting your application tokens<a class="headerlink" href="#getting-your-application-tokens" title="Permalink to this headline">¶</a></h2>
-<p>In order to use the mention-python API client, after you have created a mention account, you first need to acquire a access token.</p>
-<div class="section" id="create-your-app">
-<h3>Create your app<a class="headerlink" href="#create-your-app" title="Permalink to this headline">¶</a></h3>
-<p>Create a new <a class="reference external" href="https://dev.mention.com/apps/create">Mention App</a>. Login using your mention details, click the “Create a new application” button and fill out the fields on the next page.</p>
-<img alt="getting_started_1.png" src="getting_started_1.png" />
-<p>On the next screen, you’ll see the applications that you’ve created. Click the “Edit” button to see the application that you created and some information about it:</p>
-</div>
-<div class="section" id="your-app">
-<h3>Your app<a class="headerlink" href="#your-app" title="Permalink to this headline">¶</a></h3>
-<p>Once your app is created, you’ll be directed to a new page showing you some information about it.</p>
-<img alt="getting_started_2.png" src="getting_started_2.png" />
-<img alt="getting_started_3.png" src="getting_started_3.png" />
-</div>
-<div class="section" id="your-keys">
-<h3>Your Keys<a class="headerlink" href="#your-keys" title="Permalink to this headline">¶</a></h3>
-<p>Take note that the <code class="docutils literal"><span class="pre">account_id</span></code> is is the red outline string of charaters inside the request example seen below:</p>
-<img alt="getting_started_3.png" src="getting_started_3.png" />
-<p>At this point, you can test out your application using the keys under “Your Application Tokens”. The <code class="docutils literal"><span class="pre">twitter.Api()</span></code> object can be created as follows:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">twitter</span>
-<span class="n">api</span> <span class="o">=</span> <span class="n">twitter</span><span class="o">.</span><span class="n">Api</span><span class="p">(</span><span class="n">consumer_key</span><span class="o">=</span><span class="p">[</span><span class="n">consumer</span> <span class="n">key</span><span class="p">],</span>
-                  <span class="n">consumer_secret</span><span class="o">=</span><span class="p">[</span><span class="n">consumer</span> <span class="n">secret</span><span class="p">],</span>
-                  <span class="n">access_token_key</span><span class="o">=</span><span class="p">[</span><span class="n">access</span> <span class="n">token</span><span class="p">],</span>
-                  <span class="n">access_token_secret</span><span class="o">=</span><span class="p">[</span><span class="n">access</span> <span class="n">token</span> <span class="n">secret</span><span class="p">])</span>
+<p>First, make sure you have:</p>
+<ul class="simple">
+<li><strong>Mention-Python</strong> installed</li>
+<li>your Access token</li>
+</ul>
+<p>See the <a class="reference internal" href="installation.html"><span class="doc">Installation &amp; Testing</span></a> page for help if needed.</p>
+<div class="section" id="app">
+<h2>App<a class="headerlink" href="#app" title="Permalink to this headline">¶</a></h2>
+<p>Assume your access token is stored in <code class="docutils literal"><span class="pre">access_token</span></code> for all API calls:</p>
+<div class="section" id="app-data">
+<h3>App Data<a class="headerlink" href="#app-data" title="Permalink to this headline">¶</a></h3>
+<p>Retrieves useful details about the application.</p>
+<blockquote>
+<div>Like some other resources, certain properties are translated given the Accept-Language header.</div></blockquote>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mention</span> <span class="kn">import</span> <span class="n">AppDataAPI</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">appData</span> <span class="o">=</span> <span class="n">AppDataAPI</span><span class="p">(</span><span class="n">access_token</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Note: Make sure to enclose your keys in quotes (ie, api = twitter.Api(consumer_key=‘1234567’, …) and so on) or you will receive a NameError.</p>
-<p>If you are creating an application for end users/consumers, then you will want them to authorize you application, but that is outside the scope of this document.</p>
-<p>And that should be it! If you need a little more help, check out the <a class="reference external" href="https://github.com/bear/python-twitter/tree/master/examples">examples on Github</a>. If you have an open source application using python-twitter, send us a link and we’ll add a link to it here.</p>
+</div>
+</div>
+<div class="section" id="alert">
+<h2>Alert<a class="headerlink" href="#alert" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="create-an-alert">
+<h3>Create an Alert<a class="headerlink" href="#create-an-alert" title="Permalink to this headline">¶</a></h3>
+<p>You can create a new alert for a given <code class="docutils literal"><span class="pre">account_id</span></code>.</p>
+<p>The minimum requirements for a new alert are the parameters <code class="docutils literal"><span class="pre">name</span></code> as a string, <code class="docutils literal"><span class="pre">queryd</span></code> as a dictionary and <code class="docutils literal"><span class="pre">languages</span></code> as a list of strings.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Nandos&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">queryd</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;basic&quot;</span><span class="p">,</span> <span class="s2">&quot;included_keywords&quot;</span><span class="p">:</span>
+<span class="gp">... </span><span class="p">[</span><span class="s2">&quot;Nandos&quot;</span><span class="p">,</span> <span class="s2">&quot;Flame-grilled Chicken&quot;</span><span class="p">,</span> <span class="s2">&quot;Peri-Peri Sauce&quot;</span><span class="p">]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">languages</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;en&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">newAlert</span> <span class="o">=</span> <span class="n">mention</span><span class="o">.</span><span class="n">CreateAnAlertAPI</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">account_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">queryd</span><span class="p">,</span> <span class="n">languages</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">newAlert</span><span class="o">.</span><span class="n">query</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If the request was successful, the response will return the full alert data, like if you did a <span class="xref std std-ref">Fetch An Alert</span>.</p>
+<p>Please view the <a class="reference external" href="https://dev.mention.com/current/src/account/alert/PostAlert.html">Create an alert</a> page to see all the available parameters and <code class="xref py py-class docutils literal"><span class="pre">CreateAnAlertAPI</span></code> for formatting.</p>
+</div>
+<div class="section" id="fetch-an-alert">
+<h3>Fetch an Alert<a class="headerlink" href="#fetch-an-alert" title="Permalink to this headline">¶</a></h3>
+<p>Retrieve details about a single <code class="docutils literal"><span class="pre">alert_id</span></code> for a given <code class="docutils literal"><span class="pre">account_id</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nandosAlert</span> <span class="o">=</span> <span class="n">mention</span><span class="o">.</span><span class="n">FetchAnAlertAPI</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">account_id</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">alert_id</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">nandosAlert</span><span class="o">.</span><span class="n">query</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;alert&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+<span class="go">&#39;Nandos&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;alert&#39;</span><span class="p">][</span><span class="s1">&#39;query&#39;</span><span class="p">][</span><span class="s1">&#39;included_keywords&#39;</span><span class="p">]</span>
+<span class="go">[&#39;Nandos&#39;, &#39;Flame-grilled Chicken&#39;, &#39;Peri-Peri Sauce&#39;]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fetch-all-alerts-of-an-account">
+<h3>Fetch all alerts of an account<a class="headerlink" href="#fetch-all-alerts-of-an-account" title="Permalink to this headline">¶</a></h3>
+<p>Fetch a list of all alerts for a given <code class="docutils literal"><span class="pre">account_id</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">allAlerts</span> <span class="o">=</span> <span class="n">mention</span><span class="o">.</span><span class="n">FetchAlertsAPI</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">account_id</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">nandosAlert</span><span class="o">.</span><span class="n">query</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alertsList</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;alerts&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alertsList</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="s1">&#39;alert&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+<span class="go">&#39;Nandos&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;alert&#39;</span><span class="p">][</span><span class="s1">&#39;query&#39;</span><span class="p">][</span><span class="s1">&#39;included_keywords&#39;</span><span class="p">]</span>
+<span class="go">[&#39;Nandos&#39;, &#39;Flame-grilled Chicken&#39;, &#39;Peri-Peri Sauce&#39;]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="update-an-alert">
+<h3>Update an Alert<a class="headerlink" href="#update-an-alert" title="Permalink to this headline">¶</a></h3>
+<p>Modifies an existing alert, usually to update the criteria and to improve the search’s efficiency for a given <code class="docutils literal"><span class="pre">account_id</span></code>.</p>
+<p>This API call has all of the same parameters as <span class="xref std std-ref">Create An Alert</span>.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Nandos&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">queryd</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;basic&quot;</span><span class="p">,</span> <span class="s2">&quot;included_keywords&quot;</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="p">[</span><span class="s2">&quot;Nandos&quot;</span><span class="p">,</span> <span class="s2">&quot;Flame-grilled Chicken&quot;</span><span class="p">,</span> <span class="s2">&quot;Peri-Peri Sauce&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;Garlic Rolls&quot;</span><span class="p">]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">languages</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="s2">&quot;af&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">countries</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;US&quot;</span><span class="p">,</span> <span class="s2">&quot;ZA&quot;</span><span class="p">,</span> <span class="s2">&quot;UK&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;web&quot;</span><span class="p">,</span> <span class="s2">&quot;twitter&quot;</span><span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">updateNandosAlert</span> <span class="o">=</span> <span class="n">mention</span><span class="o">.</span><span class="n">UpdateAnAlertAPI</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">account_id</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">name</span><span class="p">,</span> <span class="n">queryd</span><span class="p">,</span> <span class="n">languages</span><span class="p">,</span> <span class="n">countries</span><span class="p">,</span> <span class="n">sources</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">updateNandosAlert</span><span class="o">.</span><span class="n">query</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Again a successful request will return the full alert data as a response.</p>
+<p>Please view the <a class="reference external" href="https://dev.mention.com/current/src/account/alert/PutAlert.html">Update an alert</a> page to see all the available parameters and <code class="xref py py-class docutils literal"><span class="pre">UpdateAnAlertAPI</span></code> for formatting.</p>
+</div>
+</div>
+<div class="section" id="mention">
+<h2>Mention<a class="headerlink" href="#mention" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fetch-a-mention">
+<h3>Fetch a mention<a class="headerlink" href="#fetch-a-mention" title="Permalink to this headline">¶</a></h3>
+<p>Retrieve details about a single <code class="docutils literal"><span class="pre">mention_id</span></code> for a given <code class="docutils literal"><span class="pre">alert_id</span></code> from an <code class="docutils literal"><span class="pre">account_id</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nandosMention</span> <span class="o">=</span> <span class="n">mention</span><span class="o">.</span><span class="n">FetchAMentionAPI</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">account_id</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">alert_id</span><span class="p">,</span> <span class="n">mention_id</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">nandosMention</span><span class="o">.</span><span class="n">query</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span>
+<span class="go">&quot;Nando&#39;s launches their own food ordering app&quot;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span>
+<span class="go">&quot;Nando&#39;s has launched their own app that will allow people to order their favourite meal from the comfort of their own home.&quot;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;original_url&#39;</span><span class="p">]</span>
+<span class="go">&quot;https:\/\/www.iol.co.za\/business-report\/technology\/nandos-launches-their-own-food-ordering-app-18378360&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fetch-mentions">
+<h3>Fetch mentions<a class="headerlink" href="#fetch-mentions" title="Permalink to this headline">¶</a></h3>
+<p>Fetch a list of all mention for a given <code class="docutils literal"><span class="pre">alert_id</span></code> from an <code class="docutils literal"><span class="pre">account_id</span></code>.</p>
+<p>There are 16 parameters which can be used to filter the mentions you receive as a response. Please note that some parameters cannot be used in combination with others. For example <code class="docutils literal"><span class="pre">since_id</span></code> cannot be combined with <code class="docutils literal"><span class="pre">before_date</span></code>, <code class="docutils literal"><span class="pre">not_before_date</span></code> or <code class="docutils literal"><span class="pre">cursor</span></code>.</p>
+<p>Please view the <a class="reference external" href="https://dev.mention.com/current/src/account/alert/mention/GetMentions.html">Fetch Mentions</a> page to see all the available parameters and <code class="xref py py-class docutils literal"><span class="pre">FetchAllMentionsAPI</span></code> for formatting. For example read and favourite uses the python boolean type instead of a string.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nandosMentions</span> <span class="o">=</span> <span class="n">mention</span><span class="o">.</span><span class="n">FetchAllMentionsAPI</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">account_id</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">alert_id</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="s2">&quot;1000&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">before_date</span><span class="o">=</span><span class="s2">&quot;2018-11-25 12:00&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">not_before_date</span><span class="o">=</span><span class="s2">&quot;2018-10-04 12:00&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">source</span><span class="o">=</span><span class="s2">&quot;twitter&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">read</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">nandosMentions</span><span class="o">.</span><span class="n">query</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">firstMention</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;mentions&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">firstMention</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span>
+<span class="go">&quot;Nando&#39;s launches their own food ordering app&quot;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">firstMention</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span>
+<span class="go">&quot;Nando&#39;s has launched their own app that will allow people to order their favourite meal from the comfort of their own home.&quot;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">firstMention</span><span class="p">[</span><span class="s1">&#39;original_url&#39;</span><span class="p">]</span>
+<span class="go">&quot;https:\/\/www.iol.co.za\/business-report\/technology\/nandos-launches-their-own-food-ordering-app-18378360&quot;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;_links&#39;</span><span class="p">][</span><span class="s1">&#39;more&#39;</span><span class="p">][</span><span class="s1">&#39;href&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;No more mentions to receive.&#39;</span><span class="p">)</span>
+<span class="go">&quot;No more mentions to receive.&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal"><span class="pre">limit</span></code> is capped at 1000. To view more mentions use the <code class="docutils literal"><span class="pre">_links</span></code>, <code class="docutils literal"><span class="pre">more</span></code> and <code class="docutils literal"><span class="pre">pull</span></code> urls to receive all of your mentions. To learn more about this, read the bottom of <a class="reference external" href="https://dev.mention.com/current/src/account/alert/mention/GetMentions.html">Fetch Mentions</a>.</p>
+</div>
+</div>
+<div class="section" id="stream-mention">
+<h3>Stream mention<a class="headerlink" href="#stream-mention" title="Permalink to this headline">¶</a></h3>
+<p>Enables you to stream mentions for one or many alerts. It will open an http connection and keep it open, sending to your stream client any mention as soon as it is fetched for any of the selected alerts.</p>
+<p>Requires at least one <code class="docutils literal"><span class="pre">alert_id</span></code> from an <code class="docutils literal"><span class="pre">account_id</span></code>.</p>
+<p>You can pass the parameter <code class="docutils literal"><span class="pre">since_id</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">streamedMentions</span> <span class="o">=</span> <span class="n">mention</span><span class="o">.</span><span class="n">StreamMentionsAPI</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">alerts</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;alert_id&quot;</span><span class="p">,</span> <span class="s2">&quot;111222&quot;</span><span class="p">],</span>
+<span class="gp">... </span><span class="n">since_ids</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;43&quot;</span><span class="p">])</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">streamedMentions</span><span class="o">.</span><span class="n">query</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">firstStremedMentions</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;mentions&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="curate-a-mention">
+<h3>Curate a mention<a class="headerlink" href="#curate-a-mention" title="Permalink to this headline">¶</a></h3>
+<p>Updates an existing <code class="docutils literal"><span class="pre">mention_id</span></code> for a given <code class="docutils literal"><span class="pre">alert_id</span></code> from an <code class="docutils literal"><span class="pre">account_id</span></code>. These update concern majorly classification of the mention: indicating the folder, tags, effective tone of the mention, etc… You cannot modify the content of a mention, or its source.</p>
+<p>There are 6 parameters which can be used to change how a mention is classified. <code class="docutils literal"><span class="pre">favorite</span></code> and <code class="docutils literal"><span class="pre">trashed</span></code> can only be editted by an admin. Please view the <a class="reference external" href="https://dev.mention.com/current/src/account/alert/mention/PutMention.html">Curate Mention</a> page to see all the available parameters and <code class="xref py py-class docutils literal"><span class="pre">CurateAMentionAPI</span></code> for formatting.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nandosMention</span> <span class="o">=</span> <span class="n">mention</span><span class="o">.</span><span class="n">CurateAMentionAPI</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">account_id</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">alert_id</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">mention_id</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">favorite</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">tone</span><span class="o">=</span><span class="s1">&#39;-1&#39;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">nandosMention</span><span class="o">.</span><span class="n">query</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;favorite&#39;</span><span class="p">]</span>
+<span class="go">&#39;true&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A mention can only be associated with an existing <code class="docutils literal"><span class="pre">tag</span></code>. This means that you have to <a class="reference external" href="https://dev.mention.com/current/src/account/alert/tag/PostTag.html">create a tag</a> first. Mention-Python does not currently support this feature.</p>
+</div>
+</div>
+<div class="section" id="mark-all-mentions-read">
+<h3>Mark all mentions read<a class="headerlink" href="#mark-all-mentions-read" title="Permalink to this headline">¶</a></h3>
+<p>Mark all mentions as read for a given <code class="docutils literal"><span class="pre">alert_id</span></code> from an <code class="docutils literal"><span class="pre">account_id</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nandos</span> <span class="o">=</span> <span class="n">mention</span><span class="o">.</span><span class="n">MarkAllMentionsReadAPI</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">account_id</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">alert_id</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">nandos</span><span class="o">.</span><span class="n">query</span><span class="p">()</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -81,7 +244,35 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation &amp; Testing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#app">App</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#app-data">App Data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#alert">Alert</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#create-an-alert">Create an Alert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fetch-an-alert">Fetch an Alert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fetch-all-alerts-of-an-account">Fetch all alerts of an account</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update-an-alert">Update an Alert</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mention">Mention</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fetch-a-mention">Fetch a mention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fetch-mentions">Fetch mentions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stream-mention">Stream mention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#curate-a-mention">Curate a mention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mark-all-mentions-read">Mark all mentions read</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mention.html">mention package</a></li>
+</ul>
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
@@ -90,6 +281,13 @@
   </ul></li>
 </ul>
 </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/getting_started.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">

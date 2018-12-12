@@ -92,12 +92,15 @@ Check out the latest development version anonymously with
 
 .. code-block:: console
 
-$ git clone git://github.com/mazi76erX2/mention-python.git
-$ cd mention-python
+	$ git clone git://github.com/mazi76erX2/mention-python.git
+	$ cd mention-python
 
-At this point, you can test out your application using the key under "Access Token". The ``mention.FetchAnAlerAPI()`` object can be created as follows::
+At this point, you can test out your application using the key under "Access Token". The ``mention.FetchAnAlerAPI()`` object can be created as follows:
 
-    import twitter
+.. code-block:: python
+
+    import mention
+
     alert = mention.FetchAnAlerAPI(access_token='access_token',
-    							   account_id='account_id',
-    							   alert_id='alert_id')
+    ...		account_id='account_id',
+    ...		alert_id='alert_id')

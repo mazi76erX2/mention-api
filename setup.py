@@ -3,7 +3,7 @@ from setuptools import setup
 import io
 import os
 
-VERSION = '0.0.1'
+VERSION = '0.1'
 
 
 def fpath(name):
@@ -40,9 +40,9 @@ setup_args = dict(
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
-        'Programming Language :: Python',
+        'Programming Language :: Python :: 3',
     ],
 )
 
 if __name__ == '__main__':
-setup(**setup_args)
+    setup(**setup_args)

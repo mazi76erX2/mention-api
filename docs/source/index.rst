@@ -1,16 +1,17 @@
-Welcome to Mention-Python's documentation!
-==========================================
-
-Author: Xolani Mazibuko <mazi76erx@gmail.com>
+Mention-Python
+==============
 
 .. image:: https://img.shields.io/pypi/v/MentionAPI.svg
     :target: https://pypi.python.org/pypi/MentionAPI
 
-.. image:: https://travis-ci.org/rhgrant10/Mention.svg?branch=dev
-    :target: https://travis-ci.org/mazi76er/Mention
+.. image:: https://travis-ci.org/mazi76erX2/mention-python.svg?branch=master
+    :target: https://travis-ci.org/mazi76erX2/mention-python
 
-.. image:: https://readthedocs.org/projects/mention/badge/?version=latest
-    :target: https://mention.readthedocs.org/en/latest
+.. image:: https://codecov.io/gh/mazi76erX2/mention-python/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/mazi76erX2/mention-python
+
+.. image:: https://readthedocs.org/projects/mention-python/badge/?version=latest
+    :target: https://mention-python.readthedocs.org/en/latest
 
 **A Python wrapper around the Mention API.**
 
@@ -22,14 +23,16 @@ Author: Xolani Mazibuko <mazi76erx@gmail.com>
 .. code-block:: python
 
     >>> from mention import FetchAMentionAPI
-    >>> first_mention = FetchAMentionAPI('access_token', 'account_id', 'alert_id', 'mention_id')
+    >>> first_mention = FetchAMentionAPI('access_token', 'account_id', 
+    ...	'alert_id', 'mention_id')
 
     >>> first_mention_data = first_mention.query()
 
     >>> title = first_mention_data['title']
+    "Nando's launches their own food ordering app"
 
 Features
-========
+--------
 
 **Mention-Python** supports all of the App, Alert and Mention features of the Mention API.
 
@@ -42,10 +45,12 @@ Features
 - stream all mentions for alerts
 - mark all of an alert's mentions as read
 
-Contents:
+
+Table of Contents
+-----------------
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 3
 
    installation.rst
    getting_started.rst
@@ -53,7 +58,7 @@ Contents:
    changelog.rst
    models.rst
    searching.rst
-   mention.rst
+   api.rst
 
 
 Introduction
@@ -62,15 +67,15 @@ Mention is a social media and web monitoring tool. The media monitoring tool pro
 
 This library provides a pure Python interface for the `Mention API <https://dev.mention.com/>`_. It only works with Python 3.6+
 
-`Mention<http://mention.com>`_. Mention is designed as a REST API with multiple clients: web (the web app, used on computers), iOS, and Android. A client is a program that will consume our API, that will use its endpoints and returned data.
---------
+`Mention <http://mention.com>`_. Mention is designed as a REST API with multiple clients: web (the web app, used on computers), iOS, and Android. A client is a program that will consume our API, that will use its endpoints and returned data.
+
 What can this API do for you?
 
 Integrate Mention capabilities into your own website, with your own layout and your own way of managing rights
 Use Mention as an intelligent crawler and use its output in your own systems / workflow. You can do pretty much anything the web client can.
 
 Indices and tables
-==================
+------------------
 
 * :ref:`genindex`
 * :ref:`modindex`
