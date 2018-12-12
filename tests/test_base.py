@@ -594,8 +594,8 @@ class TestFetchAllMentionsAPI(unittest.TestCase):
         response = type('response', (object,),
                         {'text': json.dumps(successful_response)})
 
-        self.assertEqual(successful_response["mentions"][0]["title"],
-                         self.client.query()["mentions"][0]["title"])
+        self.assertEqual(successful_response["mentions"][0]["original_url"],
+                         self.client.query()["mentions"][0]["original_url"])
 
 
 class TestFetchMentionChildrenAPI(unittest.TestCase):
