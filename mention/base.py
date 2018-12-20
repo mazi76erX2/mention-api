@@ -1,10 +1,9 @@
 import requests
-import json
 from requests_oauth2 import OAuth2BearerToken
+import json
 from abc import ABCMeta, abstractmethod
 from requests.exceptions import HTTPError
-from mention import utils
-
+import utils
 
 class Mention(object):
     __metaclass__ = ABCMeta
@@ -53,7 +52,7 @@ class AppDataAPI(Mention):
 
         return self._base_url + end_url
 
- 
+    
     def query(self):
         #with requests.Session() as session:
         session = requests.Session()
@@ -251,8 +250,8 @@ class UpdateAnAlertAPI(Mention):
     def __init__(self,
                  access_token,
                  account_id,
-                 name,
                  alert_id,
+                 name,
                  queryd,
                  languages,
                  countries=None,
@@ -365,8 +364,8 @@ class UpdateAnAlertAPI(Mention):
 
     @property
     def url(self):
-        end_url = ("/accounts/{account_id}/alerts/
-                   "{alert_id}".format(**self.params))
+        end_url = ("/accounts/{account_id}/alerts/{alert_id}"\
+                    .format(**self.params))
         return self._base_url + end_url
 
 
@@ -380,7 +379,7 @@ class UpdateAnAlertAPI(Mention):
                 pass
             data = response.json()
         return data
-
+    
 
 class FetchAlertsAPI(Mention):
     def __init__(self, access_token, account_id):
@@ -476,7 +475,6 @@ class FetchAMentionAPI(Mention):
             except HTTPError:
                 pass
             data = response.json()
-
         return data
 
 
@@ -735,7 +733,7 @@ class FetchMentionChildrenAPI(Mention):
             self.before_date = utils.transform_date(before_date)
         else:
             self.before_date = before_date
-        super(FetchChildrenMentionAPI, self).__init__(access_token)
+        super(FetchMentionChildrenAPI, self).__init__(access_token)
 
 
     @property
@@ -747,12 +745,13 @@ class FetchMentionChildrenAPI(Mention):
         params["mention_id"] = self.mention_id
         params["before_date"] = self.before_date if self.before_date else ""
 
-        if int(self.limit) > 1000:
-            params["limit"] = "1000"
-        elif int(self.limit) < 1:
-            params["limit"] = ""
-        else:
-            params["limit"] = self.limit
+        if self.limit:
+            if int(self.limit) > 1000:
+                params["limit"] = "1000"
+            elif int(self.limit) < 1:
+                params["limit"] = ""
+            else:
+                params["limit"] = self.limit
         
         return params
 
@@ -786,4 +785,226 @@ class FetchMentionChildrenAPI(Mention):
                 pass
             data = response.json()
 
+        return data
+
+
+class StreamMentionsAPI(Mention):
+    def __init__(self,
+                 access_token,
+                 account_id,
+                 alerts,
+                 since_ids=None):
+        """
+        Parameters
+        ----------
+        access_token: string
+            Mention API access_token
+
+        alerts: list[string]
+            list of alerts to stream
+
+        since_id: string
+            Returns mentions ordered by id
+            Can not be combined with before_date, not_before_date, cursor.
+
+        """
+        self.access_token = access_token
+        self.account_id = account_id
+        self.alerts = alerts
+        self.since_ids = since_ids
+        super(StreamMentionsAPI, self).__init__(access_token)
+        
+
+    @property
+    def params(self):
+        params = {}
+        params["access_token"] = self.access_token
+        params["account_id"] = self.account_id
+
+        querystring = ""
+
+        for alert in self.alerts:
+            querystring += "alerts[]=" + alert + "&"
+            
+        if self.since_ids:
+            for i in range(self.since_ids):
+                querystring += ("since_id[{alert_id}]="
+                                "{since_id}&").format(self.since_ids[i],
+                                                      self.alerts[i])
+
+        params["querystring"] = querystring
+                
+        return params
+
+    @property
+    def url(self):
+        base_url = "https://stream.mention.net/api"
+        end_url = ("/accounts/{account_id}/mentions?"
+                  "{querystring}").format(**self.params)
+
+        return base_url + end_url
+
+
+    def query(self):
+        with requests.Session() as session:
+            session.auth = OAuth2BearerToken(self.access_token)
+            response = session.get(self.url)
+            try:
+                response.raise_for_status()
+            except HTTPError:
+                pass
+            data = response.json()
+
+        return data
+
+
+class CurateAMentionAPI(Mention):
+    def __init__(self,
+                 access_token,
+                 account_id,
+                 alert_id,
+                 mention_id,
+                 favorite=None,
+                 trashed=None,
+                 read=None,
+                 tags=None,
+                 folder=None,
+                 tone=None):
+        """
+        Parameters
+        ----------
+        access_token: string
+            Mention API access_token
+
+        account_id: string
+            ID of the account.
+
+        alert_id: string
+            ID of the alert.
+
+        mention_id: string
+            ID of the mention.
+        """
+        self.access_token = access_token
+        self.account_id = account_id
+        self.alert_id = alert_id
+        self.mention_id = mention_id
+
+        if favorite is not None:
+            self.favorite = utils.transform_boolean(favorite)
+        else:
+            self.favorite = favorite
+        
+        if trashed is not None:
+            self.trashed = utils.transform_boolean(trashed)
+        else:
+            self.trashed = trashed
+
+        if read is not None:
+            self.read = tone = utils.transform_tone(read)
+        else:
+            self.read = read
+ 
+        self.tags = tags
+        self.folder = folder
+        self.tone = tone
+        super(CurateAMentionAPI, self).__init__(access_token)
+
+
+    @property
+    def params(self):
+        params = {}
+        params["access_token"] = self.access_token
+        params["account_id"] = self.account_id
+        params["alert_id"] = self.alert_id
+        params["mention_id"] = self.mention_id
+        return params
+
+
+    @property
+    def data(self):
+        data = {}
+        data["favorite"] = self.favorite if self.favorite else ""
+        data["trashed"] = self.trashed if self.trashed else ""
+        data["read"] = self.read if self.read else ""
+        data["tags"] = self.tags if self.tags else ""
+        data["folder"] = self.folder if self.folder else ""
+        data["tone"] = self.tone if self.tone else ""
+
+        #Deletes parameter if it does not have a value
+        for key, value in list(data.items()):
+            if value == '':
+                del data[key]
+        
+        data = json.dumps(data)
+        return data
+
+
+    @property
+    def url(self):
+        end_url = ("/accounts/{account_id}/alerts/{alert_id}/mentions/"
+                   "{mention_id}".format(**self.params))
+
+        return self._base_url + end_url
+
+
+    def query(self):
+        with requests.Session() as session:
+            session.auth = OAuth2BearerToken(self.access_token)
+            response = session.put(self.url, data=self.data)
+            try:
+                response.raise_for_status()
+            except HTTPError:
+                pass
+            data = response.json()
+
+        return data
+
+
+class MarkAllMentionsAsReadAPI(Mention):
+    def __init__(self, access_token, account_id, alert_id):
+        """
+        Parameters
+        ----------
+        access_token: string
+            Mention API access_token
+
+        account_id: string
+            ID of the account.
+
+        alert_id: string
+            ID of the alert.
+        """
+        self.access_token = access_token
+        self.account_id = account_id
+        self.alert_id = alert_id
+        super(MarkAllMentionsAsReadAPI, self).__init__(access_token)
+
+
+    @property
+    def params(self):
+        params = {}
+        params["access_token"] = self.access_token
+        params["account_id"] = self.account_id
+        params["alert_id"] = self.alert_id
+        return params
+
+
+    @property
+    def url(self):
+        end_url = ("/accounts/{account_id}/alerts/{alert_id}/mentions/"
+                   "markallread".format(**self.params))
+
+        return self._base_url + end_url
+
+
+    def query(self):
+        with requests.Session() as session:
+            session.auth = OAuth2BearerToken(self.access_token)
+            response = session.post(self.url)
+            try:
+                response.raise_for_status()
+            except HTTPError:
+                pass
+            data = response.json()
         return data

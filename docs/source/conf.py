@@ -21,7 +21,7 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('C:/Users/mazi7/Documents/Programming' +
                                    '/Projects/Python Projects/Mention API' +
-                                   '/mention/'))
+                                   '/mention/mention'))
 
 
 # -- General configuration ------------------------------------------------

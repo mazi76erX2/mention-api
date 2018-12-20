@@ -63,10 +63,12 @@ Examples
     "Nando's launches their own food ordering app"
 
     >>> data['description']				 			
-    "Nando's has launched their own app that will allow people to order their favourite meal from the comfort of their own home."
+    "Nando's has launched their own app that will allow people to order their favourite meal from the comfort 
+    ...	of their own home."
 
     >>> data['original_url']				 			
-    'https:\/\/www.iol.co.za\/business-report\/technology\/nandos-launches-their-own-food-ordering-app-18378360'
+    'https:\/\/www.iol.co.za\/business-report\/technology\/nandos-launches-their-own-food-
+    ...	ordering-app-18378360'
 
 **Read More**
 

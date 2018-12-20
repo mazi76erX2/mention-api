@@ -242,7 +242,7 @@ class CreateAnAlertAPI(Mention):
                 response.raise_for_status()
             except HTTPError:
                 pass
-            data = response.text
+            data = response.json()
         return data
 
 
@@ -788,102 +788,78 @@ class FetchMentionChildrenAPI(Mention):
         return data
 
 
-##class StreamMentionsAPI(Mention):
-##    def __init__(self,
-##                 access_token,
-##                 account_id,
-##                 alerts,
-##                 since_ids=None,
-##                 time_open=20):
-##        """
-##        Parameters
-##        ----------
-##        access_token: string
-##            Mention API access_token
-##
-##        alerts: list[string]
-##            list of alerts to stream
-##
-##        since_id: string
-##            Returns mentions ordered by id
-##            Can not be combined with before_date, not_before_date, cursor.
-##
-##        time_open: string
-##            Sets the amount of time the connection should stay open for.
-##
-##        """
-##        self.access_token = access_token
-##        self.account_id = account_id
-##        self.alerts = alerts
-##        self.since_ids = since_ids
-##        self.time_open = time_open
-##        super(StreamMentionsAPI, self).__init__(access_token)
-##        
-##
-##    @property
-##    def params(self):
-##        params = {}
-##        params["access_token"] = self.access_token
-##        params["account_id"] = self.account_id
-##
-##        querystring = ""
-##
-##        for alert in self.alerts:
-##            querystring += "alerts[]=" + alert + "&"
-##            
-##        if self.since_ids:
-##            for i in range(self.since_ids):
-##                querystring += ("since_id[{alert_id}]="
-##                                "{since_id}&").format(self.since_ids[i],
-##                                                      self.alerts[i])
-##
-##        params["querystring"] = querystring
-##                
-##        return params
-##
-##    @property
-##    def url(self):
-##        base_url = "https://stream.mention.net/api"
-##        end_url = ("/accounts/{account_id}/mentions?"
-##                  "{querystring}").format(**self.params)
-##
-##        return base_url + end_url
-##
-##
-##    def query(self):
-##        with requests.Session() as session:
-##            session.auth = OAuth2BearerToken(self.access_token)
-##            
-##            response = session.get(self.url,
-##                                   stream=True,
-##                                   timeout=self.time_open)
-##
-##
-##            for line in response.iter_lines():
-##                if line:
-##                    print(json.loads(line))
-##                            
-##            try:
-##                response.raise_for_status()
-##            except HTTPError:
-##                pass
-##            data = response.json()
-##
-##        return data
-
-
-class CurateAMentionAPI(Mention):
+class StreamMentionsAPI(Mention):
     def __init__(self,
                  access_token,
                  account_id,
-                 alert_id,
-                 mention_id,
-                 favorite=None,
-                 trashed=None,
-                 read=None,
-                 tags=None,
-                 folder=None,
-                 tone=None):
+                 alerts,
+                 since_ids=None):
+        """
+        Parameters
+        ----------
+        access_token: string
+            Mention API access_token
+
+        alerts: list[string]
+            list of alerts to stream
+
+        since_id: string
+            Returns mentions ordered by id
+            Can not be combined with before_date, not_before_date, cursor.
+
+        """
+        self.access_token = access_token
+        self.account_id = account_id
+        self.alerts = alerts
+        self.since_ids = since_ids
+        super(StreamMentionsAPI, self).__init__(access_token)
+        
+
+    @property
+    def params(self):
+        params = {}
+        params["access_token"] = self.access_token
+        params["account_id"] = self.account_id
+
+        querystring = ""
+
+        for alert in self.alerts:
+            querystring += "alerts[]=" + alert + "&"
+            
+        if self.since_ids:
+            for i in range(self.since_ids):
+                querystring += ("since_id[{alert_id}]="
+                                "{since_id}&").format(self.since_ids[i],
+                                                      self.alerts[i])
+
+        params["querystring"] = querystring
+                
+        return params
+
+    @property
+    def url(self):
+        base_url = "https://stream.mention.net/api"
+        end_url = ("/accounts/{account_id}/mentions?"
+                  "{querystring}").format(**self.params)
+
+        return base_url + end_url
+
+
+    def query(self):
+        with requests.Session() as session:
+            session.auth = OAuth2BearerToken(self.access_token)
+            response = session.get(self.url)
+            try:
+                response.raise_for_status()
+            except HTTPError:
+                pass
+            data = response.json()
+
+        return data
+
+
+class CurateAMentionAPI(Mention):
+    def __init__(self, access_token, account_id, alert_id, mention_id):
         """
         Parameters
         ----------
@@ -1050,43 +1026,33 @@ query = {'type':'basic',
          'excluded_keywords' : ["adidas"],
          'monitored_website' : {"domain":"www.hypebeast.com", "block_self":False}
         }
+
+alerts = [alert_id, alert_id1, alert_id2]
+
+#data6 = StreamMentionsAPI(access_token, account_id, alerts).query()
+
+data9 = CurateAMentionAPI(access_token, account_id, alert_id, mention_id).query()
+
+
+"""
 languages = ["en"]
 
-alerts = [alert_id1]
-
-## App
-
 data = AppDataAPI(access_token).query()
-
-## Alert
-
-data1 = CreateAnAlertAPI(access_token, account_id, name, query, languages).query()
 data2 = FetchAnAlertAPI(access_token, account_id, alert_id).query()
 data3 = FetchAlertsAPI(access_token, account_id).query()
-data4 = UpdateAnAlertAPI(access_token, account_id, alert_id3, name, query, languages).query()
-
-## Mention
-
+data4 = FetchAllMentionsAPI(access_token, account_id, alert_id).query()
 data5 = FetchAMentionAPI(access_token, account_id, alert_id, mention_id).query()
-data6 = FetchAllMentionsAPI(access_token, account_id, alert_id).query()
-data7 = FetchMentionChildrenAPI(access_token, account_id, alert_id, mention_id).query()
-#data8 = StreamMentionsAPI(access_token, account_id, alerts).query()
-data9 = CurateAMentionAPI(access_token, account_id, alert_id, mention_id).query()
-data10 = MarkAllMentionsAsReadAPI(access_token, account_id, alert_id4).query()
+#data6 = StreamMentionsAPI(access_token, account_id, alerts).query()
 
+#data6 = CreateAnAlertAPI(access_token, account_id, name, query, languages).query()
 
 countries = ["US", "ZA"]
 
-
-## App JSON
+data7 = UpdateAnAlertAPI(access_token, account_id, alert_id4, name, query, languages).query()
+data8 = FetchMentionChildrenAPI(access_token, account_id, alert_id, mention_id).query()
 
 with open('testapidata.json', 'w') as file:
     json.dump(data, file)
-
-## Alert JSON
-
-with open('testcreateanalert.json', 'w') as file:
-    json.dump({'text': data1}, file)
 
 with open('testfetchanalert.json', 'w') as file:
     json.dump(data2, file)
@@ -1094,25 +1060,18 @@ with open('testfetchanalert.json', 'w') as file:
 with open('testfetchalerts.json', 'w') as file:
     json.dump(data3, file)
 
-with open('testupdateanalert.json', 'w') as file:
+with open('testfetchmentions.json', 'w') as file:
     json.dump(data4, file)
-
-## Mention JSON
 
 with open('testfetchamention.json', 'w') as file:
     json.dump(data5, file)
 
-with open('testfetchmentions.json', 'w') as file:
-    json.dump(data6, file)
+#with open('testcreateanalert.json', 'w') as file:
+    #json.dump(data6, file)
 
-with open('testfetchmentionchildren.json', 'w') as file:
+with open('testupdateanalert.json', 'w') as file:
     json.dump(data7, file)
 
-##with open('teststreammentions.json', 'w') as file:
-##    json.dump(data8, file)
-
-with open('testcuratemention.json', 'w') as file:
-    json.dump(data9, file)
-
-with open('testallmentionsasread.json', 'w') as file:
-    json.dump(data10, file)
+with open('testfetchmentionchildren.json', 'w') as file:
+    json.dump(data8, file)
+"""
