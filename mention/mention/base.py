@@ -3,7 +3,7 @@ from requests_oauth2 import OAuth2BearerToken
 import json
 from abc import ABCMeta, abstractmethod
 from requests.exceptions import HTTPError
-import utils
+from mention import utils
 
 class Mention(object):
     __metaclass__ = ABCMeta
@@ -242,7 +242,7 @@ class CreateAnAlertAPI(Mention):
                 response.raise_for_status()
             except HTTPError:
                 pass
-            data = response.json()
+            data = response.text
         return data
 
 
@@ -788,74 +788,88 @@ class FetchMentionChildrenAPI(Mention):
         return data
 
 
-class StreamMentionsAPI(Mention):
-    def __init__(self,
-                 access_token,
-                 account_id,
-                 alerts,
-                 since_ids=None):
-        """
-        Parameters
-        ----------
-        access_token: string
-            Mention API access_token
-
-        alerts: list[string]
-            list of alerts to stream
-
-        since_id: string
-            Returns mentions ordered by id
-            Can not be combined with before_date, not_before_date, cursor.
-
-        """
-        self.access_token = access_token
-        self.account_id = account_id
-        self.alerts = alerts
-        self.since_ids = since_ids
-        super(StreamMentionsAPI, self).__init__(access_token)
-        
-
-    @property
-    def params(self):
-        params = {}
-        params["access_token"] = self.access_token
-        params["account_id"] = self.account_id
-
-        querystring = ""
-
-        for alert in self.alerts:
-            querystring += "alerts[]=" + alert + "&"
-            
-        if self.since_ids:
-            for i in range(self.since_ids):
-                querystring += ("since_id[{alert_id}]="
-                                "{since_id}&").format(self.since_ids[i],
-                                                      self.alerts[i])
-
-        params["querystring"] = querystring
-                
-        return params
-
-    @property
-    def url(self):
-        base_url = "https://stream.mention.net/api"
-        end_url = ("/accounts/{account_id}/mentions?"
-                  "{querystring}").format(**self.params)
-
-        return base_url + end_url
-
-
-    def query(self):
-        with requests.Session() as session:
-            session.auth = OAuth2BearerToken(self.access_token)
-            response = session.get(self.url)
-            try:
-                response.raise_for_status()
-            except HTTPError:
-                pass
-            data = response.json()
-
-        return data
+##class StreamMentionsAPI(Mention):
+##    def __init__(self,
+##                 access_token,
+##                 account_id,
+##                 alerts,
+##                 since_ids=None,
+##                 time_open=20):
+##        """
+##        Parameters
+##        ----------
+##        access_token: string
+##            Mention API access_token
+##
+##        alerts: list[string]
+##            list of alerts to stream
+##
+##        since_id: string
+##            Returns mentions ordered by id
+##            Can not be combined with before_date, not_before_date, cursor.
+##
+##        time_open: string
+##            Sets the amount of time the connection should stay open for.
+##
+##        """
+##        self.access_token = access_token
+##        self.account_id = account_id
+##        self.alerts = alerts
+##        self.since_ids = since_ids
+##        self.time_open = time_open
+##        super(StreamMentionsAPI, self).__init__(access_token)
+##        
+##
+##    @property
+##    def params(self):
+##        params = {}
+##        params["access_token"] = self.access_token
+##        params["account_id"] = self.account_id
+##
+##        querystring = ""
+##
+##        for alert in self.alerts:
+##            querystring += "alerts[]=" + alert + "&"
+##            
+##        if self.since_ids:
+##            for i in range(self.since_ids):
+##                querystring += ("since_id[{alert_id}]="
+##                                "{since_id}&").format(self.since_ids[i],
+##                                                      self.alerts[i])
+##
+##        params["querystring"] = querystring
+##                
+##        return params
+##
+##    @property
+##    def url(self):
+##        base_url = "https://stream.mention.net/api"
+##        end_url = ("/accounts/{account_id}/mentions?"
+##                  "{querystring}").format(**self.params)
+##
+##        return base_url + end_url
+##
+##
+##    def query(self):
+##        with requests.Session() as session:
+##            session.auth = OAuth2BearerToken(self.access_token)
+##            
+##            response = session.get(self.url,
+##                                   stream=True,
+##                                   timeout=self.time_open)
+##
+##
+##            for line in response.iter_lines():
+##                if line:
+##                    print(json.loads(line))
+##                            
+##            try:
+##                response.raise_for_status()
+##            except HTTPError:
+##                pass
+##            data = response.json()
+##
+##        return data
 
 
 class CurateAMentionAPI(Mention):
