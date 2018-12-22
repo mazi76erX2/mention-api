@@ -2,8 +2,8 @@
 Mention-Python
 ==============
 
-.. image:: https://img.shields.io/pypi/v/MentionAPI.svg
-    :target: https://pypi.python.org/pypi/MentionAPI
+.. image:: https://img.shields.io/pypi/v/mention.svg
+    :target: https://pypi.python.org/pypi/mention
 
 .. image:: https://travis-ci.org/mazi76erX2/mention-python.svg?branch=master
     :target: https://travis-ci.org/mazi76erX2/mention-python
