@@ -1,4 +1,4 @@
-Installation & Testing
+Installation
 ------------
 
 Installation
@@ -67,22 +67,6 @@ Extract the source distribution and run
     $ python setup.py install
 
 
-Testing
-=======
-
-The following requires ``pip install pytest-cov``. Run
-
-.. code-block:: console
-
-    $ make test
-
-If you would like to see coverage information
-
-.. code-block:: console
-
-    $ make coverage
-
-
 Getting the code
 ================
 
@@ -101,6 +85,6 @@ At this point, you can test out your application using the key under "Access Tok
 
     import mention
 
-    alert = mention.FetchAnAlerAPI(access_token='access_token',
+    alert = mention.FetchAnAlertAPI(access_token='access_token',
     ...		account_id='account_id',
     ...		alert_id='alert_id')

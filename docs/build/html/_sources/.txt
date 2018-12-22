@@ -1,20 +1,20 @@
-mention package
-===============
+ package
+========
 
 Subpackages
 -----------
 
 .. toctree::
 
-    mention.mention
+    .mention
 
 Submodules
 ----------
 
-mention\.setup module
----------------------
+setup module
+------------
 
-.. automodule:: mention.setup
+.. automodule:: setup
     :members:
     :undoc-members:
     :show-inheritance:
@@ -23,7 +23,7 @@ mention\.setup module
 Module contents
 ---------------
 
-.. automodule:: mention
+.. automodule:: 
     :members:
     :undoc-members:
     :show-inheritance:

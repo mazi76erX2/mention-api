@@ -23,8 +23,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="mention package" href="mention.html" />
-    <link rel="prev" title="Installation &amp; Testing" href="installation.html" />
+    <link rel="next" title="Change Log" href="changelog.html" />
+    <link rel="prev" title="Installation" href="installation.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -47,7 +47,7 @@
 <li><strong>Mention-Python</strong> installed</li>
 <li>your Access token</li>
 </ul>
-<p>See the <a class="reference internal" href="installation.html"><span class="doc">Installation &amp; Testing</span></a> page for help if needed.</p>
+<p>See the <a class="reference internal" href="installation.html"><span class="doc">Installation</span></a> page for help if needed.</p>
 <div class="section" id="app">
 <h2>App<a class="headerlink" href="#app" title="Permalink to this headline">¶</a></h2>
 <p>Assume your access token is stored in <code class="docutils literal"><span class="pre">access_token</span></code> for all API calls:</p>
@@ -189,21 +189,6 @@
 <p class="last"><code class="docutils literal"><span class="pre">limit</span></code> is capped at 1000. To view more mentions use the <code class="docutils literal"><span class="pre">_links</span></code>, <code class="docutils literal"><span class="pre">more</span></code> and <code class="docutils literal"><span class="pre">pull</span></code> urls to receive all of your mentions. To learn more about this, read the bottom of <a class="reference external" href="https://dev.mention.com/current/src/account/alert/mention/GetMentions.html">Fetch Mentions</a>.</p>
 </div>
 </div>
-<div class="section" id="stream-mention">
-<h3>Stream mention<a class="headerlink" href="#stream-mention" title="Permalink to this headline">¶</a></h3>
-<p>Enables you to stream mentions for one or many alerts. It will open an http connection and keep it open, sending to your stream client any mention as soon as it is fetched for any of the selected alerts.</p>
-<p>Requires at least one <code class="docutils literal"><span class="pre">alert_id</span></code> from an <code class="docutils literal"><span class="pre">account_id</span></code>.</p>
-<p>You can pass the parameter <code class="docutils literal"><span class="pre">since_id</span></code>.</p>
-<p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">streamedMentions</span> <span class="o">=</span> <span class="n">mention</span><span class="o">.</span><span class="n">StreamMentionsAPI</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span>
-<span class="gp">... </span><span class="n">alerts</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;alert_id&quot;</span><span class="p">,</span> <span class="s2">&quot;111222&quot;</span><span class="p">],</span>
-<span class="gp">... </span><span class="n">since_ids</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;43&quot;</span><span class="p">])</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">streamedMentions</span><span class="o">.</span><span class="n">query</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">firstStremedMentions</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;mentions&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
 <div class="section" id="curate-a-mention">
 <h3>Curate a mention<a class="headerlink" href="#curate-a-mention" title="Permalink to this headline">¶</a></h3>
 <p>Updates an existing <code class="docutils literal"><span class="pre">mention_id</span></code> for a given <code class="docutils literal"><span class="pre">alert_id</span></code> from an <code class="docutils literal"><span class="pre">account_id</span></code>. These update concern majorly classification of the mention: indicating the folder, tags, effective tone of the mention, etc… You cannot modify the content of a mention, or its source.</p>
@@ -244,10 +229,18 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
+        <div class="sphinxsidebarwrapper"><p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/mention-sidebar.png" title="Mention-Python"/>
+  </a>
+</p>
+
+<p>
+  Mention-Python is a library that provides a pure Python interface for the Mention API.
+</p>
 <h3><a href="index.html">Table Of Contents</a></h3>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation &amp; Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#app">App</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#app-data">App Data</a></li>
@@ -263,31 +256,17 @@
 <li class="toctree-l2"><a class="reference internal" href="#mention">Mention</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#fetch-a-mention">Fetch a mention</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fetch-mentions">Fetch mentions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#stream-mention">Stream mention</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#curate-a-mention">Curate a mention</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mark-all-mentions-read">Mark all mentions read</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mention.html">mention package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mention.mention.html">mention.mention package</a></li>
 </ul>
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="installation.html" title="previous chapter">Installation &amp; Testing</a></li>
-      <li>Next: <a href="mention.html" title="next chapter">mention package</a></li>
-  </ul></li>
-</ul>
-</div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/getting_started.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
+
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">

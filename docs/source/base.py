@@ -3,7 +3,7 @@ from requests_oauth2 import OAuth2BearerToken
 import json
 from abc import ABCMeta, abstractmethod
 from requests.exceptions import HTTPError
-import utils
+from mention import utils
 
 class Mention(object):
     __metaclass__ = ABCMeta
@@ -242,7 +242,7 @@ class CreateAnAlertAPI(Mention):
                 response.raise_for_status()
             except HTTPError:
                 pass
-            data = response.json()
+            data = response.text
         return data
 
 
@@ -788,78 +788,102 @@ class FetchMentionChildrenAPI(Mention):
         return data
 
 
-class StreamMentionsAPI(Mention):
-    def __init__(self,
-                 access_token,
-                 account_id,
-                 alerts,
-                 since_ids=None):
-        """
-        Parameters
-        ----------
-        access_token: string
-            Mention API access_token
-
-        alerts: list[string]
-            list of alerts to stream
-
-        since_id: string
-            Returns mentions ordered by id
-            Can not be combined with before_date, not_before_date, cursor.
-
-        """
-        self.access_token = access_token
-        self.account_id = account_id
-        self.alerts = alerts
-        self.since_ids = since_ids
-        super(StreamMentionsAPI, self).__init__(access_token)
-        
-
-    @property
-    def params(self):
-        params = {}
-        params["access_token"] = self.access_token
-        params["account_id"] = self.account_id
-
-        querystring = ""
-
-        for alert in self.alerts:
-            querystring += "alerts[]=" + alert + "&"
-            
-        if self.since_ids:
-            for i in range(self.since_ids):
-                querystring += ("since_id[{alert_id}]="
-                                "{since_id}&").format(self.since_ids[i],
-                                                      self.alerts[i])
-
-        params["querystring"] = querystring
-                
-        return params
-
-    @property
-    def url(self):
-        base_url = "https://stream.mention.net/api"
-        end_url = ("/accounts/{account_id}/mentions?"
-                  "{querystring}").format(**self.params)
-
-        return base_url + end_url
-
-
-    def query(self):
-        with requests.Session() as session:
-            session.auth = OAuth2BearerToken(self.access_token)
-            response = session.get(self.url)
-            try:
-                response.raise_for_status()
-            except HTTPError:
-                pass
-            data = response.json()
-
-        return data
+##class StreamMentionsAPI(Mention):
+##    def __init__(self,
+##                 access_token,
+##                 account_id,
+##                 alerts,
+##                 since_ids=None,
+##                 time_open=20):
+##        """
+##        Parameters
+##        ----------
+##        access_token: string
+##            Mention API access_token
+##
+##        alerts: list[string]
+##            list of alerts to stream
+##
+##        since_id: string
+##            Returns mentions ordered by id
+##            Can not be combined with before_date, not_before_date, cursor.
+##
+##        time_open: string
+##            Sets the amount of time the connection should stay open for.
+##
+##        """
+##        self.access_token = access_token
+##        self.account_id = account_id
+##        self.alerts = alerts
+##        self.since_ids = since_ids
+##        self.time_open = time_open
+##        super(StreamMentionsAPI, self).__init__(access_token)
+##        
+##
+##    @property
+##    def params(self):
+##        params = {}
+##        params["access_token"] = self.access_token
+##        params["account_id"] = self.account_id
+##
+##        querystring = ""
+##
+##        for alert in self.alerts:
+##            querystring += "alerts[]=" + alert + "&"
+##            
+##        if self.since_ids:
+##            for i in range(self.since_ids):
+##                querystring += ("since_id[{alert_id}]="
+##                                "{since_id}&").format(self.since_ids[i],
+##                                                      self.alerts[i])
+##
+##        params["querystring"] = querystring
+##                
+##        return params
+##
+##    @property
+##    def url(self):
+##        base_url = "https://stream.mention.net/api"
+##        end_url = ("/accounts/{account_id}/mentions?"
+##                  "{querystring}").format(**self.params)
+##
+##        return base_url + end_url
+##
+##
+##    def query(self):
+##        with requests.Session() as session:
+##            session.auth = OAuth2BearerToken(self.access_token)
+##            
+##            response = session.get(self.url,
+##                                   stream=True,
+##                                   timeout=self.time_open)
+##
+##
+##            for line in response.iter_lines():
+##                if line:
+##                    print(json.loads(line))
+##                            
+##            try:
+##                response.raise_for_status()
+##            except HTTPError:
+##                pass
+##            data = response.json()
+##
+##        return data
 
 
 class CurateAMentionAPI(Mention):
-    def __init__(self, access_token, account_id, alert_id, mention_id):
+    def __init__(self,
+                 access_token,
+                 account_id,
+                 alert_id,
+                 mention_id,
+                 favorite=None,
+                 trashed=None,
+                 read=None,
+                 tags=None,
+                 folder=None,
+                 tone=None):
         """
         Parameters
         ----------
@@ -998,80 +1022,3 @@ class MarkAllMentionsAsReadAPI(Mention):
                 pass
             data = response.json()
         return data
-
-
-client = '1358_2fe3fcbxf21wgkgckog4s4kowksoo044gsskss0wco0s0gc4cg'
-client_secret  = '5sy5nryhys8wsgocs08wc0wc80k880ggwoo08wko0ssscsggg8'
-
-access_token = 'MTkwOGEwNjdhOWU0Y2NiOTU5MzVmNmE1OWNkOGU1N2U0MGIxNzc3'\
-               'MjU5OTg2MzFmOWZkNTM4MGJkYTU0ZjU3OA'
-
-
-account_id = '931457_136gzug42du88og80wskosg8c4ws8kw084k8w4cwkc000go08k'
-
-alert_id = '1849085'
-alert_id1 = '1849086'
-alert_id2 = '1849087'
-alert_id3 = '1849088'
-alert_id4 = '1849150'
-
-limit = '1000'
-
-mention_id = '128182423172'
-
-name = 'Nike Air Yeezy 2'
-query = {'type':'basic',
-         'included_keywords' : ["Nike Air Yeezy 2", "Platinum"],
-         'required_keywords' : ["nike"],
-         'excluded_keywords' : ["adidas"],
-         'monitored_website' : {"domain":"www.hypebeast.com", "block_self":False}
-        }
-
-alerts = [alert_id, alert_id1, alert_id2]
-
-#data6 = StreamMentionsAPI(access_token, account_id, alerts).query()
-
-data9 = CurateAMentionAPI(access_token, account_id, alert_id, mention_id).query()
-
-
-"""
-languages = ["en"]
-
-data = AppDataAPI(access_token).query()
-data2 = FetchAnAlertAPI(access_token, account_id, alert_id).query()
-data3 = FetchAlertsAPI(access_token, account_id).query()
-data4 = FetchAllMentionsAPI(access_token, account_id, alert_id).query()
-data5 = FetchAMentionAPI(access_token, account_id, alert_id, mention_id).query()
-#data6 = StreamMentionsAPI(access_token, account_id, alerts).query()
-
-#data6 = CreateAnAlertAPI(access_token, account_id, name, query, languages).query()
-
-countries = ["US", "ZA"]
-
-data7 = UpdateAnAlertAPI(access_token, account_id, alert_id4, name, query, languages).query()
-data8 = FetchMentionChildrenAPI(access_token, account_id, alert_id, mention_id).query()
-
-with open('testapidata.json', 'w') as file:
-    json.dump(data, file)
-
-with open('testfetchanalert.json', 'w') as file:
-    json.dump(data2, file)
-
-with open('testfetchalerts.json', 'w') as file:
-    json.dump(data3, file)
-
-with open('testfetchmentions.json', 'w') as file:
-    json.dump(data4, file)
-
-with open('testfetchamention.json', 'w') as file:
-    json.dump(data5, file)
-
-#with open('testcreateanalert.json', 'w') as file:
-    #json.dump(data6, file)
-
-with open('testupdateanalert.json', 'w') as file:
-    json.dump(data7, file)
-
-with open('testfetchmentionchildren.json', 'w') as file:
-    json.dump(data8, file)
-"""

@@ -1,29 +1,20 @@
 mention package
 ===============
 
+Subpackages
+-----------
+
+.. toctree::
+
+    mention.mention
+
 Submodules
 ----------
 
-mention\.base module
---------------------
-
-.. automodule:: mention.base
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-mention\.exceptions module
---------------------------
-
-.. automodule:: mention.exceptions
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-mention\.utils module
+mention\.setup module
 ---------------------
 
-.. automodule:: mention.utils
+.. automodule:: mention.setup
     :members:
     :undoc-members:
     :show-inheritance:

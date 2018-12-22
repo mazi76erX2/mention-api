@@ -187,28 +187,6 @@ Example:
     ``limit`` is capped at 1000. To view more mentions use the ``_links``, ``more`` and ``pull`` urls to receive all of your mentions. To learn more about this, read the bottom of `Fetch Mentions <https://dev.mention.com/current/src/account/alert/mention/GetMentions.html>`_.
 
 
-Stream mention
-^^^^^^^^^^^^^^
-
-Enables you to stream mentions for one or many alerts. It will open an http connection and keep it open, sending to your stream client any mention as soon as it is fetched for any of the selected alerts.
-
-Requires at least one ``alert_id`` from an ``account_id``.
-
-You can pass the parameter ``since_id``.
-
-
-Example:
-
-.. code-block:: python
-
-    >>> streamedMentions = mention.StreamMentionsAPI(access_token, 
-    ...	alerts=["alert_id", "111222"], 
-    ...	since_ids=["", "43"])
-
-    >>> data = streamedMentions.query()
-    >>> firstStremedMentions = data['mentions'][0]
-
-
 Curate a mention
 ^^^^^^^^^^^^^^^^
 

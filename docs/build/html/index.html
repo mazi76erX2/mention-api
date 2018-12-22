@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Installation &amp; Testing" href="installation.html" />
+    <link rel="next" title="Installation" href="installation.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -41,7 +41,7 @@
             
   <div class="section" id="mention-python">
 <h1>Mention-Python<a class="headerlink" href="#mention-python" title="Permalink to this headline">¶</a></h1>
-<a class="reference external image-reference" href="https://pypi.python.org/pypi/MentionAPI"><img alt="https://img.shields.io/pypi/v/MentionAPI.svg" src="https://img.shields.io/pypi/v/MentionAPI.svg" /></a>
+<a class="reference external image-reference" href="https://pypi.org/project/mention"><img alt="https://img.shields.io/pypi/v/mention.svg" src="https://img.shields.io/pypi/v/mention.svg" /></a>
 <a class="reference external image-reference" href="https://travis-ci.org/mazi76erX2/mention-python"><img alt="https://travis-ci.org/mazi76erX2/mention-python.svg?branch=master" src="https://travis-ci.org/mazi76erX2/mention-python.svg?branch=master" /></a>
 <a class="reference external image-reference" href="https://codecov.io/gh/mazi76erX2/mention-python"><img alt="https://codecov.io/gh/mazi76erX2/mention-python/branch/master/graph/badge.svg" src="https://codecov.io/gh/mazi76erX2/mention-python/branch/master/graph/badge.svg" /></a>
 <a class="reference external image-reference" href="https://mention-python.readthedocs.org/en/latest"><img alt="https://readthedocs.org/projects/mention-python/badge/?version=latest" src="https://readthedocs.org/projects/mention-python/badge/?version=latest" /></a>
@@ -69,7 +69,6 @@
 <li>fetch and curate (update) a mention from an alert</li>
 <li>fetch all mentions for an alert</li>
 <li>fetch all children mentions for a given mention</li>
-<li>stream all mentions for alerts</li>
 <li>mark all of an alert’s mentions as read</li>
 </ul>
 </div>
@@ -77,12 +76,11 @@
 <h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation &amp; Testing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#installation">Installation</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#id1">Installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="installation.html#getting-your-application-tokens">Getting your application tokens</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#testing">Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#getting-the-code">Getting the code</a></li>
 </ul>
 </li>
@@ -101,17 +99,22 @@
 <li class="toctree-l2"><a class="reference internal" href="getting_started.html#mention">Mention</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="getting_started.html#fetch-a-mention">Fetch a mention</a></li>
 <li class="toctree-l3"><a class="reference internal" href="getting_started.html#fetch-mentions">Fetch mentions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="getting_started.html#stream-mention">Stream mention</a></li>
 <li class="toctree-l3"><a class="reference internal" href="getting_started.html#curate-a-mention">Curate a mention</a></li>
 <li class="toctree-l3"><a class="reference internal" href="getting_started.html#mark-all-mentions-read">Mark all mentions read</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">Developer Docs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html#mention-client"><code class="docutils literal"><span class="pre">mention.client</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html#mention-appdataapi"><code class="docutils literal"><span class="pre">mention.AppDataAPI</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api.html#id1"><code class="docutils literal"><span class="pre">mention.AppDataAPI</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-0-1-december-21-2018">Version 0.1 (December 21, 2018)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Developer Docs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-mention.base">mention.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-mention.exceptions">mention.exceptions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-mention.utils">mention..utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -120,7 +123,7 @@
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>Mention is a social media and web monitoring tool. The media monitoring tool provides real-time alerts for a company’s keyword and allows users to monitor millions of sources in real time and in 42 languages.</p>
-<p>This library provides a pure Python interface for the <a class="reference external" href="https://dev.mention.com/">Mention API</a>. It only works with Python 3.6+</p>
+<p>This library provides a pure Python interface for the <a class="reference external" href="https://dev.mention.com/">Mention API</a>. It works with Python 3.0+</p>
 <p><a class="reference external" href="http://mention.com">Mention</a>. Mention is designed as a REST API with multiple clients: web (the web app, used on computers), iOS, and Android. A client is a program that will consume our API, that will use its endpoints and returned data.</p>
 <p>What can this API do for you?</p>
 <p>Integrate Mention capabilities into your own website, with your own layout and your own way of managing rights
@@ -141,30 +144,23 @@ Use Mention as an intelligent crawler and use its output in your own systems / w
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
+        <div class="sphinxsidebarwrapper"><p class="logo">
+  <a href="#">
+    <img class="logo" src="_static/mention-sidebar.png" title="Mention-Python"/>
+  </a>
+</p>
+
+<p>
+  Mention-Python is a library that provides a pure Python interface for the Mention API.
+</p>
 <h3><a href="#">Table Of Contents</a></h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation &amp; Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">Developer Docs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html#mention-client"><code class="docutils literal"><span class="pre">mention.client</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html#mention-appdataapi"><code class="docutils literal"><span class="pre">mention.AppDataAPI</span></code></a></li>
 </ul>
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="installation.html" title="next chapter">Installation &amp; Testing</a></li>
-  </ul></li>
-</ul>
-</div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/index.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
+
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">

@@ -19,9 +19,7 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('C:/Users/mazi7/Documents/Programming' +
-                                   '/Projects/Python Projects/Mention API' +
-                                   '/mention/mention'))
+sys.path.insert(0, os.path.abspath('../../mention'))
 
 
 # -- General configuration ------------------------------------------------
@@ -110,9 +108,10 @@ html_static_path = ['_static']
 # refs: http://alabaster.readthedocs.io/en/latest/installation.html#sidebars
 html_sidebars = {
     '**': [
+        'sidebarlogo.html',
         'globaltoc.html',
-        'relations.html',  # needs 'show_related': True theme option to display
-        'sourcelink.html',
+        #'relations.html',  # needs 'show_related': True theme option to display
+        #'sourcelink.html',
         'searchbox.html',
     ]
 }
