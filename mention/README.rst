@@ -39,7 +39,9 @@ Examples
 **Fetch all alerts of an account**
 
 .. code-block:: python
-
+    
+    >>> import mention
+    
     >>> allAlerts = mention.FetchAlertsAPI(access_token, account_id)
 
     >>> data = nandosAlert.query()
@@ -78,6 +80,5 @@ Examples
      - `Contributing`_
 
 .. _Full Documentation: http:///mention-python.readthedocs.org/en/latest/
-.. _Installation: http://mention-python.readthedocs.org/en/latest/pages/installation.html
-.. _Basic Usage: http:///mention-python.readthedocs.org/en/latest/pages/quickstart.html
-.. _Contributing: http:///mention-python.readthedocs.org/en/latest/pages/contributing.html
+.. _Installation: http://mention-python.readthedocs.org/en/latest/installation.html
+.. _Basic Usage: http:///mention-python.readthedocs.org/en/latest/getting_started.html

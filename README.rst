@@ -2,8 +2,8 @@
 Mention-Python
 ==============
 
-.. image:: https://img.shields.io/pypi/v/MentionAPI.svg
-    :target: https://pypi.python.org/pypi/MentionAPI
+.. image:: https://img.shields.io/pypi/v/mention.svg
+    :target: https://pypi.org/project/mention
 
 .. image:: https://travis-ci.org/mazi76erX2/mention-python.svg?branch=master
     :target: https://travis-ci.org/mazi76erX2/mention-python
@@ -39,6 +39,8 @@ Examples
 **Fetch all alerts of an account**
 
 .. code-block:: python
+
+    >>> import mention
 
     >>> allAlerts = mention.FetchAlertsAPI(access_token, account_id)
 

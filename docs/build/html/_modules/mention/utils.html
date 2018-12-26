@@ -40,13 +40,29 @@
             
   <h1>Source code for mention.utils</h1><div class="highlight"><pre>
 <div class="viewcode-block" id="transform_date"><a class="viewcode-back" href="../../api.html#mention.utils.transform_date">[docs]</a><span></span><span class="k">def</span> <span class="nf">transform_date</span><span class="p">(</span><span class="n">date</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Encodes date and timke into url format.</span>
+
+<span class="sd">    :param date: Date and time.</span>
+<span class="sd">    :type date: str</span>
+
+<span class="sd">    :return: encoded date.</span>
+<span class="sd">    :rtype: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">index</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
-    <span class="n">date</span> <span class="o">=</span> <span class="p">(</span><span class="n">date</span><span class="p">[:</span><span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;T&#39;</span> <span class="o">+</span> <span class="n">date</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span>
-            <span class="s2">&quot;:00.12345+00:00&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span><span class="s1">&#39;%3A&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;+&#39;</span><span class="p">,</span><span class="s1">&#39;%2B&#39;</span><span class="p">)</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="p">(</span><span class="n">date</span><span class="p">[:</span><span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;T&#39;</span> <span class="o">+</span> <span class="n">date</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">+</span>
+            <span class="s2">&quot;:00.12345+00:00&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="s1">&#39;%3A&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="s1">&#39;%2B&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">date</span></div>
 
 
 <div class="viewcode-block" id="transform_boolean"><a class="viewcode-back" href="../../api.html#mention.utils.transform_boolean">[docs]</a><span class="k">def</span> <span class="nf">transform_boolean</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transfroms boolean to `1` or `0`.</span>
+
+<span class="sd">    :param value: Boolean value.</span>
+<span class="sd">    :type value: boolean</span>
+
+<span class="sd">    :return: number epresentation of boolean `1` or `0`.</span>
+<span class="sd">    :rtype: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
         <span class="k">return</span> <span class="s1">&#39;1&#39;</span>
     <span class="k">else</span><span class="p">:</span>
@@ -54,6 +70,15 @@
 
 
 <div class="viewcode-block" id="transform_tone"><a class="viewcode-back" href="../../api.html#mention.utils.transform_tone">[docs]</a><span class="k">def</span> <span class="nf">transform_tone</span><span class="p">(</span><span class="n">tone</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transforms keyword `negative`, `neutral` or `positive` into</span>
+<span class="sd">     `-1`, `0` or `1`.</span>
+
+<span class="sd">    :param tone: string representation of tone.</span>
+<span class="sd">    :type tone: str</span>
+
+<span class="sd">    :return: number representation of tone.</span>
+<span class="sd">    :rtype: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="s1">&#39;negative&#39;</span><span class="p">:</span>
         <span class="k">return</span> <span class="s1">&#39;-1&#39;</span>
     <span class="k">elif</span> <span class="s1">&#39;neutral&#39;</span><span class="p">:</span>
@@ -79,8 +104,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">Developer Docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change Log</a></li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">

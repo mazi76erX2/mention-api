@@ -52,7 +52,7 @@
 
 
 <span class="sd">    :param access_token: Mention API `access_token`</span>
-<span class="sd">    :type session: :class: `~mention.access_token`</span>
+<span class="sd">    :type access_token: str</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
@@ -63,6 +63,7 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">_base_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Base url.</span>
+
 <span class="sd">        :return: the base url</span>
 <span class="sd">        :rtype: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -89,13 +90,14 @@
 
 
 <div class="viewcode-block" id="AppDataAPI"><a class="viewcode-back" href="../../api.html#mention.base.AppDataAPI">[docs]</a><span class="k">class</span> <span class="nc">AppDataAPI</span><span class="p">(</span><span class="n">Mention</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Retrieves useful details about the application.</span>
+
+<span class="sd">    :param access_token: Mention API `access_token`</span>
+<span class="sd">    :type access_token: str</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">access_token</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Retrieves useful details about the application.</span>
-
-<span class="sd">        :param access_token: Mention API `access_token`</span>
-<span class="sd">        :type session: :class: `~mention.access_token`</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="o">=</span> <span class="n">access_token</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">AppDataAPI</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">access_token</span><span class="p">)</span>
 
@@ -103,7 +105,8 @@
     <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;The concatenation of the `base_url` and `end_url` that make up the</span>
 <span class="sd">        resultant url.</span>
-<span class="sd">        :return: the `base_url` and the `end_url`</span>
+
+<span class="sd">        :return: the `base_url` and the `end_url`.</span>
 <span class="sd">        :rtype: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">end_url</span> <span class="o">=</span> <span class="s2">&quot;/app/data&quot;</span>
@@ -112,7 +115,8 @@
 
 <div class="viewcode-block" id="AppDataAPI.query"><a class="viewcode-back" href="../../api.html#mention.base.AppDataAPI.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;The request that returns a JSON file of the API call given a url.</span>
-<span class="sd">        :return: the `base_url` and the `end_url`</span>
+
+<span class="sd">        :return: the `base_url` and the `end_url`.</span>
 <span class="sd">        :rtype: :class: `json`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
@@ -129,43 +133,54 @@
 
 
 <div class="viewcode-block" id="FetchAnAlertAPI"><a class="viewcode-back" href="../../api.html#mention.base.FetchAnAlertAPI">[docs]</a><span class="k">class</span> <span class="nc">FetchAnAlertAPI</span><span class="p">(</span><span class="n">Mention</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Retrieve details about a single alert.</span>
+
+<span class="sd">    :param access_token: Mention API `access_token`</span>
+<span class="sd">    :param account_id: ID of the account.</span>
+<span class="sd">    :param alert_id: ID of the alert.</span>
+<span class="sd">    :type access_token: str</span>
+<span class="sd">    :type account_id: str</span>
+<span class="sd">    :type alert_id: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">access_token</span><span class="p">,</span> <span class="n">account_id</span><span class="p">,</span> <span class="n">alert_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        access_token: string</span>
-<span class="sd">            Mention API access_token</span>
-
-<span class="sd">        account_id: string</span>
-<span class="sd">            ID of the account.</span>
-
-<span class="sd">        alert_id: string</span>
-<span class="sd">            ID of the alert.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="o">=</span> <span class="n">access_token</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">account_id</span> <span class="o">=</span> <span class="n">account_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">alert_id</span> <span class="o">=</span> <span class="n">alert_id</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">FetchAnAlertAPI</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">access_token</span><span class="p">)</span>
 
-
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Parameters used in the url of the API call and for authentication.</span>
+
+<span class="sd">        :return: parameters used in the url.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;account_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">account_id</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;alert_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alert_id</span>
         <span class="k">return</span> <span class="n">params</span>
 
-
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">end_url</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;/accounts/</span><span class="si">{account_id}</span><span class="s2">/alerts/&quot;</span>\
+        <span class="sd">&quot;&quot;&quot;The concatenation of the `base_url` and `end_url` that make up the</span>
+<span class="sd">        resultant url.</span>
+
+<span class="sd">        :return: the `base_url` and the `end_url`.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">end_url</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;/accounts/</span><span class="si">{account_id}</span><span class="s2">/alerts/&quot;</span>
             <span class="s2">&quot;</span><span class="si">{alert_id}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span> <span class="o">+</span> <span class="n">end_url</span>
 
-
 <div class="viewcode-block" id="FetchAnAlertAPI.query"><a class="viewcode-back" href="../../api.html#mention.base.FetchAnAlertAPI.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The request that returns a JSON file of the API call given a url.</span>
+
+<span class="sd">        :return: the `base_url` and the `end_url`.</span>
+<span class="sd">        :rtype: :class: `json`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
             <span class="n">session</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">OAuth2BearerToken</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">access_token</span><span class="p">)</span>
             <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
@@ -175,10 +190,61 @@
                 <span class="k">pass</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="n">data</span>    </div></div>
+        <span class="k">return</span> <span class="n">data</span></div></div>
 
 
 <div class="viewcode-block" id="CreateAnAlertAPI"><a class="viewcode-back" href="../../api.html#mention.base.CreateAnAlertAPI">[docs]</a><span class="k">class</span> <span class="nc">CreateAnAlertAPI</span><span class="p">(</span><span class="n">Mention</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Retrieve details about a single alert.</span>
+
+<span class="sd">    :param access_token: Mention API `access_token`</span>
+<span class="sd">    :param account_id: ID of the account.</span>
+<span class="sd">    :param name: Alert name.</span>
+<span class="sd">    :param queryd: `queryd` is a dictionary that can be of two different</span>
+<span class="sd">        types: basic or advanced.</span>
+
+
+<span class="sd">    :Example:</span>
+
+<span class="sd">    &gt;&gt;&gt; queryd = {</span>
+<span class="sd">            &#39;type&#39;=&#39;basic&#39;,</span>
+<span class="sd">            &#39;included_keywords&#39; : [&quot;NASA&quot;, &quot;Arianespace&quot;, &quot;SpaceX&quot;,</span>
+<span class="sd">            &quot;Pockocmoc&quot;],</span>
+<span class="sd">            &#39;required_keywords&#39; : [&quot;mars&quot;],</span>
+<span class="sd">            &#39;excluded_keywords&#39; : [&quot;nose&quot;, &quot;fil d&#39;ariane&quot;],</span>
+<span class="sd">            &#39;monitored_website&#39; : [&quot;domain&quot;:&quot;www.nasa.gov&quot;,</span>
+<span class="sd">             &quot;block_self&quot;:true]</span>
+<span class="sd">        }</span>
+
+<span class="sd">    OR</span>
+
+<span class="sd">    &gt;&gt;&gt; queryd = {</span>
+<span class="sd">            &#39;type&#39; : &#39;advanced&#39;,</span>
+<span class="sd">            &#39;query_string&#39; : &#39;(NASA AND Discovery) OR</span>
+<span class="sd">            (Arianespace AND Ariane)&#39;</span>
+<span class="sd">        }</span>
+
+<span class="sd">    :param languages: A list of language codes. eg: [&#39;en&#39;].</span>
+<span class="sd">    :param countries: A list of country codes. eg: [&#39;US&#39;, &#39;RU&#39;, &#39;XX&#39;].</span>
+<span class="sd">    :param sources: A list of sources from which mentions should be</span>
+<span class="sd">        tracked. Must be either web, twitter, blogs, forums, news,</span>
+<span class="sd">         facebook, images or videos</span>
+<span class="sd">    :param blocked_sites: A list of blocked sites from which you</span>
+<span class="sd">     don&#39;t want mentions to be tracked.</span>
+<span class="sd">    :param noise_detection: Enables noise detection.</span>
+<span class="sd">    :param reviews_pages: List of reviews pages.</span>
+
+
+<span class="sd">    :type access_token: str</span>
+<span class="sd">    :type account_id: str</span>
+<span class="sd">    :type queryd: dict</span>
+<span class="sd">    :type languages: list</span>
+<span class="sd">    :type countries: list</span>
+<span class="sd">    :type sources: list</span>
+<span class="sd">    :type blocked_sites: list</span>
+<span class="sd">    :type noise_detection: boolean</span>
+<span class="sd">    :type reviews_pages: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">access_token</span><span class="p">,</span>
                  <span class="n">account_id</span><span class="p">,</span>
@@ -190,58 +256,6 @@
                  <span class="n">blocked_sites</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">noise_detection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">reviews_pages</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        access_token: string</span>
-<span class="sd">            Mention API access_token</span>
-
-<span class="sd">        account_id: string</span>
-<span class="sd">            ID of the account.</span>
-
-<span class="sd">        name: string</span>
-<span class="sd">            Alert name.</span>
-
-<span class="sd">        queryd: dict</span>
-<span class="sd">            Queryd is a dictionary that can be of two different types: basic or</span>
-<span class="sd">            advanced.</span>
-<span class="sd">            </span>
-<span class="sd">            eg.</span>
-<span class="sd">            queryd = {</span>
-<span class="sd">                &#39;type&#39;=&#39;basic&#39;,</span>
-<span class="sd">                &#39;included_keywords&#39; : [&quot;NASA&quot;, &quot;Arianespace&quot;, &quot;SpaceX&quot;, &quot;Pockocmoc&quot;],</span>
-<span class="sd">                &#39;required_keywords&#39; : [&quot;mars&quot;],</span>
-<span class="sd">                &#39;excluded_keywords&#39; : [&quot;nose&quot;, &quot;fil d&#39;ariane&quot;],</span>
-<span class="sd">                &#39;monitored_website&#39; : [&quot;domain&quot;:&quot;www.nasa.gov&quot;, &quot;block_self&quot;:true]</span>
-<span class="sd">            }</span>
-
-<span class="sd">            OR</span>
-
-<span class="sd">            queryd = {</span>
-<span class="sd">                &#39;type&#39; : &#39;advanced&#39;,</span>
-<span class="sd">                &#39;query_string&#39; : &#39;(NASA AND Discovery) OR (Arianespace AND Ariane)&#39;</span>
-<span class="sd">            }</span>
-<span class="sd">            </span>
-<span class="sd">        languages: list [str]</span>
-<span class="sd">            A list of language codes. eg: [&#39;en&#39;]</span>
-
-<span class="sd">        countries: list [str]</span>
-<span class="sd">            A list of country codes. eg: [&#39;US&#39;, &#39;RU&#39;, &#39;XX&#39;]</span>
-
-<span class="sd">        sources: list [str]</span>
-<span class="sd">            A list of sources from which mentions should be tracked.</span>
-<span class="sd">            Must be either web, twitter, blogs, forums, news, facebook, images or videos</span>
-
-<span class="sd">        blocked_sites: list [str] </span>
-<span class="sd">            A list of blocked sites from which you don&#39;t want mentions to be tracked.</span>
-
-<span class="sd">        noise_detection: boolean</span>
-<span class="sd">            Enables noise detection.</span>
-
-<span class="sd">        reviews_pages: list [str]  </span>
-<span class="sd">            List of reviews pages.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="o">=</span> <span class="n">access_token</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">account_id</span> <span class="o">=</span> <span class="n">account_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
@@ -255,13 +269,17 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">noise_detection</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">transform_boolean</span><span class="p">(</span><span class="n">noise_detection</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">noise_detection</span> <span class="o">=</span> <span class="n">noise_detection</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">reviews_pages</span> <span class="o">=</span> <span class="n">reviews_pages</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">CreateAnAlertAPI</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">access_token</span><span class="p">)</span>
 
-
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Parameters used in the url of the API call and for authentication.</span>
+
+<span class="sd">        :return: parameters used in the url.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;account_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">account_id</span>
@@ -269,6 +287,12 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Parameters passed to the API containing the details to create a new</span>
+<span class="sd">         alert.</span>
+
+<span class="sd">        :return: parameters to create new alert.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;query&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryd</span>
@@ -279,22 +303,31 @@
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;noise_detection&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise_detection</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise_detection</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;reviews_pages&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reviews_pages</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reviews_pages</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
 
-        <span class="c1">#Deletes parameter if it does not have a value</span>
+        <span class="c1"># Deletes parameter if it does not have a value</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
             <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
                 <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-        
+
         <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span>
 
-
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The concatenation of the `base_url` and `end_url` that make up the</span>
+<span class="sd">        resultant url.</span>
+
+<span class="sd">        :return: the `base_url` and the `end_url`.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">end_url</span> <span class="o">=</span> <span class="s2">&quot;/accounts/</span><span class="si">{account_id}</span><span class="s2">/alerts/&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span> <span class="o">+</span> <span class="n">end_url</span>
 
-
 <div class="viewcode-block" id="CreateAnAlertAPI.query"><a class="viewcode-back" href="../../api.html#mention.base.CreateAnAlertAPI.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The request that returns a JSON file of the API call given a url.</span>
+
+<span class="sd">        :return: the `base_url` and the `end_url`.</span>
+<span class="sd">        :rtype: :class: `json`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
             <span class="n">session</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">OAuth2BearerToken</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">access_token</span><span class="p">)</span>
             <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
@@ -307,6 +340,57 @@
 
 
 <div class="viewcode-block" id="UpdateAnAlertAPI"><a class="viewcode-back" href="../../api.html#mention.base.UpdateAnAlertAPI">[docs]</a><span class="k">class</span> <span class="nc">UpdateAnAlertAPI</span><span class="p">(</span><span class="n">Mention</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Modifies an existing alert, usually to update the criteria and to improve the search&#39;s efficiency.</span>
+
+<span class="sd">    :param access_token: Mention API `access_token`</span>
+<span class="sd">    :param account_id: ID of the account.</span>
+<span class="sd">    :param name: Alert name.</span>
+<span class="sd">    :param `queryd`: Queryd is a dictionary that can be of two different</span>
+<span class="sd">        types: basic or advanced.</span>
+
+
+<span class="sd">    :Example:</span>
+
+<span class="sd">    &gt;&gt;&gt; queryd = {</span>
+<span class="sd">            &#39;type&#39;=&#39;basic&#39;,</span>
+<span class="sd">            &#39;included_keywords&#39; : [&quot;NASA&quot;, &quot;Arianespace&quot;, &quot;SpaceX&quot;,</span>
+<span class="sd">            &quot;Pockocmoc&quot;],</span>
+<span class="sd">            &#39;required_keywords&#39; : [&quot;mars&quot;],</span>
+<span class="sd">            &#39;excluded_keywords&#39; : [&quot;nose&quot;, &quot;fil d&#39;ariane&quot;],</span>
+<span class="sd">            &#39;monitored_website&#39; : [&quot;domain&quot;:&quot;www.nasa.gov&quot;,</span>
+<span class="sd">             &quot;block_self&quot;:true]</span>
+<span class="sd">        }</span>
+
+<span class="sd">    OR</span>
+
+<span class="sd">    &gt;&gt;&gt; queryd = {</span>
+<span class="sd">            &#39;type&#39; : &#39;advanced&#39;,</span>
+<span class="sd">            &#39;query_string&#39; : &#39;(NASA AND Discovery) OR</span>
+<span class="sd">            (Arianespace AND Ariane)&#39;</span>
+<span class="sd">        }</span>
+
+<span class="sd">    :param languages: A list of language codes. eg: [&#39;en&#39;].</span>
+<span class="sd">    :param countries: A list of country codes. eg: [&#39;US&#39;, &#39;RU&#39;, &#39;XX&#39;].</span>
+<span class="sd">    :param sources: A list of sources from which mentions should be</span>
+<span class="sd">        tracked. Must be either web, twitter, blogs, forums, news,</span>
+<span class="sd">         facebook, images or videos</span>
+<span class="sd">    :param blocked_sites: A list of blocked sites from which you</span>
+<span class="sd">     don&#39;t want mentions to be tracked.</span>
+<span class="sd">    :param noise_detection: Enables noise detection.</span>
+<span class="sd">    :param reviews_pages: List of reviews pages.</span>
+
+
+<span class="sd">    :type access_token: str</span>
+<span class="sd">    :type account_id: str</span>
+<span class="sd">    :type queryd: dict</span>
+<span class="sd">    :type languages: list</span>
+<span class="sd">    :type countries: list</span>
+<span class="sd">    :type sources: list</span>
+<span class="sd">    :type blocked_sites: list</span>
+<span class="sd">    :type noise_detection: boolean</span>
+<span class="sd">    :type reviews_pages: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">access_token</span><span class="p">,</span>
                  <span class="n">account_id</span><span class="p">,</span>
@@ -319,61 +403,6 @@
                  <span class="n">blocked_sites</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">noise_detection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">reviews_pages</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        access_token: string</span>
-<span class="sd">            Mention API access_token</span>
-
-<span class="sd">        account_id: string</span>
-<span class="sd">            ID of the account.</span>
-
-<span class="sd">        alert_id: string</span>
-<span class="sd">            ID of the alert.</span>
-
-<span class="sd">        name: string</span>
-<span class="sd">            Alert name.</span>
-
-<span class="sd">        queryd: dict</span>
-<span class="sd">            Queryd is a dictionary that can be of two different types: basic or</span>
-<span class="sd">            advanced.</span>
-<span class="sd">            </span>
-<span class="sd">            eg.</span>
-<span class="sd">            queryd = {</span>
-<span class="sd">                &#39;type&#39;=&#39;basic&#39;,</span>
-<span class="sd">                &#39;included_keywords&#39; : [&quot;NASA&quot;, &quot;Arianespace&quot;, &quot;SpaceX&quot;, &quot;Pockocmoc&quot;],</span>
-<span class="sd">                &#39;required_keywords&#39; : [&quot;mars&quot;],</span>
-<span class="sd">                &#39;excluded_keywords&#39; : [&quot;nose&quot;, &quot;fil d&#39;ariane&quot;],</span>
-<span class="sd">                &#39;monitored_website&#39; : [&quot;domain&quot;:&quot;www.nasa.gov&quot;, &quot;block_self&quot;:true]</span>
-<span class="sd">            }</span>
-
-<span class="sd">            OR</span>
-
-<span class="sd">            queryd = {</span>
-<span class="sd">                &#39;type&#39; : &#39;advanced&#39;,</span>
-<span class="sd">                &#39;query_string&#39; : &#39;(NASA AND Discovery) OR (Arianespace AND Ariane)&#39;</span>
-<span class="sd">            }</span>
-<span class="sd">            </span>
-<span class="sd">        languages: list [str]</span>
-<span class="sd">            A list of language codes. eg: [&#39;en&#39;]</span>
-
-<span class="sd">        countries: list [str]</span>
-<span class="sd">            A list of country codes. eg: [&#39;US&#39;, &#39;RU&#39;, &#39;XX&#39;]</span>
-
-<span class="sd">        sources: list [str]</span>
-<span class="sd">            A list of sources from which mentions should be tracked.</span>
-<span class="sd">            Must be either web, twitter, blogs, forums, news, facebook, images or videos</span>
-
-<span class="sd">        blocked_sites: list [str] </span>
-<span class="sd">            A list of blocked sites from which you don&#39;t want mentions to be tracked.</span>
-
-<span class="sd">        noise_detection: boolean</span>
-<span class="sd">            Enables noise detection.</span>
-
-<span class="sd">        reviews_pages: list [str]  </span>
-<span class="sd">            List of reviews pages.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="o">=</span> <span class="n">access_token</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">account_id</span> <span class="o">=</span> <span class="n">account_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">alert_id</span> <span class="o">=</span> <span class="n">alert_id</span>
@@ -388,13 +417,17 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">noise_detection</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">transform_boolean</span><span class="p">(</span><span class="n">noise_detection</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">noise_detection</span> <span class="o">=</span> <span class="n">noise_detection</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">reviews_pages</span> <span class="o">=</span> <span class="n">reviews_pages</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">UpdateAnAlertAPI</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">access_token</span><span class="p">)</span>
 
-
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Parameters used in the url of the API call and for authentication.</span>
+
+<span class="sd">        :return: parameters used in the url.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;account_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">account_id</span>
@@ -403,6 +436,12 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Parameters passed to the API containing the details to update a</span>
+<span class="sd">         alert.</span>
+
+<span class="sd">        :return: parameters to create new alert.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;query&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryd</span>
@@ -413,23 +452,32 @@
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;noise_detection&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise_detection</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise_detection</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;reviews_pages&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reviews_pages</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reviews_pages</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
 
-        <span class="c1">#Deletes parameter if it does not have a value</span>
+        <span class="c1"># Deletes parameter if it does not have a value</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
             <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
                 <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-        
+
         <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span>
 
-
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">end_url</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;/accounts/</span><span class="si">{account_id}</span><span class="s2">/alerts/</span><span class="si">{alert_id}</span><span class="s2">&quot;</span>\
+        <span class="sd">&quot;&quot;&quot;The concatenation of the `base_url` and `end_url` that make up the</span>
+<span class="sd">        resultant url.</span>
+
+<span class="sd">        :return: the `base_url` and the `end_url`.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">end_url</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;/accounts/</span><span class="si">{account_id}</span><span class="s2">/alerts/</span><span class="si">{alert_id}</span><span class="s2">&quot;</span>
                     <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span> <span class="o">+</span> <span class="n">end_url</span>
 
-
 <div class="viewcode-block" id="UpdateAnAlertAPI.query"><a class="viewcode-back" href="../../api.html#mention.base.UpdateAnAlertAPI.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The request that returns a JSON file of the API call given a url.</span>
+
+<span class="sd">        :return: the `base_url` and the `end_url`.</span>
+<span class="sd">        :rtype: :class: `json`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
             <span class="n">session</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">OAuth2BearerToken</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">access_token</span><span class="p">)</span>
             <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
@@ -439,27 +487,29 @@
                 <span class="k">pass</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">data</span></div></div>
-    
+
 
 <div class="viewcode-block" id="FetchAlertsAPI"><a class="viewcode-back" href="../../api.html#mention.base.FetchAlertsAPI">[docs]</a><span class="k">class</span> <span class="nc">FetchAlertsAPI</span><span class="p">(</span><span class="n">Mention</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This method will allow you to fetch a list of all alerts for a given account.</span>
+
+<span class="sd">    :param access_token: Mention API `access_token`</span>
+<span class="sd">    :param account_id: ID of the account.</span>
+<span class="sd">    :type access_token: str</span>
+<span class="sd">    :type account_id: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">access_token</span><span class="p">,</span> <span class="n">account_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        access_token: string</span>
-<span class="sd">            Mention API access_token</span>
-
-<span class="sd">        account_id: string</span>
-<span class="sd">            ID of the account.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="o">=</span> <span class="n">access_token</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">account_id</span> <span class="o">=</span> <span class="n">account_id</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">FetchAlertsAPI</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">access_token</span><span class="p">)</span>
 
-
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Parameters used in the url of the API call and for authentication.</span>
+
+<span class="sd">        :return: parameters used in the url.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;account_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">account_id</span>
@@ -467,11 +517,21 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The concatenation of the `base_url` and `end_url` that make up the</span>
+<span class="sd">        resultant url.</span>
+
+<span class="sd">        :return: the `base_url` and the `end_url`.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">end_url</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;/accounts/</span><span class="si">{account_id}</span><span class="s2">/alerts&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span> <span class="o">+</span> <span class="n">end_url</span>
 
-
 <div class="viewcode-block" id="FetchAlertsAPI.query"><a class="viewcode-back" href="../../api.html#mention.base.FetchAlertsAPI.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The request that returns a JSON file of the API call given a url.</span>
+
+<span class="sd">        :return: the `base_url` and the `end_url`.</span>
+<span class="sd">        :rtype: :class: `json`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
             <span class="n">session</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">OAuth2BearerToken</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">access_token</span><span class="p">)</span>
             <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
@@ -485,31 +545,34 @@
 
 
 <div class="viewcode-block" id="FetchAMentionAPI"><a class="viewcode-back" href="../../api.html#mention.base.FetchAMentionAPI">[docs]</a><span class="k">class</span> <span class="nc">FetchAMentionAPI</span><span class="p">(</span><span class="n">Mention</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get a single mention by its mention ID.</span>
+
+<span class="sd">    :param access_token: Mention API `access_token`</span>
+<span class="sd">    :param account_id: ID of the account.</span>
+<span class="sd">    :param alert_id: ID of the alert.</span>
+<span class="sd">    :param mention_id: ID of the mention.</span>
+
+<span class="sd">    :type access_token: str</span>
+<span class="sd">    :type account_id: str</span>
+<span class="sd">    :type alert_id: str</span>
+<span class="sd">    :type mention_id: str</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">access_token</span><span class="p">,</span> <span class="n">account_id</span><span class="p">,</span> <span class="n">alert_id</span><span class="p">,</span> <span class="n">mention_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        access_token: string</span>
-<span class="sd">            Mention API access_token</span>
-
-<span class="sd">        account_id: string</span>
-<span class="sd">            ID of the account.</span>
-
-<span class="sd">        alert_id: string</span>
-<span class="sd">            ID of the alert.</span>
-
-<span class="sd">        mention_id: string</span>
-<span class="sd">            ID of the mention.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="o">=</span> <span class="n">access_token</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">account_id</span> <span class="o">=</span> <span class="n">account_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">alert_id</span> <span class="o">=</span> <span class="n">alert_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mention_id</span> <span class="o">=</span> <span class="n">mention_id</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">FetchAMentionAPI</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">access_token</span><span class="p">)</span>
 
-
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Parameters used in the url of the API call and for authentication.</span>
+
+<span class="sd">        :return: parameters used in the url.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;account_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">account_id</span>
@@ -517,16 +580,25 @@
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;mention_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mention_id</span>
         <span class="k">return</span> <span class="n">params</span>
 
-
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The concatenation of the `base_url` and `end_url` that make up the</span>
+<span class="sd">        resultant url.</span>
+
+<span class="sd">        :return: the `base_url` and the `end_url`.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">end_url</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;/accounts/</span><span class="si">{account_id}</span><span class="s2">/alerts/</span><span class="si">{alert_id}</span><span class="s2">/mentions/&quot;</span>
                    <span class="s2">&quot;</span><span class="si">{mention_id}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span> <span class="o">+</span> <span class="n">end_url</span>
 
-
 <div class="viewcode-block" id="FetchAMentionAPI.query"><a class="viewcode-back" href="../../api.html#mention.base.FetchAMentionAPI.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The request that returns a JSON file of the API call given a url.</span>
+
+<span class="sd">        :return: the `base_url` and the `end_url`.</span>
+<span class="sd">        :rtype: :class: `json`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
             <span class="n">session</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">OAuth2BearerToken</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">access_token</span><span class="p">)</span>
             <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
@@ -539,14 +611,79 @@
 
 
 <div class="viewcode-block" id="FetchAllMentionsAPI"><a class="viewcode-back" href="../../api.html#mention.base.FetchAllMentionsAPI">[docs]</a><span class="k">class</span> <span class="nc">FetchAllMentionsAPI</span><span class="p">(</span><span class="n">Mention</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get all or a filtered amount of mentions from an account.</span>
+
+<span class="sd">    :param access_token: Mention API `access_token`</span>
+<span class="sd">    :param account_id: ID of the account.</span>
+<span class="sd">    :param alert_id: ID of the alert.</span>
+<span class="sd">    :param since_id: Returns mentions ordered by id.</span>
+<span class="sd">     Can not be combined with before_date, not_before_date, cursor.</span>
+
+<span class="sd">    :param limit: Number of mentions to return. max 1000.</span>
+<span class="sd">    :param before_date: Mentions Before date in &#39;yyyy-MM-dd HH:mm&#39; format</span>
+
+<span class="sd">    :Example:</span>
+
+<span class="sd">    &gt;&gt;&gt; before_date = &#39;2018-11-25 12:00&#39;</span>
+
+<span class="sd">    :param not_before_date: Mentions Not before date in</span>
+<span class="sd">     &#39;yyyy-MM-dd HH:mm&#39; format</span>
+
+<span class="sd">    :param source: Must be either web, twitter, blogs, forums, news,</span>
+<span class="sd">     facebook, images or videos</span>
+
+<span class="sd">    :param unread: return only unread mentions. Must not be combined</span>
+<span class="sd">     with favorite, q, and tone.</span>
+
+<span class="sd">    :param favorite: Whether to return only favorite mentions.</span>
+<span class="sd">     Can not be combined with folder, when folder is not inbox or archive</span>
+
+<span class="sd">    :param folder: Filter by folder. Can be: inbox, archive, spam, trash.</span>
+<span class="sd">     With spam and trash, include_children is enabled by default.</span>
+
+<span class="sd">    :param tone: Filter by tone. Must be one of &#39;negative&#39;, &#39;neutral&#39;,</span>
+<span class="sd">     &#39;positive&#39;.</span>
+
+<span class="sd">    :param countries: Filter by country.</span>
+<span class="sd">    :param include_children: include children mentions.</span>
+<span class="sd">    :param sort: Sort results. Must be one of published_at,</span>
+<span class="sd">     author_influence.score, direct_reach, cumulative_reach, domain_reach.</span>
+
+<span class="sd">    :param languages: Filter by language.</span>
+<span class="sd">    :param timezone: Filter by timezone.</span>
+<span class="sd">    :param q: Filter by q.</span>
+<span class="sd">    :param cursor: Filter by cursor</span>
+
+
+<span class="sd">    :type access_token: str</span>
+<span class="sd">    :type account_id: str</span>
+<span class="sd">    :type alert_id: str</span>
+<span class="sd">    :type since_id: str</span>
+<span class="sd">    :type limit: str</span>
+<span class="sd">    :type before_date: str</span>
+<span class="sd">    :type not_before_date: str</span>
+<span class="sd">    :type source: str</span>
+<span class="sd">    :type unread: boolean</span>
+<span class="sd">    :type favorite: boolean</span>
+<span class="sd">    :type folder: str</span>
+<span class="sd">    :type tone: str</span>
+<span class="sd">    :type countries: str</span>
+<span class="sd">    :type include_children: boolean</span>
+<span class="sd">    :type sort: str</span>
+<span class="sd">    :type languages: str</span>
+<span class="sd">    :type timezone: str</span>
+<span class="sd">    :type q: str</span>
+<span class="sd">    :type cursor: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">access_token</span><span class="p">,</span>
                  <span class="n">account_id</span><span class="p">,</span>
                  <span class="n">alert_id</span><span class="p">,</span>
                  <span class="n">since_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">limit</span><span class="o">=</span><span class="s1">&#39;20&#39;</span><span class="p">,</span>
-                 <span class="n">before_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="c1"># 2018-07-07T00:00:00.12345+02:00</span>
-                 <span class="n">not_before_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="c1"># #2018-07-01T00:00:00.12345+02:00</span>
+                 <span class="n">before_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># 2018-07-07T00:00:00.12345+02:00</span>
+                 <span class="n">not_before_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># #2018-07-01T00:00:00.12345+02:00</span>
                  <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">unread</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">favorite</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -559,70 +696,6 @@
                  <span class="n">timezone</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">q</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">cursor</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        access_token: string</span>
-<span class="sd">            Mention API access_token</span>
-
-<span class="sd">        alert_id: string</span>
-<span class="sd">            ID of the alert.</span>
-
-<span class="sd">        since_id: string</span>
-<span class="sd">            Returns mentions ordered by id</span>
-<span class="sd">            Can not be combined with before_date, not_before_date, cursor.</span>
-
-<span class="sd">        limit: string</span>
-<span class="sd">            Number of mentions to return. max 1000.</span>
-
-<span class="sd">        before_date: string</span>
-<span class="sd">            Mentions Before date in &#39;yyyy-MM-dd HH:mm&#39; format</span>
-<span class="sd">            eg. &#39;2018-11-25 12:00&#39;</span>
-
-<span class="sd">        not_before_date: string</span>
-<span class="sd">            Mentions Not before date in &#39;yyyy-MM-dd HH:mm&#39; format</span>
-<span class="sd">            eg. &#39;2018-10-04 12:00&#39;</span>
-
-<span class="sd">        source: string</span>
-<span class="sd">            Must be either web, twitter, blogs, forums, news, facebook, images or videos</span>
-
-<span class="sd">        unread: boolean</span>
-<span class="sd">            return only unread mentions.</span>
-<span class="sd">            Must not be combined with favorite, q, and tone.</span>
-
-<span class="sd">        favorite: boolean</span>
-<span class="sd">            Whether to return only favorite mentions.</span>
-<span class="sd">            Can not be combined with folder, when folder is not inbox or archive</span>
-
-<span class="sd">        folder: string</span>
-<span class="sd">            Filter by folder. Can be: inbox, archive, spam, trash.</span>
-<span class="sd">            With spam and trash, include_children is enabled by default.</span>
-
-<span class="sd">        tone: string</span>
-<span class="sd">            Filter by tone. Must be one of &#39;negative&#39;, &#39;neutral&#39;, &#39;positive&#39;</span>
-
-<span class="sd">        countries: string</span>
-<span class="sd">            Filter by country</span>
-
-<span class="sd">        include_children: boolean</span>
-<span class="sd">            include children mentions.</span>
-
-<span class="sd">        sort: string</span>
-<span class="sd">            Sort results. Must be one of published_at, author_influence.score,</span>
-<span class="sd">            direct_reach, cumulative_reach, domain_reach.</span>
-
-<span class="sd">        languages: string</span>
-<span class="sd">            Filter by language</span>
-
-<span class="sd">        timezone: string</span>
-<span class="sd">            Filter by timezone</span>
-
-<span class="sd">        q: string</span>
-<span class="sd">            Filter by q</span>
-
-<span class="sd">        cursor: string</span>
-<span class="sd">            Filter by cursor</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="o">=</span> <span class="n">access_token</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">account_id</span> <span class="o">=</span> <span class="n">account_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">alert_id</span> <span class="o">=</span> <span class="n">alert_id</span>
@@ -640,7 +713,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">not_before_date</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">transform_date</span><span class="p">(</span><span class="n">not_before_date</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">not_before_date</span> <span class="o">=</span> <span class="n">not_before_date</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
 
         <span class="k">if</span> <span class="n">unread</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -652,14 +725,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">favorite</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">transform_boolean</span><span class="p">(</span><span class="n">favorite</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">favorite</span> <span class="o">=</span> <span class="n">favorite</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">folder</span> <span class="o">=</span> <span class="n">folder</span>
 
         <span class="k">if</span> <span class="n">tone</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">tone</span> <span class="o">=</span> <span class="n">tone</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">transform_tone</span><span class="p">(</span><span class="n">tone</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">tone</span> <span class="o">=</span> <span class="n">tone</span>
- 
+
         <span class="bp">self</span><span class="o">.</span><span class="n">countries</span> <span class="o">=</span> <span class="n">countries</span>
 
         <span class="k">if</span> <span class="n">include_children</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -667,16 +740,20 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">include_children</span> <span class="o">=</span> <span class="n">include_children</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">sort</span> <span class="o">=</span> <span class="n">sort</span>                        
+        <span class="bp">self</span><span class="o">.</span><span class="n">sort</span> <span class="o">=</span> <span class="n">sort</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">languages</span> <span class="o">=</span> <span class="n">languages</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timezone</span> <span class="o">=</span> <span class="n">timezone</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">q</span> <span class="o">=</span> <span class="n">q</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="n">cursor</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">FetchAllMentionsAPI</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">access_token</span><span class="p">)</span>
-        
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Parameters used in the url of the API call and for authentication.</span>
+
+<span class="sd">        :return: parameters used in the url.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;account_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">account_id</span>
@@ -715,17 +792,23 @@
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;sort&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;languages&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">languages</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">languages</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;timezone&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timezone</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">timezone</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
-        
-        <span class="c1">#Deletes parameter if it does not have a value</span>
+
+        <span class="c1"># Deletes parameter if it does not have a value</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
             <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
                 <span class="k">del</span> <span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-                
+
         <span class="k">return</span> <span class="n">params</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">end_url</span><span class="o">=</span> <span class="s2">&quot;/accounts/</span><span class="si">{account_id}</span><span class="s2">/alerts/</span><span class="si">{alert_id}</span><span class="s2">/mentions?&quot;</span>
+        <span class="sd">&quot;&quot;&quot;The concatenation of the `base_url` and `end_url` that make up the</span>
+<span class="sd">        resultant url.</span>
+
+<span class="sd">        :return: the `base_url` and the `end_url`.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">end_url</span> <span class="o">=</span> <span class="s2">&quot;/accounts/</span><span class="si">{account_id}</span><span class="s2">/alerts/</span><span class="si">{alert_id}</span><span class="s2">/mentions?&quot;</span>
 
         <span class="c1"># Returns copy of dictionary excluding certain keys</span>
         <span class="k">def</span> <span class="nf">without_keys</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">keys</span><span class="p">):</span>
@@ -737,12 +820,16 @@
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
             <span class="k">if</span> <span class="n">value</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
                 <span class="n">end_url</span> <span class="o">+=</span> <span class="s1">&#39;&amp;&#39;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;={&#39;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
-        
+
         <span class="n">end_url</span> <span class="o">=</span> <span class="n">end_url</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span> <span class="o">+</span> <span class="n">end_url</span>
 
-
 <div class="viewcode-block" id="FetchAllMentionsAPI.query"><a class="viewcode-back" href="../../api.html#mention.base.FetchAllMentionsAPI.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The request that returns a JSON file of the API call given a url.</span>
+
+<span class="sd">        :return: the `base_url` and the `end_url`.</span>
+<span class="sd">        :rtype: :class: `json`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
             <span class="n">session</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">OAuth2BearerToken</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">access_token</span><span class="p">)</span>
             <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
@@ -756,48 +843,46 @@
 
 
 <div class="viewcode-block" id="FetchMentionChildrenAPI"><a class="viewcode-back" href="../../api.html#mention.base.FetchMentionChildrenAPI">[docs]</a><span class="k">class</span> <span class="nc">FetchMentionChildrenAPI</span><span class="p">(</span><span class="n">Mention</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;&quot;&quot;This class will allow you to fetch a list of all children mentions for</span>
-<span class="sd">    a given mention.</span>
-<span class="sd">    &quot;&quot;&quot;</span><span class="s2">&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;&quot;&quot;This class will allow you to fetch a list of all children mentions for a given mention.</span>
+
+<span class="sd">    :param access_token: Mention API `access_token`</span>
+<span class="sd">    :param account_id: ID of the account.</span>
+<span class="sd">    :param alert_id: ID of the alert.</span>
+<span class="sd">    :param limit: Number of mentions to return. max 1000.</span>
+<span class="sd">    :param before_date: Mentions Before date in &#39;yyyy-MM-dd HH:mm&#39; format</span>
+
+<span class="sd">    :Example:</span>
+
+<span class="sd">    &gt;&gt;&gt; before_date = &#39;2018-11-25 12:00&#39;</span>
+
+<span class="sd">    :type access_token: str</span>
+<span class="sd">    :type account_id: str</span>
+<span class="sd">    :type alert_id: str</span>
+<span class="sd">    :type limit: str</span>
+<span class="sd">    :type before_date: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">access_token</span><span class="p">,</span> <span class="n">account_id</span><span class="p">,</span> <span class="n">alert_id</span><span class="p">,</span> <span class="n">mention_id</span><span class="p">,</span>
                  <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">before_date</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        access_token: string</span>
-<span class="sd">            Mention API access_token</span>
-
-<span class="sd">        account_id: string</span>
-<span class="sd">            ID of the account.</span>
-
-<span class="sd">        alert_id: string</span>
-<span class="sd">            ID of the alert.</span>
-
-<span class="sd">        mention_id: string</span>
-<span class="sd">            ID of the mention.</span>
-
-<span class="sd">        limit: string</span>
-<span class="sd">            Number of mentions to return. max 1000.</span>
-
-<span class="sd">        before_date: string</span>
-<span class="sd">            Mentions Before date in &#39;yyyy-MM-dd HH:mm&#39; format</span>
-<span class="sd">            eg. &#39;2018-11-25 12:00&#39;</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="o">=</span> <span class="n">access_token</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">account_id</span> <span class="o">=</span> <span class="n">account_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">alert_id</span> <span class="o">=</span> <span class="n">alert_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mention_id</span> <span class="o">=</span> <span class="n">mention_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">limit</span> <span class="o">=</span> <span class="n">limit</span>
-        
+
         <span class="k">if</span> <span class="n">before_date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">before_date</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">transform_date</span><span class="p">(</span><span class="n">before_date</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">before_date</span> <span class="o">=</span> <span class="n">before_date</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">FetchMentionChildrenAPI</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">access_token</span><span class="p">)</span>
 
-
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Parameters used in the url of the API call and for authentication.</span>
+
+<span class="sd">        :return: parameters used in the url.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;account_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">account_id</span>
@@ -812,13 +897,18 @@
                 <span class="n">params</span><span class="p">[</span><span class="s2">&quot;limit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">params</span><span class="p">[</span><span class="s2">&quot;limit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">limit</span>
-        
-        <span class="k">return</span> <span class="n">params</span>
 
+        <span class="k">return</span> <span class="n">params</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">end_url</span><span class="o">=</span> <span class="p">(</span><span class="s2">&quot;/accounts/</span><span class="si">{account_id}</span><span class="s2">/alerts/</span><span class="si">{alert_id}</span><span class="s2">/mentions/&quot;</span>
+        <span class="sd">&quot;&quot;&quot;The concatenation of the `base_url` and `end_url` that make up the</span>
+<span class="sd">        resultant url.</span>
+
+<span class="sd">        :return: the `base_url` and the `end_url`.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">end_url</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;/accounts/</span><span class="si">{account_id}</span><span class="s2">/alerts/</span><span class="si">{alert_id}</span><span class="s2">/mentions/&quot;</span>
                   <span class="s2">&quot;</span><span class="si">{mention_id}</span><span class="s2">/children?&quot;</span><span class="p">)</span>
 
         <span class="k">def</span> <span class="nf">without_keys</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">keys</span><span class="p">):</span>
@@ -830,12 +920,16 @@
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
             <span class="k">if</span> <span class="n">value</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
                 <span class="n">end_url</span> <span class="o">+=</span> <span class="s1">&#39;&amp;&#39;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;={&#39;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
-        
+
         <span class="n">end_url</span> <span class="o">=</span> <span class="n">end_url</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span> <span class="o">+</span> <span class="n">end_url</span>
 
-
 <div class="viewcode-block" id="FetchMentionChildrenAPI.query"><a class="viewcode-back" href="../../api.html#mention.base.FetchMentionChildrenAPI.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The request that returns a JSON file of the API call given a url.</span>
+
+<span class="sd">        :return: the `base_url` and the `end_url`.</span>
+<span class="sd">        :rtype: :class: `json`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
             <span class="n">session</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">OAuth2BearerToken</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">access_token</span><span class="p">)</span>
             <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
@@ -848,91 +942,126 @@
         <span class="k">return</span> <span class="n">data</span></div></div>
 
 
-<span class="c1">##class StreamMentionsAPI(Mention):</span>
-<span class="c1">##    def __init__(self,</span>
-<span class="c1">##                 access_token,</span>
-<span class="c1">##                 account_id,</span>
-<span class="c1">##                 alerts,</span>
-<span class="c1">##                 since_ids=None,</span>
-<span class="c1">##                 time_open=20):</span>
-<span class="c1">##        &quot;&quot;&quot;</span>
-<span class="c1">##        Parameters</span>
-<span class="c1">##        ----------</span>
-<span class="c1">##        access_token: string</span>
-<span class="c1">##            Mention API access_token</span>
-<span class="c1">##</span>
-<span class="c1">##        alerts: list[string]</span>
-<span class="c1">##            list of alerts to stream</span>
-<span class="c1">##</span>
-<span class="c1">##        since_id: string</span>
-<span class="c1">##            Returns mentions ordered by id</span>
-<span class="c1">##            Can not be combined with before_date, not_before_date, cursor.</span>
-<span class="c1">##</span>
-<span class="c1">##        time_open: string</span>
-<span class="c1">##            Sets the amount of time the connection should stay open for.</span>
-<span class="c1">##</span>
-<span class="c1">##        &quot;&quot;&quot;</span>
-<span class="c1">##        self.access_token = access_token</span>
-<span class="c1">##        self.account_id = account_id</span>
-<span class="c1">##        self.alerts = alerts</span>
-<span class="c1">##        self.since_ids = since_ids</span>
-<span class="c1">##        self.time_open = time_open</span>
-<span class="c1">##        super(StreamMentionsAPI, self).__init__(access_token)</span>
-<span class="c1">##        </span>
-<span class="c1">##</span>
-<span class="c1">##    @property</span>
-<span class="c1">##    def params(self):</span>
-<span class="c1">##        params = {}</span>
-<span class="c1">##        params[&quot;access_token&quot;] = self.access_token</span>
-<span class="c1">##        params[&quot;account_id&quot;] = self.account_id</span>
-<span class="c1">##</span>
-<span class="c1">##        querystring = &quot;&quot;</span>
-<span class="c1">##</span>
-<span class="c1">##        for alert in self.alerts:</span>
-<span class="c1">##            querystring += &quot;alerts[]=&quot; + alert + &quot;&amp;&quot;</span>
-<span class="c1">##            </span>
-<span class="c1">##        if self.since_ids:</span>
-<span class="c1">##            for i in range(self.since_ids):</span>
-<span class="c1">##                querystring += (&quot;since_id[{alert_id}]=&quot;</span>
-<span class="c1">##                                &quot;{since_id}&amp;&quot;).format(self.since_ids[i],</span>
-<span class="c1">##                                                      self.alerts[i])</span>
-<span class="c1">##</span>
-<span class="c1">##        params[&quot;querystring&quot;] = querystring</span>
-<span class="c1">##                </span>
-<span class="c1">##        return params</span>
-<span class="c1">##</span>
-<span class="c1">##    @property</span>
-<span class="c1">##    def url(self):</span>
-<span class="c1">##        base_url = &quot;https://stream.mention.net/api&quot;</span>
-<span class="c1">##        end_url = (&quot;/accounts/{account_id}/mentions?&quot;</span>
-<span class="c1">##                  &quot;{querystring}&quot;).format(**self.params)</span>
-<span class="c1">##</span>
-<span class="c1">##        return base_url + end_url</span>
-<span class="c1">##</span>
-<span class="c1">##</span>
-<span class="c1">##    def query(self):</span>
-<span class="c1">##        with requests.Session() as session:</span>
-<span class="c1">##            session.auth = OAuth2BearerToken(self.access_token)</span>
-<span class="c1">##            </span>
-<span class="c1">##            response = session.get(self.url,</span>
-<span class="c1">##                                   stream=True,</span>
-<span class="c1">##                                   timeout=self.time_open)</span>
-<span class="c1">##</span>
-<span class="c1">##</span>
-<span class="c1">##            for line in response.iter_lines():</span>
-<span class="c1">##                if line:</span>
-<span class="c1">##                    print(json.loads(line))</span>
-<span class="c1">##                            </span>
-<span class="c1">##            try:</span>
-<span class="c1">##                response.raise_for_status()</span>
-<span class="c1">##            except HTTPError:</span>
-<span class="c1">##                pass</span>
-<span class="c1">##            data = response.json()</span>
-<span class="c1">##</span>
-<span class="c1">##        return data</span>
+<span class="c1"># class StreamMentionsAPI(Mention):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     :param access_token: Mention API `access_token`</span>
+<span class="c1">#     :param account_id: ID of the account.</span>
+<span class="c1">#     :param alerts: list of alerts to stream.</span>
+<span class="c1">#     :param since_id: Returns mentions ordered by id.</span>
+<span class="c1">#     Can not be combined with before_date, not_before_date, cursor.</span>
+
+<span class="c1">#     :param time_open:</span>
+<span class="c1">#     Sets the amount of time the connection should stay open for.</span>
+
+<span class="c1">#     :type access_token: str</span>
+<span class="c1">#     :type account_id: str</span>
+<span class="c1">#     :type alerts: list</span>
+<span class="c1">#     :type since_id: list</span>
+<span class="c1">#     :type time_open: str</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+
+<span class="c1">#     def __init__(self,</span>
+<span class="c1">#                  access_token,</span>
+<span class="c1">#                  account_id,</span>
+<span class="c1">#                  alerts,</span>
+<span class="c1">#                  since_ids=None,</span>
+<span class="c1">#                  time_open=20):</span>
+<span class="c1">#         self.access_token = access_token</span>
+<span class="c1">#         self.account_id = account_id</span>
+<span class="c1">#         self.alerts = alerts</span>
+<span class="c1">#         self.since_ids = since_ids</span>
+<span class="c1">#         self.time_open = time_open</span>
+<span class="c1">#         super(StreamMentionsAPI, self).__init__(access_token)</span>
+       
+
+<span class="c1">#    @property</span>
+<span class="c1">#    def params(self):</span>
+<span class="c1">#        params = {}</span>
+<span class="c1">#        params[&quot;access_token&quot;] = self.access_token</span>
+<span class="c1">#        params[&quot;account_id&quot;] = self.account_id</span>
+
+<span class="c1">#        querystring = &quot;&quot;</span>
+
+<span class="c1">#        for alert in self.alerts:</span>
+<span class="c1">#            querystring += &quot;alerts[]=&quot; + alert + &quot;&amp;&quot;</span>
+           
+<span class="c1">#        if self.since_ids:</span>
+<span class="c1">#            for i in range(self.since_ids):</span>
+<span class="c1">#                querystring += (&quot;since_id[{alert_id}]=&quot;</span>
+<span class="c1">#                                &quot;{since_id}&amp;&quot;).format(self.since_ids[i],</span>
+<span class="c1">#                                                      self.alerts[i])</span>
+
+<span class="c1">#        params[&quot;querystring&quot;] = querystring</span>
+               
+<span class="c1">#        return params</span>
+
+<span class="c1">#    @property</span>
+<span class="c1">#    def url(self):</span>
+<span class="c1">#        base_url = &quot;https://stream.mention.net/api&quot;</span>
+<span class="c1">#        end_url = (&quot;/accounts/{account_id}/mentions?&quot;</span>
+<span class="c1">#                  &quot;{querystring}&quot;).format(**self.params)</span>
+
+<span class="c1">#        return base_url + end_url</span>
+
+
+<span class="c1">#    def query(self):</span>
+<span class="c1">#        with requests.Session() as session:</span>
+<span class="c1">#            session.auth = OAuth2BearerToken(self.access_token)</span>
+           
+<span class="c1">#            response = session.get(self.url,</span>
+<span class="c1">#                                   stream=True,</span>
+<span class="c1">#                                   timeout=self.time_open)</span>
+
+
+<span class="c1">#            for line in response.iter_lines():</span>
+<span class="c1">#                if line:</span>
+<span class="c1">#                    print(json.loads(line))</span>
+                           
+<span class="c1">#            try:</span>
+<span class="c1">#                response.raise_for_status()</span>
+<span class="c1">#            except HTTPError:</span>
+<span class="c1">#                pass</span>
+<span class="c1">#            data = response.json()</span>
+
+<span class="c1">#        return data</span>
 
 
 <div class="viewcode-block" id="CurateAMentionAPI"><a class="viewcode-back" href="../../api.html#mention.base.CurateAMentionAPI">[docs]</a><span class="k">class</span> <span class="nc">CurateAMentionAPI</span><span class="p">(</span><span class="n">Mention</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Updates an existing mention.</span>
+
+<span class="sd">    :param access_token: Mention API `access_token`</span>
+<span class="sd">    :param account_id: ID of the account.</span>
+<span class="sd">    :param alert_id: ID of the alert.</span>
+<span class="sd">    :param mention_id: ID of the mention.</span>
+
+<span class="sd">    :param favorite: Boolean value indicating if the mention was</span>
+<span class="sd">     set as favorite.</span>
+
+<span class="sd">    :param trashed: Boolean value indicating if the mention has</span>
+<span class="sd">     been put in trash.</span>
+
+<span class="sd">    :param read: Boolean value indicating that a mention was read.</span>
+
+<span class="sd">    :param tags: add list of tags attributed to the mention.</span>
+
+<span class="sd">    :param folder: Indicates the folder where the mention has been put.</span>
+
+<span class="sd">    :param tone: Tone value given to the mention. Must be one of &#39;negative&#39;,</span>
+<span class="sd">     &#39;neutral&#39;, &#39;positive&#39;.</span>
+
+
+<span class="sd">    :type access_token: str</span>
+<span class="sd">    :type account_id: str</span>
+<span class="sd">    :type alert_id: str</span>
+<span class="sd">    :type mention_id: str</span>
+<span class="sd">    :type favorite: boolean</span>
+<span class="sd">    :type trashed: boolean</span>
+<span class="sd">    :type read: str</span>
+<span class="sd">    :type tags: dict</span>
+<span class="sd">    :type folder: str</span>
+<span class="sd">    :type tone: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">access_token</span><span class="p">,</span>
                  <span class="n">account_id</span><span class="p">,</span>
@@ -944,21 +1073,6 @@
                  <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">folder</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">tone</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        access_token: string</span>
-<span class="sd">            Mention API access_token</span>
-
-<span class="sd">        account_id: string</span>
-<span class="sd">            ID of the account.</span>
-
-<span class="sd">        alert_id: string</span>
-<span class="sd">            ID of the alert.</span>
-
-<span class="sd">        mention_id: string</span>
-<span class="sd">            ID of the mention.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="o">=</span> <span class="n">access_token</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">account_id</span> <span class="o">=</span> <span class="n">account_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">alert_id</span> <span class="o">=</span> <span class="n">alert_id</span>
@@ -968,7 +1082,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">favorite</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">transform_boolean</span><span class="p">(</span><span class="n">favorite</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">favorite</span> <span class="o">=</span> <span class="n">favorite</span>
-        
+
         <span class="k">if</span> <span class="n">trashed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">trashed</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">transform_boolean</span><span class="p">(</span><span class="n">trashed</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -978,15 +1092,19 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">read</span> <span class="o">=</span> <span class="n">tone</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">transform_tone</span><span class="p">(</span><span class="n">read</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">read</span> <span class="o">=</span> <span class="n">read</span>
- 
+
         <span class="bp">self</span><span class="o">.</span><span class="n">tags</span> <span class="o">=</span> <span class="n">tags</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">folder</span> <span class="o">=</span> <span class="n">folder</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tone</span> <span class="o">=</span> <span class="n">tone</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">CurateAMentionAPI</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">access_token</span><span class="p">)</span>
 
-
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Parameters used in the url of the API call and for authentication.</span>
+
+<span class="sd">        :return: parameters used in the url.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;account_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">account_id</span>
@@ -994,9 +1112,14 @@
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;mention_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mention_id</span>
         <span class="k">return</span> <span class="n">params</span>
 
-
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Parameters passed to the API containing the details to update a</span>
+<span class="sd">         alert.</span>
+
+<span class="sd">        :return: parameters to create new alert.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;favorite&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">favorite</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">favorite</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;trashed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trashed</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trashed</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
@@ -1005,24 +1128,33 @@
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;folder&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;tone&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tone</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tone</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
 
-        <span class="c1">#Deletes parameter if it does not have a value</span>
+        <span class="c1"># Deletes parameter if it does not have a value</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
             <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
                 <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-        
+
         <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span>
 
-
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The concatenation of the `base_url` and `end_url` that make up the</span>
+<span class="sd">        resultant url.</span>
+
+<span class="sd">        :return: the `base_url` and the `end_url`.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">end_url</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;/accounts/</span><span class="si">{account_id}</span><span class="s2">/alerts/</span><span class="si">{alert_id}</span><span class="s2">/mentions/&quot;</span>
                    <span class="s2">&quot;</span><span class="si">{mention_id}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span> <span class="o">+</span> <span class="n">end_url</span>
 
-
 <div class="viewcode-block" id="CurateAMentionAPI.query"><a class="viewcode-back" href="../../api.html#mention.base.CurateAMentionAPI.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The request that returns a JSON file of the API call given a url.</span>
+
+<span class="sd">        :return: the `base_url` and the `end_url`.</span>
+<span class="sd">        :rtype: :class: `json`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
             <span class="n">session</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">OAuth2BearerToken</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">access_token</span><span class="p">)</span>
             <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
@@ -1036,43 +1168,55 @@
 
 
 <div class="viewcode-block" id="MarkAllMentionsAsReadAPI"><a class="viewcode-back" href="../../api.html#mention.base.MarkAllMentionsAsReadAPI">[docs]</a><span class="k">class</span> <span class="nc">MarkAllMentionsAsReadAPI</span><span class="p">(</span><span class="n">Mention</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Marks all mentions as read.</span>
+
+<span class="sd">    :param access_token: Mention API `access_token`</span>
+<span class="sd">    :param account_id: ID of the account.</span>
+<span class="sd">    :param alert_id: ID of the alert.</span>
+
+<span class="sd">    :type access_token: str</span>
+<span class="sd">    :type account_id: str</span>
+<span class="sd">    :type alert_id: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">access_token</span><span class="p">,</span> <span class="n">account_id</span><span class="p">,</span> <span class="n">alert_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        access_token: string</span>
-<span class="sd">            Mention API access_token</span>
-
-<span class="sd">        account_id: string</span>
-<span class="sd">            ID of the account.</span>
-
-<span class="sd">        alert_id: string</span>
-<span class="sd">            ID of the alert.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="o">=</span> <span class="n">access_token</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">account_id</span> <span class="o">=</span> <span class="n">account_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">alert_id</span> <span class="o">=</span> <span class="n">alert_id</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MarkAllMentionsAsReadAPI</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">access_token</span><span class="p">)</span>
 
-
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Parameters used in the url of the API call and for authentication.</span>
+
+<span class="sd">        :return: parameters used in the url.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;account_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">account_id</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;alert_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alert_id</span>
         <span class="k">return</span> <span class="n">params</span>
 
-
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The concatenation of the `base_url` and `end_url` that make up the</span>
+<span class="sd">        resultant url.</span>
+
+<span class="sd">        :return: the `base_url` and the `end_url`.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">end_url</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;/accounts/</span><span class="si">{account_id}</span><span class="s2">/alerts/</span><span class="si">{alert_id}</span><span class="s2">/mentions/&quot;</span>
                    <span class="s2">&quot;markallread&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span> <span class="o">+</span> <span class="n">end_url</span>
 
-
 <div class="viewcode-block" id="MarkAllMentionsAsReadAPI.query"><a class="viewcode-back" href="../../api.html#mention.base.MarkAllMentionsAsReadAPI.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The request that returns a JSON file of the API call given a url.</span>
+
+<span class="sd">        :return: the `base_url` and the `end_url`.</span>
+<span class="sd">        :rtype: :class: `json`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
             <span class="n">session</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">OAuth2BearerToken</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">access_token</span><span class="p">)</span>
             <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
@@ -1101,8 +1245,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">Developer Docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change Log</a></li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">

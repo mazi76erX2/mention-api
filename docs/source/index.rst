@@ -53,9 +53,8 @@ Table of Contents
 
    installation.rst
    getting_started.rst
-   changelog.rst
    api.rst
-   module.rst
+   changelog.rst
 
 
 Introduction
