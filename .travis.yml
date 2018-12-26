@@ -8,9 +8,6 @@ python:
 
 cache: pip
 
-before_install:
-  -openssl aes-256-cbc -K $encrypted_0a6446eb3ae3_key -iv $encrypted_0a6446eb3ae3_iv -in api_keys.json.enc -out api_keys.json -d
-
 install:
   - pip install -r requirements.txt
   - pip install codecov
