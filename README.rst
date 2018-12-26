@@ -69,7 +69,7 @@ Examples
     ...	of their own home."
 
     >>> data['original_url']				 			
-    'https:\/\/www.iol.co.za\/business-report\/technology\/nandos-launches-their-own-food-
+    'https://www.iol.co.za/business-report/technology/nandos-launches-their-own-food-
     ...	ordering-app-18378360'
 
 **Read More**
